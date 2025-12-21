@@ -11,14 +11,13 @@ export const WhiteGloveService: React.FC = () => {
                 <div>
                     <div className="flex items-center gap-2 text-amber-500 font-bold text-sm tracking-widest uppercase mb-2">
                         <Crown size={18} />
-                        <span>Experiência VIP</span>
+                        <span>Padrão Ouro</span>
                     </div>
                     <h2 className="text-3xl md:text-4xl font-serif font-bold text-slate-900 mb-4">
-                        Instalação "White Glove"
+                        Protocolo de Excelência Aquafeel
                     </h2>
                     <p className="text-slate-600 text-lg leading-relaxed">
-                        Aline, sabemos que obras e instalações podem ser estressantes. Por isso, para clientes Platinum, oferecemos o protocolo <strong>Luva Branca</strong>. 
-                        Nossa equipe elite cuida de tudo.
+                        Aline & Sinval, sua nova casa merece respeito. Nossa equipe técnica segue um protocolo rigoroso desenhado para residências de alto padrão, garantindo que a única mudança que vocês notarão será a qualidade da água.
                     </p>
                 </div>
 
@@ -28,8 +27,8 @@ export const WhiteGloveService: React.FC = () => {
                             <Sparkles size={22} />
                         </div>
                         <div>
-                            <h4 className="font-bold text-slate-900 text-lg">Limpeza Absoluta</h4>
-                            <p className="text-slate-500 text-sm mt-1">Nós garantimos que o local da instalação ficará mais limpo do que quando chegamos. Zero poeira, zero resíduos.</p>
+                            <h4 className="font-bold text-slate-900 text-lg">Ambiente Imaculado</h4>
+                            <p className="text-slate-500 text-sm mt-1">Garantia de limpeza absoluta. Nossa equipe utiliza proteções para o piso e deixa o local da instalação mais limpo do que o encontrou.</p>
                         </div>
                     </div>
 
@@ -38,8 +37,8 @@ export const WhiteGloveService: React.FC = () => {
                             <Clock size={22} />
                         </div>
                         <div>
-                            <h4 className="font-bold text-slate-900 text-lg">Agendamento Prioritário</h4>
-                            <p className="text-slate-500 text-sm mt-1">Sua instalação fura a fila. Adaptamos nossa agenda à sua disponibilidade, inclusive aos finais de semana se necessário.</p>
+                            <h4 className="font-bold text-slate-900 text-lg">Prioridade de Agenda</h4>
+                            <p className="text-slate-500 text-sm mt-1">Como clientes Platinum, vocês têm acesso preferencial à agenda técnica, incluindo finais de semana, para se adaptar à rotina da mudança.</p>
                         </div>
                     </div>
 
@@ -49,7 +48,7 @@ export const WhiteGloveService: React.FC = () => {
                         </div>
                         <div>
                             <h4 className="font-bold text-slate-900 text-lg">Garantia Estética</h4>
-                            <p className="text-slate-500 text-sm mt-1">Instalação discreta e profissional que preserva o design e a estética da sua nova casa.</p>
+                            <p className="text-slate-500 text-sm mt-1">Instalação discreta e profissional, otimizando espaço e preservando o design dos armários e área técnica da casa.</p>
                         </div>
                     </div>
                 </div>
@@ -60,9 +59,9 @@ export const WhiteGloveService: React.FC = () => {
                 <div className="relative bg-slate-900 rounded-2xl p-8 md:p-12 text-center text-white shadow-2xl overflow-hidden">
                     <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full blur-3xl"></div>
                     <Crown size={48} className="text-amber-400 mx-auto mb-6" />
-                    <h3 className="text-2xl font-bold mb-4">Acesso Vitalício ao Clube</h3>
+                    <h3 className="text-2xl font-bold mb-4">Suporte VIP Dedicado</h3>
                     <p className="text-slate-300 mb-8">
-                        Além da instalação, você ganha acesso direto ao Whatsapp pessoal do gerente para qualquer necessidade futura. Sem 0800, sem espera.
+                        Esqueça call centers. Vocês terão linha direta com o consultor sênior para qualquer necessidade futura.
                     </p>
                     <div className="inline-block border border-white/20 rounded-lg px-4 py-2 text-sm text-slate-400">
                         Incluso no Pacote Aline & Sinval
