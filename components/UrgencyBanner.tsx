@@ -1,29 +1,70 @@
-import React from 'react';
-import { Clock, Tag, CalendarDays } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Clock, Tag, AlertOctagon } from 'lucide-react';
 
-export const UrgencyBanner: React.FC = () => {
+interface UrgencyBannerProps {
+  expirationDate: Date;
+}
+
+export const UrgencyBanner: React.FC<UrgencyBannerProps> = ({ expirationDate }) => {
+  const [timeLeft, setTimeLeft] = useState({ hours: 48, minutes: 0, seconds: 0 });
+
+  useEffect(() => {
+    const calculateTimeLeft = () => {
+      const now = new Date();
+      const difference = expirationDate.getTime() - now.getTime();
+
+      if (difference > 0) {
+        return {
+          hours: Math.floor((difference / (1000 * 60 * 60))),
+          minutes: Math.floor((difference / 1000 / 60) % 60),
+          seconds: Math.floor((difference / 1000) % 60),
+        };
+      }
+      return { hours: 0, minutes: 0, seconds: 0 };
+    };
+
+    const timer = setInterval(() => {
+      setTimeLeft(calculateTimeLeft());
+    }, 1000);
+
+    // Inicializa imediatamente
+    setTimeLeft(calculateTimeLeft());
+
+    return () => clearInterval(timer);
+  }, [expirationDate]);
+
+  // Formata a data para texto (ex: 23 de Dezembro, 2025)
+  const formattedDate = expirationDate.toLocaleDateString('pt-BR', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric'
+  });
+
   return (
-    <div className="bg-gradient-to-r from-amber-50 to-orange-50 border-y border-amber-200 py-8 px-4">
-      <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left bg-white p-6 rounded-2xl shadow-sm border border-amber-100">
-        <div className="flex items-center gap-4">
-            <div className="bg-amber-500 text-white p-4 rounded-xl shadow-lg shadow-amber-500/30 animate-pulse">
-                <Tag size={32} />
+    <div className="bg-slate-900 border-y-4 border-amber-500 py-6 px-4 sticky bottom-0 z-50 md:relative">
+      <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
+        
+        <div className="flex items-center gap-5">
+            <div className="bg-amber-500 text-slate-900 p-3 rounded-full animate-pulse hidden md:block">
+                <Clock size={32} strokeWidth={2.5} />
             </div>
             <div>
-                <h3 className="font-bold text-slate-900 text-xl">Última Chamada: Cliente VIP</h3>
-                <p className="text-slate-600 mt-1">
-                   Bônus de <span className="font-black text-amber-600 underline decoration-wavy">$1,000.00 OFF</span> + <span className="font-black text-amber-600">2 Meses Grátis</span>.
+                <h3 className="font-bold text-white text-xl md:text-2xl uppercase tracking-tight">
+                  Oferta Expira em: <span className="text-amber-400 font-mono">{String(timeLeft.hours).padStart(2, '0')}h {String(timeLeft.minutes).padStart(2, '0')}m {String(timeLeft.seconds).padStart(2, '0')}s</span>
+                </h3>
+                <p className="text-slate-400 mt-1 text-sm md:text-base hidden md:block">
+                   Abri mão de $1.000 da minha comissão para aprovar esta condição para vocês.
                 </p>
             </div>
         </div>
         
-        <div className="flex flex-col items-center md:items-end">
-            <div className="bg-red-50 text-red-600 px-4 py-2 rounded-lg border border-red-100 flex items-center gap-2 font-bold mb-2">
-                <CalendarDays size={20} />
-                <span>EXPIRA: 20 DE DEZEMBRO, 2025</span>
+        <div className="flex flex-col items-center md:items-end bg-white/5 p-4 rounded-lg border border-white/10 w-full md:w-auto">
+            <div className="text-amber-400 font-bold flex items-center gap-2 mb-1">
+                <AlertOctagon size={18} />
+                <span className="uppercase text-sm md:text-base">LIMITE: {formattedDate.toUpperCase()}</span>
             </div>
-            <p className="text-xs text-slate-400 font-medium max-w-[200px] text-center md:text-right">
-                Após esta data, a proposta retorna ao valor original de mercado sem exceções.
+            <p className="text-xs text-slate-400 max-w-[300px] text-center md:text-right">
+                Após o cronômetro zerar, a proposta retorna ao valor original de mercado sem exceções.
             </p>
         </div>
       </div>
