@@ -179,8 +179,8 @@ export const ComparisonCalculator: React.FC<ComparisonCalculatorProps> = ({ onSe
               )}
             </div>
 
-            {/* Plan Selector */}
-            <div className="grid grid-cols-3 md:grid-cols-5 gap-2 mb-8">
+            {/* Plan Selector - Responsive Flex Wrap */}
+            <div className="flex flex-wrap justify-center gap-2 mb-8">
               {plans.map((plan) => (
                 <button
                   key={plan.id}
@@ -188,14 +188,14 @@ export const ComparisonCalculator: React.FC<ComparisonCalculatorProps> = ({ onSe
                     setSelectedPlan(plan.id);
                     onSelectPlan(plan.id);
                   }}
-                  className={`flex flex-col items-center justify-center p-2 rounded-xl border transition-all duration-200 ${
+                  className={`flex flex-col items-center justify-center p-2 rounded-xl border transition-all duration-200 w-[48%] sm:w-[30%] md:w-auto md:flex-1 ${
                     selectedPlan === plan.id 
                       ? 'bg-emerald-600 border-emerald-500 text-white shadow-lg shadow-emerald-900/50 scale-105 relative z-10' 
                       : 'bg-slate-800/50 border-slate-700 text-slate-400 hover:bg-slate-700 hover:text-white'
                   }`}
                 >
                   <span className="text-xs md:text-sm font-bold whitespace-nowrap">{plan.label}</span>
-                  {!plan.isFull && <span className="text-[9px] md:text-[10px] opacity-75 hidden md:block">{plan.sub}</span>}
+                  {!plan.isFull && <span className="text-[10px] opacity-75 hidden md:block">{plan.sub}</span>}
                 </button>
               ))}
             </div>
