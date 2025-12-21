@@ -52,11 +52,15 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
             <div className="grid gap-4">
               <button 
                 onClick={() => handleLangSelect('en')}
-                className="flex items-center gap-4 bg-slate-800/50 hover:bg-slate-700/80 border border-white/10 p-4 rounded-xl transition-all hover:scale-[1.02] group"
+                className="flex items-center gap-4 bg-slate-800/50 hover:bg-slate-700/80 border border-white/10 p-4 rounded-xl transition-all hover:scale-[1.02] hover:shadow-lg hover:shadow-blue-900/20 group"
               >
-                <span className="text-4xl shadow-sm">🇺🇸</span>
+                <img 
+                  src="https://flagcdn.com/w160/us.png" 
+                  alt="USA Flag" 
+                  className="w-12 h-8 object-cover rounded shadow-md border border-white/10"
+                />
                 <div className="text-left">
-                  <div className="font-bold text-white">English</div>
+                  <div className="font-bold text-white text-lg">English</div>
                   <div className="text-xs text-slate-400">United States</div>
                 </div>
                 <ChevronRight className="ml-auto text-slate-500 group-hover:text-white transition-colors" />
@@ -64,11 +68,15 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
 
               <button 
                 onClick={() => handleLangSelect('es')}
-                className="flex items-center gap-4 bg-slate-800/50 hover:bg-slate-700/80 border border-white/10 p-4 rounded-xl transition-all hover:scale-[1.02] group"
+                className="flex items-center gap-4 bg-slate-800/50 hover:bg-slate-700/80 border border-white/10 p-4 rounded-xl transition-all hover:scale-[1.02] hover:shadow-lg hover:shadow-red-900/20 group"
               >
-                <span className="text-4xl shadow-sm">🇪🇸</span>
+                <img 
+                  src="https://flagcdn.com/w160/es.png" 
+                  alt="Spain Flag" 
+                  className="w-12 h-8 object-cover rounded shadow-md border border-white/10"
+                />
                 <div className="text-left">
-                  <div className="font-bold text-white">Español</div>
+                  <div className="font-bold text-white text-lg">Español</div>
                   <div className="text-xs text-slate-400">España / Latino</div>
                 </div>
                 <ChevronRight className="ml-auto text-slate-500 group-hover:text-white transition-colors" />
@@ -76,11 +84,15 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
 
               <button 
                 onClick={() => handleLangSelect('pt')}
-                className="flex items-center gap-4 bg-slate-800/50 hover:bg-slate-700/80 border border-white/10 p-4 rounded-xl transition-all hover:scale-[1.02] group"
+                className="flex items-center gap-4 bg-slate-800/50 hover:bg-slate-700/80 border border-white/10 p-4 rounded-xl transition-all hover:scale-[1.02] hover:shadow-lg hover:shadow-green-900/20 group"
               >
-                <span className="text-4xl shadow-sm">🇧🇷</span>
+                <img 
+                  src="https://flagcdn.com/w160/br.png" 
+                  alt="Brazil Flag" 
+                  className="w-12 h-8 object-cover rounded shadow-md border border-white/10"
+                />
                 <div className="text-left">
-                  <div className="font-bold text-white">Português</div>
+                  <div className="font-bold text-white text-lg">Português</div>
                   <div className="text-xs text-slate-400">Brasil / Portugal</div>
                 </div>
                 <ChevronRight className="ml-auto text-slate-500 group-hover:text-white transition-colors" />
@@ -90,7 +102,14 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
         ) : (
           // STEP 2: FORM
           <div className="animate-in fade-in slide-in-from-right-8 duration-500">
-            <div className="text-center mb-8">
+            <button 
+              onClick={() => setStep('lang')}
+              className="absolute top-6 left-6 text-slate-500 hover:text-white transition-colors text-xs uppercase font-bold tracking-wider flex items-center gap-1"
+            >
+              ← Voltar / Back
+            </button>
+
+            <div className="text-center mb-8 pt-4">
               <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-amber-400 to-amber-600 rounded-2xl mb-6 shadow-lg shadow-amber-500/20">
                 <Lock size={32} className="text-white" />
               </div>
