@@ -1,7 +1,14 @@
 import React from 'react';
 import { Crown, Sparkles, Clock, ShieldCheck } from 'lucide-react';
 
-export const WhiteGloveService: React.FC = () => {
+interface WhiteGloveServiceProps {
+  clientName: string;
+  spouseName?: string;
+}
+
+export const WhiteGloveService: React.FC<WhiteGloveServiceProps> = ({ clientName, spouseName }) => {
+  const displayName = spouseName ? `${clientName} & ${spouseName}` : clientName;
+
   return (
     <div className="bg-white py-20 px-4 border-t border-slate-100">
       <div className="max-w-6xl mx-auto">
@@ -17,7 +24,7 @@ export const WhiteGloveService: React.FC = () => {
                         Protocolo de Excelência Aquafeel
                     </h2>
                     <p className="text-slate-600 text-lg leading-relaxed">
-                        Aline & Sinval, sua nova casa merece respeito. Nossa equipe técnica segue um protocolo rigoroso desenhado para residências de alto padrão, garantindo que a única mudança que vocês notarão será a qualidade da água.
+                        {displayName}, sua nova casa merece respeito. Nossa equipe técnica segue um protocolo rigoroso desenhado para residências de alto padrão, garantindo que a única mudança que vocês notarão será a qualidade da água.
                     </p>
                 </div>
 
@@ -64,7 +71,7 @@ export const WhiteGloveService: React.FC = () => {
                         Esqueça call centers. Vocês terão linha direta com o consultor sênior para qualquer necessidade futura.
                     </p>
                     <div className="inline-block border border-white/20 rounded-lg px-4 py-2 text-sm text-slate-400">
-                        Incluso no Pacote Aline & Sinval
+                        Incluso no Pacote {displayName}
                     </div>
                 </div>
             </div>
