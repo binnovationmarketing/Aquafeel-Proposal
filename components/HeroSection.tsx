@@ -1,13 +1,16 @@
 import React from 'react';
 import { ShieldCheck, Star, Award, Sparkles, Home } from 'lucide-react';
+import { Language, translations } from '../utils/i18n';
 
 interface HeroSectionProps {
   clientName: string;
   spouseName?: string;
+  lang: Language;
 }
 
-export const HeroSection: React.FC<HeroSectionProps> = ({ clientName, spouseName }) => {
+export const HeroSection: React.FC<HeroSectionProps> = ({ clientName, spouseName, lang }) => {
   const displayName = spouseName ? `${clientName} & ${spouseName}` : clientName;
+  const t = translations[lang].hero;
 
   return (
     <div className="relative bg-[#0B1120] text-white pb-24 pt-16 px-4 overflow-hidden">
@@ -19,17 +22,16 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ clientName, spouseName
       <div className="max-w-5xl mx-auto relative z-10 text-center flex flex-col items-center">
         <div className="inline-flex items-center gap-2 mb-8 bg-amber-500/10 backdrop-blur-sm border border-amber-500/30 px-6 py-2 rounded-full shadow-2xl">
           <Star size={16} className="text-amber-400 fill-amber-400" /> 
-          <span className="text-sm font-bold tracking-[0.2em] uppercase text-amber-100">Cliente Platinum Return</span>
+          <span className="text-sm font-bold tracking-[0.2em] uppercase text-amber-100">{t.platinum}</span>
         </div>
         
         <h1 className="text-5xl md:text-7xl font-serif font-bold mb-6 leading-tight tracking-tight text-white drop-shadow-lg">
-          Bem-vindos à Casa Nova, <br/>
+          {t.welcomeHome} <br/>
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-aqua-200 to-aqua-400">{displayName}</span>
         </h1>
         
         <p className="text-lg md:text-2xl text-slate-300 font-light mb-10 max-w-3xl mx-auto leading-relaxed">
-          Vocês já conhecem a importância de uma água pura. <br/>
-          Para o novo lar, preparamos o nosso sistema mais avançado: <span className="text-white font-medium">Tanque Duplo + Osmose Reversa.</span>
+          {t.subtitle} <span className="text-white font-medium">{t.systemName}</span>
         </p>
 
         <div className="flex flex-wrap justify-center gap-3 md:gap-6">
@@ -38,8 +40,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ clientName, spouseName
                 <ShieldCheck size={20} />
             </div>
             <div className="text-left">
-                <div className="text-xs text-slate-400 font-bold uppercase tracking-wider">Garantia</div>
-                <div className="font-semibold text-white">Vitalícia</div>
+                <div className="text-xs text-slate-400 font-bold uppercase tracking-wider">{t.warranty}</div>
+                <div className="font-semibold text-white">{t.warrantySub}</div>
             </div>
           </div>
 
@@ -48,7 +50,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ clientName, spouseName
                 <Sparkles size={20} />
             </div>
             <div className="text-left">
-                <div className="text-xs text-slate-400 font-bold uppercase tracking-wider">Desconto VIP</div>
+                <div className="text-xs text-slate-400 font-bold uppercase tracking-wider">{t.discount}</div>
                 <div className="font-semibold text-white">-$1.000,00</div>
             </div>
           </div>
@@ -58,8 +60,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ clientName, spouseName
                 <Home size={20} />
             </div>
             <div className="text-left">
-                <div className="text-xs text-slate-400 font-bold uppercase tracking-wider">Instalação</div>
-                <div className="font-semibold text-white">Grátis (0 Custo)</div>
+                <div className="text-xs text-slate-400 font-bold uppercase tracking-wider">{t.installation}</div>
+                <div className="font-semibold text-white">{t.free}</div>
             </div>
           </div>
         </div>

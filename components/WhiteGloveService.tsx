@@ -1,13 +1,16 @@
 import React from 'react';
 import { Crown, Sparkles, Clock, ShieldCheck } from 'lucide-react';
+import { Language, translations } from '../utils/i18n';
 
 interface WhiteGloveServiceProps {
   clientName: string;
   spouseName?: string;
+  lang: Language;
 }
 
-export const WhiteGloveService: React.FC<WhiteGloveServiceProps> = ({ clientName, spouseName }) => {
+export const WhiteGloveService: React.FC<WhiteGloveServiceProps> = ({ clientName, spouseName, lang }) => {
   const displayName = spouseName ? `${clientName} & ${spouseName}` : clientName;
+  const t = translations[lang].whiteGlove;
 
   return (
     <div className="bg-white py-20 px-4 border-t border-slate-100">
@@ -18,13 +21,13 @@ export const WhiteGloveService: React.FC<WhiteGloveServiceProps> = ({ clientName
                 <div>
                     <div className="flex items-center gap-2 text-amber-500 font-bold text-sm tracking-widest uppercase mb-2">
                         <Crown size={18} />
-                        <span>Padrão Ouro</span>
+                        <span>{t.goldStandard}</span>
                     </div>
                     <h2 className="text-3xl md:text-4xl font-serif font-bold text-slate-900 mb-4">
-                        Protocolo de Excelência Aquafeel
+                        {t.title}
                     </h2>
                     <p className="text-slate-600 text-lg leading-relaxed">
-                        {displayName}, sua nova casa merece respeito. Nossa equipe técnica segue um protocolo rigoroso desenhado para residências de alto padrão, garantindo que a única mudança que vocês notarão será a qualidade da água.
+                        {displayName}, {t.subtitle}
                     </p>
                 </div>
 
@@ -34,8 +37,8 @@ export const WhiteGloveService: React.FC<WhiteGloveServiceProps> = ({ clientName
                             <Sparkles size={22} />
                         </div>
                         <div>
-                            <h4 className="font-bold text-slate-900 text-lg">Ambiente Imaculado</h4>
-                            <p className="text-slate-500 text-sm mt-1">Garantia de limpeza absoluta. Nossa equipe utiliza proteções para o piso e deixa o local da instalação mais limpo do que o encontrou.</p>
+                            <h4 className="font-bold text-slate-900 text-lg">{t.clean}</h4>
+                            <p className="text-slate-500 text-sm mt-1">{t.cleanSub}</p>
                         </div>
                     </div>
 
@@ -44,8 +47,8 @@ export const WhiteGloveService: React.FC<WhiteGloveServiceProps> = ({ clientName
                             <Clock size={22} />
                         </div>
                         <div>
-                            <h4 className="font-bold text-slate-900 text-lg">Prioridade de Agenda</h4>
-                            <p className="text-slate-500 text-sm mt-1">Como clientes Platinum, vocês têm acesso preferencial à agenda técnica, incluindo finais de semana, para se adaptar à rotina da mudança.</p>
+                            <h4 className="font-bold text-slate-900 text-lg">{t.priority}</h4>
+                            <p className="text-slate-500 text-sm mt-1">{t.prioritySub}</p>
                         </div>
                     </div>
 
@@ -54,8 +57,8 @@ export const WhiteGloveService: React.FC<WhiteGloveServiceProps> = ({ clientName
                             <ShieldCheck size={22} />
                         </div>
                         <div>
-                            <h4 className="font-bold text-slate-900 text-lg">Garantia Estética</h4>
-                            <p className="text-slate-500 text-sm mt-1">Instalação discreta e profissional, otimizando espaço e preservando o design dos armários e área técnica da casa.</p>
+                            <h4 className="font-bold text-slate-900 text-lg">{t.aesthetic}</h4>
+                            <p className="text-slate-500 text-sm mt-1">{t.aestheticSub}</p>
                         </div>
                     </div>
                 </div>
@@ -66,12 +69,12 @@ export const WhiteGloveService: React.FC<WhiteGloveServiceProps> = ({ clientName
                 <div className="relative bg-slate-900 rounded-2xl p-8 md:p-12 text-center text-white shadow-2xl overflow-hidden">
                     <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full blur-3xl"></div>
                     <Crown size={48} className="text-amber-400 mx-auto mb-6" />
-                    <h3 className="text-2xl font-bold mb-4">Suporte VIP Dedicado</h3>
+                    <h3 className="text-2xl font-bold mb-4">{t.support}</h3>
                     <p className="text-slate-300 mb-8">
-                        Esqueça call centers. Vocês terão linha direta com o consultor sênior para qualquer necessidade futura.
+                        {t.supportSub}
                     </p>
                     <div className="inline-block border border-white/20 rounded-lg px-4 py-2 text-sm text-slate-400">
-                        Incluso no Pacote {displayName}
+                        {t.included} {displayName}
                     </div>
                 </div>
             </div>

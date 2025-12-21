@@ -1,16 +1,23 @@
 import React from 'react';
 import { Star, Quote } from 'lucide-react';
+import { Language, translations } from '../utils/i18n';
 
-export const Testimonials: React.FC = () => {
+interface TestimonialsProps {
+  lang: Language;
+}
+
+export const Testimonials: React.FC<TestimonialsProps> = ({ lang }) => {
+  const t = translations[lang].testimonials;
+
   return (
     <section className="py-20 bg-slate-50 px-4">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-serif font-bold text-slate-900">
-            Famílias Que Escolheram o Melhor
+            {t.title}
           </h2>
           <p className="text-slate-500 mt-4">
-            Veja o que outros clientes exigentes dizem sobre a mudança de vida.
+            {t.subtitle}
           </p>
         </div>
 
@@ -22,13 +29,13 @@ export const Testimonials: React.FC = () => {
                     {[1,2,3,4,5].map(i => <Star key={i} size={16} className="text-amber-400 fill-amber-400" />)}
                 </div>
                 <p className="text-slate-600 mb-6 leading-relaxed italic">
-                    "Eu duvidei que faria diferença na minha pele, mas em 2 semanas meu cabelo mudou completamente. E o melhor: meus boxes de vidro continuam brilhando como novos há meses."
+                    "{t.t1}"
                 </p>
                 <div className="flex items-center gap-4">
                     <div className="w-10 h-10 bg-slate-200 rounded-full flex items-center justify-center text-slate-500 font-bold">MJ</div>
                     <div>
                         <p className="font-bold text-slate-900 text-sm">Mariana J.</p>
-                        <p className="text-xs text-slate-400">Cliente há 2 anos • New Jersey</p>
+                        <p className="text-xs text-slate-400">New Jersey</p>
                     </div>
                 </div>
             </div>
@@ -40,13 +47,13 @@ export const Testimonials: React.FC = () => {
                     {[1,2,3,4,5].map(i => <Star key={i} size={16} className="text-amber-400 fill-amber-400" />)}
                 </div>
                 <p className="text-slate-600 mb-6 leading-relaxed italic">
-                    "Acabamos de comprar nossa casa dos sonhos e não queríamos estragar as tubulações com a água da cidade. O atendimento da equipe foi impecável, parecia hotel 5 estrelas."
+                    "{t.t2}"
                 </p>
                 <div className="flex items-center gap-4">
                     <div className="w-10 h-10 bg-aqua-100 rounded-full flex items-center justify-center text-aqua-700 font-bold">RC</div>
                     <div>
                         <p className="font-bold text-slate-900 text-sm">Roberto & Carla</p>
-                        <p className="text-xs text-slate-400">Casa Nova • Pennsylvania</p>
+                        <p className="text-xs text-slate-400">Pennsylvania</p>
                     </div>
                 </div>
             </div>
@@ -58,13 +65,13 @@ export const Testimonials: React.FC = () => {
                     {[1,2,3,4,5].map(i => <Star key={i} size={16} className="text-amber-400 fill-amber-400" />)}
                 </div>
                 <p className="text-slate-600 mb-6 leading-relaxed italic">
-                    "O sabão que eles dão dura uma eternidade e é ótimo. Só a economia de supermercado já pagou metade da parcela. Recomendo de olhos fechados."
+                    "{t.t3}"
                 </p>
                 <div className="flex items-center gap-4">
                     <div className="w-10 h-10 bg-slate-200 rounded-full flex items-center justify-center text-slate-500 font-bold">AL</div>
                     <div>
                         <p className="font-bold text-slate-900 text-sm">Ana Lucia</p>
-                        <p className="text-xs text-slate-400">Cliente Fidelidade</p>
+                        <p className="text-xs text-slate-400">Florida</p>
                     </div>
                 </div>
             </div>

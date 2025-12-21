@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Clock, Tag, AlertOctagon } from 'lucide-react';
+import { Language, translations } from '../utils/i18n';
 
 interface UrgencyBannerProps {
   expirationDate: Date;
+  lang: Language;
 }
 
-export const UrgencyBanner: React.FC<UrgencyBannerProps> = ({ expirationDate }) => {
+export const UrgencyBanner: React.FC<UrgencyBannerProps> = ({ expirationDate, lang }) => {
   const [timeLeft, setTimeLeft] = useState({ hours: 48, minutes: 0, seconds: 0 });
+  const t = translations[lang].urgency;
 
   useEffect(() => {
     const calculateTimeLeft = () => {
@@ -34,7 +37,7 @@ export const UrgencyBanner: React.FC<UrgencyBannerProps> = ({ expirationDate }) 
   }, [expirationDate]);
 
   // Formata a data para texto (ex: 23 de Dezembro, 2025)
-  const formattedDate = expirationDate.toLocaleDateString('pt-BR', {
+  const formattedDate = expirationDate.toLocaleDateString(lang === 'en' ? 'en-US' : (lang === 'es' ? 'es-ES' : 'pt-BR'), {
     day: 'numeric',
     month: 'long',
     year: 'numeric'
@@ -50,10 +53,10 @@ export const UrgencyBanner: React.FC<UrgencyBannerProps> = ({ expirationDate }) 
             </div>
             <div>
                 <h3 className="font-bold text-white text-xl md:text-2xl uppercase tracking-tight">
-                  Oferta Expira em: <span className="text-amber-400 font-mono">{String(timeLeft.hours).padStart(2, '0')}h {String(timeLeft.minutes).padStart(2, '0')}m {String(timeLeft.seconds).padStart(2, '0')}s</span>
+                  {t.expires} <span className="text-amber-400 font-mono">{String(timeLeft.hours).padStart(2, '0')}h {String(timeLeft.minutes).padStart(2, '0')}m {String(timeLeft.seconds).padStart(2, '0')}s</span>
                 </h3>
                 <p className="text-slate-400 mt-1 text-sm md:text-base hidden md:block">
-                   Abri mão de $1.000 da minha comissão para aprovar esta condição para vocês.
+                   {t.commission}
                 </p>
             </div>
         </div>
@@ -61,10 +64,10 @@ export const UrgencyBanner: React.FC<UrgencyBannerProps> = ({ expirationDate }) 
         <div className="flex flex-col items-center md:items-end bg-white/5 p-4 rounded-lg border border-white/10 w-full md:w-auto">
             <div className="text-amber-400 font-bold flex items-center gap-2 mb-1">
                 <AlertOctagon size={18} />
-                <span className="uppercase text-sm md:text-base">LIMITE: {formattedDate.toUpperCase()}</span>
+                <span className="uppercase text-sm md:text-base">{t.limit} {formattedDate.toUpperCase()}</span>
             </div>
             <p className="text-xs text-slate-400 max-w-[300px] text-center md:text-right">
-                Após o cronômetro zerar, a proposta retorna ao valor original de mercado sem exceções.
+                {t.footer}
             </p>
         </div>
       </div>

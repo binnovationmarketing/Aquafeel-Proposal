@@ -10,32 +10,35 @@ import {
   ArrowRight,
   Utensils
 } from 'lucide-react';
+import { Language, translations } from '../utils/i18n';
 
 interface ComparisonCalculatorProps {
   onSelectPlan: (planId: string) => void;
   expirationDate: Date;
   cleaningTotal: number;
+  lang: Language;
 }
 
-export const ComparisonCalculator: React.FC<ComparisonCalculatorProps> = ({ onSelectPlan, expirationDate, cleaningTotal }) => {
+export const ComparisonCalculator: React.FC<ComparisonCalculatorProps> = ({ onSelectPlan, expirationDate, cleaningTotal, lang }) => {
   const [selectedPlan, setSelectedPlan] = useState<string>('180x');
   const [waterDrinking, setWaterDrinking] = useState<number>(0);
   const [waterCooking, setWaterCooking] = useState<number>(0);
+  const t = translations[lang].calculator;
 
   // Preços atualizados conforme solicitação
   const plans = [
-    { id: '180x', label: '180 Meses', sub: 'Menor Parcela', amount: 111, icon: Calendar },
-    { id: '120x', label: '120 Meses', sub: 'Equilíbrio', amount: 150, icon: Calendar }, 
-    { id: '60x', label: '60 Meses', sub: 'Rápido', amount: 185, icon: Calendar }, 
-    { id: '4x', label: '4 Meses', sub: 'Curto Prazo', amount: 2197, icon: Calendar }, 
-    { id: 'cash', label: 'À Vista', sub: '$1.000 OFF', amount: 7790, icon: DollarSign, isFull: true },
+    { id: '180x', label: `180 ${t.months}`, sub: '', amount: 111, icon: Calendar },
+    { id: '120x', label: `120 ${t.months}`, sub: '', amount: 150, icon: Calendar }, 
+    { id: '60x', label: `60 ${t.months}`, sub: '', amount: 185, icon: Calendar }, 
+    { id: '4x', label: `4 ${t.months}`, sub: '', amount: 2197, icon: Calendar }, 
+    { id: 'cash', label: t.cash, sub: '$1.000 OFF', amount: 7790, icon: DollarSign, isFull: true },
   ];
 
   const currentPlan = plans.find(p => p.id === selectedPlan) || plans[0];
   const monthlyTotal = waterDrinking + waterCooking + cleaningTotal;
 
   // Formata a data para exibir
-  const dateString = expirationDate.toLocaleDateString('pt-BR', {
+  const dateString = expirationDate.toLocaleDateString(lang === 'en' ? 'en-US' : (lang === 'es' ? 'es-ES' : 'pt-BR'), {
     day: 'numeric',
     month: 'long',
     year: 'numeric'
@@ -47,12 +50,12 @@ export const ComparisonCalculator: React.FC<ComparisonCalculatorProps> = ({ onSe
         
         {/* LEFT SIDE: THE PROBLEM (Dinheiro no Lixo) */}
         <div className="bg-white p-6 md:p-10 border-b md:border-b-0 md:border-r border-gray-100 flex flex-col justify-between relative overflow-hidden">
-          <div className="absolute top-0 right-0 bg-red-600 text-white text-[10px] font-bold px-3 py-1 rounded-bl-lg uppercase tracking-wider z-10">Realidade Atual</div>
+          <div className="absolute top-0 right-0 bg-red-600 text-white text-[10px] font-bold px-3 py-1 rounded-bl-lg uppercase tracking-wider z-10">!</div>
           
           <div>
             <div className="text-center mb-8">
-              <h2 className="text-3xl font-black text-slate-800 uppercase tracking-tight">O Dinheiro Invisível</h2>
-              <p className="text-sm font-bold text-slate-400 tracking-wider uppercase mt-1">Gastos que você já tem hoje</p>
+              <h2 className="text-3xl font-black text-slate-800 uppercase tracking-tight">{t.problemTitle}</h2>
+              <p className="text-sm font-bold text-slate-400 tracking-wider uppercase mt-1">{t.problemSub}</p>
             </div>
 
             <div className="space-y-4">
@@ -63,8 +66,7 @@ export const ComparisonCalculator: React.FC<ComparisonCalculatorProps> = ({ onSe
                     <Droplets size={20} />
                   </div>
                   <div className="flex-1">
-                    <span className="text-sm font-bold text-slate-700 block">Água para Beber</span>
-                    <span className="text-[10px] text-slate-400">Garrafinhas, galões, gelo</span>
+                    <span className="text-sm font-bold text-slate-700 block">{t.waterDrink}</span>
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
@@ -86,8 +88,7 @@ export const ComparisonCalculator: React.FC<ComparisonCalculatorProps> = ({ onSe
                     <Utensils size={20} />
                   </div>
                   <div className="flex-1">
-                    <span className="text-sm font-bold text-slate-700 block">Água para Cozinhar</span>
-                    <span className="text-[10px] text-slate-400">Lavar alimentos, sopas, café (Muitos esquecem!)</span>
+                    <span className="text-sm font-bold text-slate-700 block">{t.waterCook}</span>
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
@@ -109,27 +110,26 @@ export const ComparisonCalculator: React.FC<ComparisonCalculatorProps> = ({ onSe
                     <ShoppingCart size={20} />
                   </div>
                   <div>
-                    <span className="text-sm font-bold text-slate-700 block">Produtos de Limpeza</span>
-                    <span className="text-[10px] text-slate-400">Sabão roupa, louça, corpo (Pure Selects)</span>
+                    <span className="text-sm font-bold text-slate-700 block">{t.cleaning}</span>
                   </div>
                 </div>
                 <div className="text-right">
                     <span className="text-xl font-bold text-slate-800">${cleaningTotal}</span>
                     {cleaningTotal === 0 && (
-                        <p className="text-[9px] text-red-500 font-bold max-w-[100px]">Preencha o gráfico acima!</p>
+                        <p className="text-[9px] text-red-500 font-bold max-w-[100px]">{t.fillChart}</p>
                     )}
                 </div>
               </div>
             </div>
 
             <div className="bg-slate-50 rounded-2xl p-6 mt-6 text-center border border-slate-200 relative">
-              <p className="text-sm text-slate-500 font-semibold mb-2 mt-2">SEU GASTO ATUAL MENSAL</p>
+              <p className="text-sm text-slate-500 font-semibold mb-2 mt-2">{t.currentMonthly}</p>
               <div className="text-5xl font-black text-slate-800 tracking-tighter">
-                ${monthlyTotal}<span className="text-2xl text-slate-400 font-medium">/mês</span>
+                ${monthlyTotal}<span className="text-2xl text-slate-400 font-medium">/mo</span>
               </div>
               <p className="text-xs text-red-600 font-black mt-2 uppercase tracking-wider flex justify-center items-center gap-1">
                 <AlertTriangle size={12} />
-                Gasto por toda a sua vida a troco de nada
+                {t.waste}
               </p>
             </div>
           </div>
@@ -138,7 +138,7 @@ export const ComparisonCalculator: React.FC<ComparisonCalculatorProps> = ({ onSe
           <div className="mt-8 pt-6 border-t border-slate-100">
             <div className="bg-amber-100 border-l-4 border-amber-500 p-4 rounded-r-lg shadow-sm">
                 <p className="text-slate-800 text-center font-bold text-sm md:text-base leading-tight">
-                "Vocês já pagam pelo sistema, mas estão recebendo produtos químicos e plástico em troca."
+                {t.warning}
                 </p>
             </div>
           </div>
@@ -148,12 +148,12 @@ export const ComparisonCalculator: React.FC<ComparisonCalculatorProps> = ({ onSe
         <div className="bg-[#0f172a] text-white p-6 md:p-10 flex flex-col relative overflow-hidden">
            {/* Background decorative shine */}
            <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500 rounded-full blur-[100px] opacity-20 pointer-events-none"></div>
-           <div className="absolute top-0 right-0 bg-emerald-500 text-white text-[10px] font-bold px-3 py-1 rounded-bl-lg uppercase tracking-wider z-10">Proposta Henrique</div>
+           <div className="absolute top-0 right-0 bg-emerald-500 text-white text-[10px] font-bold px-3 py-1 rounded-bl-lg uppercase tracking-wider z-10">VIP</div>
 
           <div className="relative z-10 h-full flex flex-col">
             <div className="text-center mb-6">
-              <h2 className="text-3xl font-black text-white uppercase tracking-tight">A Decisão Inteligente</h2>
-              <p className="text-xs font-bold text-emerald-400 tracking-widest uppercase mt-1">Investimento com Retorno</p>
+              <h2 className="text-3xl font-black text-white uppercase tracking-tight">{t.solutionTitle}</h2>
+              <p className="text-xs font-bold text-emerald-400 tracking-widest uppercase mt-1">{t.solutionSub}</p>
             </div>
 
             <div className="text-center mb-8 relative">
@@ -172,7 +172,7 @@ export const ComparisonCalculator: React.FC<ComparisonCalculatorProps> = ({ onSe
                 </div>
                 {monthlyTotal > 0 && (
                     <p className="text-lg text-emerald-400 font-medium mt-1">
-                    Diferença Real: <span className="text-white bg-emerald-600 px-2 rounded">{ (monthlyTotal - currentPlan.amount) > 0 ? `Economia de $${monthlyTotal - currentPlan.amount}` : `Investimento de $${Math.abs(monthlyTotal - currentPlan.amount)}` }</span>
+                    {t.difference}: <span className="text-white bg-emerald-600 px-2 rounded">${Math.abs(monthlyTotal - currentPlan.amount)}</span>
                     </p>
                 )}
                 </>
@@ -195,7 +195,6 @@ export const ComparisonCalculator: React.FC<ComparisonCalculatorProps> = ({ onSe
                   }`}
                 >
                   <span className="text-xs md:text-sm font-bold whitespace-nowrap">{plan.label}</span>
-                  {!plan.isFull && <span className="text-[10px] opacity-75 hidden md:block">{plan.sub}</span>}
                 </button>
               ))}
             </div>
@@ -204,20 +203,20 @@ export const ComparisonCalculator: React.FC<ComparisonCalculatorProps> = ({ onSe
             <div className="bg-slate-800/50 rounded-xl p-5 mb-8 border border-slate-700">
                 <div className="grid grid-cols-1 gap-3 text-sm">
                     <div className="flex justify-between items-center text-white border-b border-slate-700/50 pb-2">
-                        <span className="flex items-center gap-2"><CheckCircle2 size={16} className="text-emerald-400"/> Sistema Atualizado (2 Tanques)</span>
-                        <span className="font-bold">Incluso</span>
+                        <span className="flex items-center gap-2"><CheckCircle2 size={16} className="text-emerald-400"/> {t.benefits.tank}</span>
+                        <span className="font-bold">{t.benefits.included}</span>
                     </div>
                     <div className="flex justify-between items-center text-white border-b border-slate-700/50 pb-2">
-                        <span className="flex items-center gap-2"><CheckCircle2 size={16} className="text-emerald-400"/> Água Ultra Pura (RO)</span>
-                        <span className="font-bold">Incluso</span>
+                        <span className="flex items-center gap-2"><CheckCircle2 size={16} className="text-emerald-400"/> {t.benefits.ro}</span>
+                        <span className="font-bold">{t.benefits.included}</span>
                     </div>
                     <div className="flex justify-between items-center text-white border-b border-slate-700/50 pb-2">
-                        <span className="flex items-center gap-2 text-amber-400 font-bold"><Gift size={16}/> Desconto Cliente Antigo</span>
+                        <span className="flex items-center gap-2 text-amber-400 font-bold"><Gift size={16}/> {t.benefits.discount}</span>
                         <span className="font-bold text-amber-400">-$1.000,00</span>
                     </div>
                     <div className="flex justify-between items-center text-white pt-1 bg-amber-500/10 p-2 rounded">
-                        <span className="flex items-center gap-2 text-white font-bold"><Calendar size={16}/> Primeiro Pagamento:</span>
-                        <span className="font-black text-amber-400 text-lg uppercase">MARÇO 2026</span>
+                        <span className="flex items-center gap-2 text-white font-bold"><Calendar size={16}/> {t.benefits.payment}</span>
+                        <span className="font-black text-amber-400 text-lg uppercase">MAR 2026</span>
                     </div>
                 </div>
             </div>
@@ -225,16 +224,16 @@ export const ComparisonCalculator: React.FC<ComparisonCalculatorProps> = ({ onSe
             {/* Action Buttons */}
             <div className="mt-auto space-y-4">
               <a 
-                href="https://wa.me/12407806473?text=Ol%C3%A1%20Henrique%2C%20decidimos%20fechar.%20Quero%20a%20instala%C3%A7%C3%A3o%20sem%20custo%20e%20pagamento%20para%202026."
+                href={`https://wa.me/12407806473?text=${lang === 'pt' ? 'Ol%C3%A1' : 'Hello'}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full bg-emerald-500 hover:bg-emerald-400 text-white font-black text-lg py-4 rounded-xl shadow-lg shadow-emerald-900/40 transform transition-all hover:-translate-y-1 flex items-center justify-center gap-3 cursor-pointer group"
               >
-                <span>ACEITAR OFERTA AGORA</span>
+                <span>{t.accept}</span>
                 <ArrowRight className="group-hover:translate-x-1 transition-transform" size={24} />
               </a>
               <p className="text-center text-slate-400 text-[10px]">
-                Oferta válida até {dateString} (Bloqueio Automático).
+                {t.offerValid} {dateString}
               </p>
             </div>
           </div>
