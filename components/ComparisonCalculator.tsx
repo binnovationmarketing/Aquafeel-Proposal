@@ -3,116 +3,130 @@ import {
   ShoppingCart, 
   Droplets, 
   AlertTriangle, 
-  Zap, 
   CheckCircle2, 
   Gift, 
   Calendar, 
   DollarSign,
-  Phone
+  ArrowRight
 } from 'lucide-react';
 
 interface ComparisonCalculatorProps {
   onSelectPlan: (planId: string) => void;
+  expirationDate: Date;
 }
 
-export const ComparisonCalculator: React.FC<ComparisonCalculatorProps> = ({ onSelectPlan }) => {
+export const ComparisonCalculator: React.FC<ComparisonCalculatorProps> = ({ onSelectPlan, expirationDate }) => {
   const [selectedPlan, setSelectedPlan] = useState<string>('180x');
 
+  // Preços exatos conforme solicitação
   const plans = [
-    { id: '180x', label: '180x', sub: 'Meses', amount: 111, icon: Calendar },
-    { id: '120x', label: '120x', sub: 'Meses', amount: 131, icon: Calendar },
-    { id: '60x', label: '60x', sub: 'Meses', amount: 200, icon: Calendar }, 
-    { id: 'cash', label: 'À Vista', sub: 'Economia Max', amount: 7790, icon: DollarSign, isFull: true },
+    { id: '180x', label: '180 Meses', sub: 'Menor Parcela', amount: 111, icon: Calendar },
+    { id: '120x', label: '120 Meses', sub: 'Equilíbrio', amount: 155, icon: Calendar }, 
+    { id: '60x', label: '60 Meses', sub: 'Rápido', amount: 260, icon: Calendar }, 
+    { id: 'cash', label: 'À Vista', sub: 'Total', amount: 7790, icon: DollarSign, isFull: true },
   ];
 
   const currentPlan = plans.find(p => p.id === selectedPlan) || plans[0];
 
+  // Formata a data para exibir
+  const dateString = expirationDate.toLocaleDateString('pt-BR', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric'
+  });
+
   return (
     <div className="max-w-7xl mx-auto px-2 md:px-4 relative z-20">
-      <div className="grid md:grid-cols-2 gap-0 shadow-2xl rounded-3xl overflow-hidden">
+      <div className="grid md:grid-cols-2 gap-0 shadow-2xl rounded-3xl overflow-hidden ring-4 ring-slate-100">
         
-        {/* LEFT SIDE: THE PROBLEM (Walmart/Waste) */}
-        <div className="bg-white p-6 md:p-10 border-b md:border-b-0 md:border-r border-gray-100 flex flex-col justify-between">
+        {/* LEFT SIDE: THE PROBLEM (Dinheiro no Lixo) */}
+        <div className="bg-white p-6 md:p-10 border-b md:border-b-0 md:border-r border-gray-100 flex flex-col justify-between relative overflow-hidden">
+          <div className="absolute top-0 right-0 bg-red-600 text-white text-[10px] font-bold px-3 py-1 rounded-bl-lg uppercase tracking-wider z-10">Realidade Atual</div>
+          
           <div>
             <div className="text-center mb-8">
-              <h2 className="text-3xl font-black text-danger-600 uppercase tracking-tight">O Custo do Desperdício</h2>
-              <p className="text-xs font-bold text-danger-400 tracking-widest uppercase mt-1">O Caminho do Consumo Eterno</p>
+              <h2 className="text-3xl font-black text-slate-800 uppercase tracking-tight">O Dinheiro Invisível</h2>
+              <p className="text-sm font-bold text-slate-400 tracking-wider uppercase mt-1">Gastos que você já tem hoje</p>
             </div>
 
             <div className="space-y-6">
-              <div className="flex justify-between items-center py-4 border-b border-dashed border-gray-200">
+              <div className="flex justify-between items-center py-4 border-b border-dashed border-gray-200 group hover:bg-red-50/50 transition-colors px-2 rounded-lg">
                 <div className="flex items-center gap-3">
-                  <Droplets className="text-blue-400" />
-                  <span className="text-lg font-semibold text-gray-700">Água Engarrafada</span>
+                  <div className="bg-blue-100 p-2 rounded-lg text-blue-600">
+                    <Droplets size={20} />
+                  </div>
+                  <div>
+                    <span className="text-lg font-bold text-slate-700 block">Água Engarrafada</span>
+                    <span className="text-xs text-slate-400">Garrafinhas, galões, gelo</span>
+                  </div>
                 </div>
-                <span className="text-xl font-bold text-gray-800">$90</span>
+                <span className="text-xl font-bold text-slate-800">$100</span>
               </div>
 
-              <div className="flex justify-between items-center py-4 border-b border-dashed border-gray-200">
+              <div className="flex justify-between items-center py-4 border-b border-dashed border-gray-200 group hover:bg-red-50/50 transition-colors px-2 rounded-lg">
                 <div className="flex items-center gap-3">
-                  <ShoppingCart className="text-purple-400" />
-                  <span className="text-lg font-semibold text-gray-700">Produtos Químicos</span>
+                   <div className="bg-purple-100 p-2 rounded-lg text-purple-600">
+                    <ShoppingCart size={20} />
+                  </div>
+                  <div>
+                    <span className="text-lg font-bold text-slate-700 block">Produtos de Limpeza</span>
+                    <span className="text-xs text-slate-400">Sabão roupa, louça, corpo (Fornecido por nós)</span>
+                  </div>
                 </div>
-                <span className="text-xl font-bold text-gray-800">$100</span>
+                <span className="text-xl font-bold text-slate-800">$120</span>
               </div>
             </div>
 
-            <div className="bg-danger-50 rounded-2xl p-6 mt-8 text-center border border-danger-100">
-              <p className="text-sm text-gray-500 font-semibold mb-2">TOTAL JOGADO NO LIXO (MENSAL)</p>
-              <div className="text-6xl font-black text-danger-600 tracking-tighter">
-                $190
+            <div className="bg-slate-50 rounded-2xl p-6 mt-8 text-center border border-slate-200 relative">
+              <p className="text-sm text-slate-500 font-semibold mb-2 mt-2">SEU GASTO ATUAL MENSAL</p>
+              <div className="text-5xl font-black text-slate-800 tracking-tighter">
+                $220<span className="text-2xl text-slate-400 font-medium">/mês</span>
               </div>
-              <p className="text-xs font-bold text-danger-400 mt-2 uppercase tracking-wider">Dinheiro Queimado Para Sempre</p>
+              <p className="text-xs text-red-500 font-bold mt-2 uppercase tracking-wider flex justify-center items-center gap-1">
+                <AlertTriangle size={12} />
+                Dinheiro sem retorno (Lixo)
+              </p>
             </div>
           </div>
 
-          <div className="mt-8 space-y-4">
-            <div className="border border-red-100 rounded-xl p-4 bg-white shadow-sm">
-              <div className="flex items-center gap-2 mb-2 text-danger-600 font-bold">
-                <AlertTriangle size={18} />
-                <h3>Problemas de Saúde</h3>
-              </div>
-              <ul className="text-sm text-gray-600 space-y-1 list-disc pl-5">
-                <li>Queda de cabelo e pele ressecada</li>
-                <li>Dermatites, Eczemas e Alergias</li>
-                <li>Ingestão de microplásticos e metais pesados</li>
-              </ul>
-            </div>
-            
-            <div className="border border-orange-100 rounded-xl p-4 bg-white shadow-sm">
-              <div className="flex items-center gap-2 mb-2 text-orange-600 font-bold">
-                <Zap size={18} />
-                <h3>Danos à Casa</h3>
-              </div>
-              <ul className="text-sm text-gray-600 space-y-1 list-disc pl-5">
-                <li>Degradação acelerada de eletrodomésticos</li>
-                <li>Aumento na conta de energia (Scaling)</li>
-                <li>Manchas eternas em roupas e louças</li>
-              </ul>
-            </div>
+          <div className="mt-8 pt-6 border-t border-slate-100">
+            <p className="text-sm text-slate-500 text-center italic">
+              "Vocês já pagam pelo sistema, mas estão recebendo produtos químicos e plástico em troca."
+            </p>
           </div>
         </div>
 
-        {/* RIGHT SIDE: THE SOLUTION (Aquafeel) */}
-        <div className="bg-aqua-950 text-white p-6 md:p-10 flex flex-col relative overflow-hidden">
+        {/* RIGHT SIDE: THE SOLUTION (Aquafeel VIP) */}
+        <div className="bg-[#0f172a] text-white p-6 md:p-10 flex flex-col relative overflow-hidden">
            {/* Background decorative shine */}
-           <div className="absolute top-0 right-0 w-64 h-64 bg-aqua-500 rounded-full blur-[100px] opacity-20 pointer-events-none"></div>
+           <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500 rounded-full blur-[100px] opacity-20 pointer-events-none"></div>
+           <div className="absolute top-0 right-0 bg-emerald-500 text-white text-[10px] font-bold px-3 py-1 rounded-bl-lg uppercase tracking-wider z-10">Proposta Henrique</div>
 
-          <div className="relative z-10">
-            <div className="text-center mb-8">
-              <h2 className="text-3xl font-black text-white uppercase tracking-tight">Aquafeel Solutions</h2>
-              <p className="text-xs font-bold text-emerald-400 tracking-widest uppercase mt-1">Oportunidade Única • Programa Fidelidade</p>
+          <div className="relative z-10 h-full flex flex-col">
+            <div className="text-center mb-6">
+              <h2 className="text-3xl font-black text-white uppercase tracking-tight">A Decisão Inteligente</h2>
+              <p className="text-xs font-bold text-emerald-400 tracking-widest uppercase mt-1">Investimento com Retorno</p>
             </div>
 
-            <div className="text-center mb-8">
-              <p className="text-sm text-aqua-200 font-medium mb-2 uppercase tracking-wider">Investimento Selecionado</p>
-              <div className="text-7xl font-black text-white tracking-tighter flex justify-center items-start gap-1">
-                <span className="text-3xl mt-2">$</span>
-                {currentPlan.isFull ? currentPlan.amount.toLocaleString() : currentPlan.amount}
-              </div>
-              <p className="text-lg text-aqua-200 font-medium mt-1">
-                {currentPlan.isFull ? 'Pagamento Único' : `/mês (${currentPlan.label})`}
-              </p>
+            <div className="text-center mb-8 relative">
+              {currentPlan.isFull ? (
+                  <div className="flex flex-col items-center">
+                    <span className="text-slate-400 line-through text-lg font-bold mb-1">$8,790</span>
+                    <div className="text-6xl font-black text-white tracking-tighter text-emerald-400">
+                        ${currentPlan.amount.toLocaleString()}
+                    </div>
+                  </div>
+              ) : (
+                <>
+                <div className="text-7xl font-black text-white tracking-tighter flex justify-center items-start gap-1">
+                    <span className="text-3xl mt-2">$</span>
+                    {currentPlan.amount}
+                </div>
+                <p className="text-lg text-emerald-400 font-medium mt-1">
+                   Economia mensal real: <span className="text-white bg-emerald-600 px-2 rounded">+$109</span>
+                </p>
+                </>
+              )}
             </div>
 
             {/* Plan Selector */}
@@ -124,68 +138,53 @@ export const ComparisonCalculator: React.FC<ComparisonCalculatorProps> = ({ onSe
                     setSelectedPlan(plan.id);
                     onSelectPlan(plan.id);
                   }}
-                  className={`flex flex-col items-center justify-center p-3 rounded-xl border transition-all duration-200 ${
+                  className={`flex flex-col items-center justify-center p-2 rounded-xl border transition-all duration-200 ${
                     selectedPlan === plan.id 
-                      ? 'bg-aqua-500 border-aqua-400 text-white shadow-lg shadow-aqua-900/50 scale-105' 
-                      : 'bg-aqua-900/50 border-aqua-800 text-aqua-300 hover:bg-aqua-800 hover:text-white'
+                      ? 'bg-emerald-600 border-emerald-500 text-white shadow-lg shadow-emerald-900/50 scale-105 relative z-10' 
+                      : 'bg-slate-800/50 border-slate-700 text-slate-400 hover:bg-slate-700 hover:text-white'
                   }`}
                 >
-                  <plan.icon size={16} className="mb-1" />
                   <span className="text-sm font-bold">{plan.label}</span>
-                  {!plan.isFull && <span className="text-[10px] opacity-75 hidden sm:block">Meses</span>}
+                  {!plan.isFull && <span className="text-[10px] opacity-75">{plan.sub}</span>}
                 </button>
               ))}
             </div>
 
-            {/* Benefits List */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-3 gap-x-6 text-sm mb-8">
-              <div className="flex items-center gap-2 text-aqua-100">
-                <CheckCircle2 className="text-emerald-400 shrink-0" size={18} />
-                <span>Água Alcalina & Purificada</span>
-              </div>
-              <div className="flex items-center gap-2 text-aqua-100">
-                <Gift className="text-blue-400 shrink-0" size={18} />
-                <span>0% Tax (Imposto)</span>
-              </div>
-              <div className="flex items-center gap-2 text-aqua-100">
-                <CheckCircle2 className="text-emerald-400 shrink-0" size={18} />
-                <span>Saúde, Beleza & Cuidados</span>
-              </div>
-              <div className="flex items-center gap-2 text-aqua-100">
-                <Gift className="text-blue-400 shrink-0" size={18} />
-                <span>$0 Downpayment (Entrada)</span>
-              </div>
-              <div className="flex items-center gap-2 text-aqua-100">
-                <CheckCircle2 className="text-emerald-400 shrink-0" size={18} />
-                <span>Garantia 25 Anos Sistema</span>
-              </div>
-              <div className="flex items-center gap-2 text-aqua-100">
-                <Gift className="text-blue-400 shrink-0" size={18} />
-                <span>$0 Custo Instalação</span>
-              </div>
-              <div className="flex items-center gap-2 text-aqua-100">
-                <CheckCircle2 className="text-emerald-400 shrink-0" size={18} />
-                <span>Garantia 25 Anos Sabão</span>
-              </div>
-              <div className="flex items-center gap-2 text-aqua-100">
-                <Calendar className="text-blue-400 shrink-0" size={18} />
-                <span className="font-bold text-white bg-blue-600/30 px-2 py-0.5 rounded">1º Pagamento: Março 2026</span>
-              </div>
+            {/* Benefits List - Focado no que a Aline Ganha */}
+            <div className="bg-slate-800/50 rounded-xl p-5 mb-8 border border-slate-700">
+                <div className="grid grid-cols-1 gap-3 text-sm">
+                    <div className="flex justify-between items-center text-white border-b border-slate-700/50 pb-2">
+                        <span className="flex items-center gap-2"><CheckCircle2 size={16} className="text-emerald-400"/> Sistema Atualizado (2 Tanques)</span>
+                        <span className="font-bold">Incluso</span>
+                    </div>
+                    <div className="flex justify-between items-center text-white border-b border-slate-700/50 pb-2">
+                        <span className="flex items-center gap-2"><CheckCircle2 size={16} className="text-emerald-400"/> Água Ultra Pura (RO)</span>
+                        <span className="font-bold">Incluso</span>
+                    </div>
+                    <div className="flex justify-between items-center text-white border-b border-slate-700/50 pb-2">
+                        <span className="flex items-center gap-2 text-amber-400 font-bold"><Gift size={16}/> Desconto Cliente Antigo</span>
+                        <span className="font-bold text-amber-400">-$1.000,00</span>
+                    </div>
+                    <div className="flex justify-between items-center text-white pt-1 bg-amber-500/10 p-2 rounded">
+                        <span className="flex items-center gap-2 text-white font-bold"><Calendar size={16}/> Primeiro Pagamento:</span>
+                        <span className="font-black text-amber-400 text-lg uppercase">MARÇO 2026</span>
+                    </div>
+                </div>
             </div>
 
             {/* Action Buttons */}
             <div className="mt-auto space-y-4">
               <a 
-                href="https://wa.me/12407806473?text=Ol%C3%A1%20Henrique%2C%20sou%20Aline%2FSinval%20e%20decidi%20garantir%20o%20desconto%20de%20%241000%20e%20os%202%20meses%20gr%C3%A1tis%20antes%20do%20dia%2020."
+                href="https://wa.me/12407806473?text=Ol%C3%A1%20Henrique%2C%20decidimos%20fechar.%20Quero%20a%20instala%C3%A7%C3%A3o%20sem%20custo%20e%20pagamento%20para%202026."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full bg-emerald-500 hover:bg-emerald-400 text-white font-black text-lg py-5 rounded-2xl shadow-lg shadow-emerald-900/20 transform transition-all hover:-translate-y-1 flex items-center justify-center gap-3 cursor-pointer group"
+                className="w-full bg-emerald-500 hover:bg-emerald-400 text-white font-black text-lg py-4 rounded-xl shadow-lg shadow-emerald-900/40 transform transition-all hover:-translate-y-1 flex items-center justify-center gap-3 cursor-pointer group"
               >
-                <Phone className="group-hover:animate-pulse" size={24} />
-                FALAR COM HENRIQUE
+                <span>ACEITAR OFERTA AGORA</span>
+                <ArrowRight className="group-hover:translate-x-1 transition-transform" size={24} />
               </a>
-              <p className="text-center text-aqua-300/60 text-xs">
-                Ao clicar, você será direcionado ao WhatsApp pessoal do consultor.
+              <p className="text-center text-slate-400 text-[10px]">
+                Oferta válida até {dateString} (Bloqueio Automático).
               </p>
             </div>
           </div>
