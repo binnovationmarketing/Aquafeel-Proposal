@@ -7,26 +7,32 @@ import {
   Gift, 
   Calendar, 
   DollarSign,
-  ArrowRight
+  ArrowRight,
+  Utensils
 } from 'lucide-react';
 
 interface ComparisonCalculatorProps {
   onSelectPlan: (planId: string) => void;
   expirationDate: Date;
+  cleaningTotal: number;
 }
 
-export const ComparisonCalculator: React.FC<ComparisonCalculatorProps> = ({ onSelectPlan, expirationDate }) => {
+export const ComparisonCalculator: React.FC<ComparisonCalculatorProps> = ({ onSelectPlan, expirationDate, cleaningTotal }) => {
   const [selectedPlan, setSelectedPlan] = useState<string>('180x');
+  const [waterDrinking, setWaterDrinking] = useState<number>(0);
+  const [waterCooking, setWaterCooking] = useState<number>(0);
 
-  // Preços exatos conforme solicitação
+  // Preços atualizados conforme solicitação
   const plans = [
     { id: '180x', label: '180 Meses', sub: 'Menor Parcela', amount: 111, icon: Calendar },
-    { id: '120x', label: '120 Meses', sub: 'Equilíbrio', amount: 155, icon: Calendar }, 
-    { id: '60x', label: '60 Meses', sub: 'Rápido', amount: 260, icon: Calendar }, 
-    { id: 'cash', label: 'À Vista', sub: 'Total', amount: 7790, icon: DollarSign, isFull: true },
+    { id: '120x', label: '120 Meses', sub: 'Equilíbrio', amount: 150, icon: Calendar }, 
+    { id: '60x', label: '60 Meses', sub: 'Rápido', amount: 185, icon: Calendar }, 
+    { id: '4x', label: '4 Meses', sub: 'Curto Prazo', amount: 2197, icon: Calendar }, 
+    { id: 'cash', label: 'À Vista', sub: '$1.000 OFF', amount: 7790, icon: DollarSign, isFull: true },
   ];
 
   const currentPlan = plans.find(p => p.id === selectedPlan) || plans[0];
+  const monthlyTotal = waterDrinking + waterCooking + cleaningTotal;
 
   // Formata a data para exibir
   const dateString = expirationDate.toLocaleDateString('pt-BR', {
@@ -49,50 +55,92 @@ export const ComparisonCalculator: React.FC<ComparisonCalculatorProps> = ({ onSe
               <p className="text-sm font-bold text-slate-400 tracking-wider uppercase mt-1">Gastos que você já tem hoje</p>
             </div>
 
-            <div className="space-y-6">
-              <div className="flex justify-between items-center py-4 border-b border-dashed border-gray-200 group hover:bg-red-50/50 transition-colors px-2 rounded-lg">
-                <div className="flex items-center gap-3">
+            <div className="space-y-4">
+              {/* Input: Water Drinking */}
+              <div className="flex flex-col py-3 border-b border-dashed border-gray-200 px-2 rounded-lg bg-slate-50">
+                <div className="flex items-center gap-3 mb-2">
                   <div className="bg-blue-100 p-2 rounded-lg text-blue-600">
                     <Droplets size={20} />
                   </div>
-                  <div>
-                    <span className="text-lg font-bold text-slate-700 block">Água Engarrafada</span>
-                    <span className="text-xs text-slate-400">Garrafinhas, galões, gelo</span>
+                  <div className="flex-1">
+                    <span className="text-sm font-bold text-slate-700 block">Água para Beber</span>
+                    <span className="text-[10px] text-slate-400">Garrafinhas, galões, gelo</span>
                   </div>
                 </div>
-                <span className="text-xl font-bold text-slate-800">$100</span>
+                <div className="flex items-center gap-2">
+                   <span className="text-slate-400 font-bold">$</span>
+                   <input 
+                      type="number" 
+                      placeholder="0"
+                      className="w-full bg-white border border-slate-200 rounded p-2 text-right font-bold text-slate-800 focus:ring-2 focus:ring-blue-500 outline-none"
+                      value={waterDrinking || ''}
+                      onChange={(e) => setWaterDrinking(parseFloat(e.target.value) || 0)}
+                   />
+                </div>
               </div>
 
-              <div className="flex justify-between items-center py-4 border-b border-dashed border-gray-200 group hover:bg-red-50/50 transition-colors px-2 rounded-lg">
+              {/* Input: Water Cooking */}
+              <div className="flex flex-col py-3 border-b border-dashed border-gray-200 px-2 rounded-lg bg-slate-50">
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="bg-teal-100 p-2 rounded-lg text-teal-600">
+                    <Utensils size={20} />
+                  </div>
+                  <div className="flex-1">
+                    <span className="text-sm font-bold text-slate-700 block">Água para Cozinhar</span>
+                    <span className="text-[10px] text-slate-400">Lavar alimentos, sopas, café (Muitos esquecem!)</span>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                   <span className="text-slate-400 font-bold">$</span>
+                   <input 
+                      type="number" 
+                      placeholder="0"
+                      className="w-full bg-white border border-slate-200 rounded p-2 text-right font-bold text-slate-800 focus:ring-2 focus:ring-teal-500 outline-none"
+                      value={waterCooking || ''}
+                      onChange={(e) => setWaterCooking(parseFloat(e.target.value) || 0)}
+                   />
+                </div>
+              </div>
+
+              {/* Read-Only: Cleaning Products */}
+              <div className="flex justify-between items-center py-4 border-b border-dashed border-gray-200 px-2 rounded-lg bg-purple-50/50">
                 <div className="flex items-center gap-3">
                    <div className="bg-purple-100 p-2 rounded-lg text-purple-600">
                     <ShoppingCart size={20} />
                   </div>
                   <div>
-                    <span className="text-lg font-bold text-slate-700 block">Produtos de Limpeza</span>
-                    <span className="text-xs text-slate-400">Sabão roupa, louça, corpo (Fornecido por nós)</span>
+                    <span className="text-sm font-bold text-slate-700 block">Produtos de Limpeza</span>
+                    <span className="text-[10px] text-slate-400">Sabão roupa, louça, corpo (Pure Selects)</span>
                   </div>
                 </div>
-                <span className="text-xl font-bold text-slate-800">$120</span>
+                <div className="text-right">
+                    <span className="text-xl font-bold text-slate-800">${cleaningTotal}</span>
+                    {cleaningTotal === 0 && (
+                        <p className="text-[9px] text-red-500 font-bold max-w-[100px]">Preencha o gráfico acima!</p>
+                    )}
+                </div>
               </div>
             </div>
 
-            <div className="bg-slate-50 rounded-2xl p-6 mt-8 text-center border border-slate-200 relative">
+            <div className="bg-slate-50 rounded-2xl p-6 mt-6 text-center border border-slate-200 relative">
               <p className="text-sm text-slate-500 font-semibold mb-2 mt-2">SEU GASTO ATUAL MENSAL</p>
               <div className="text-5xl font-black text-slate-800 tracking-tighter">
-                $220<span className="text-2xl text-slate-400 font-medium">/mês</span>
+                ${monthlyTotal}<span className="text-2xl text-slate-400 font-medium">/mês</span>
               </div>
-              <p className="text-xs text-red-500 font-bold mt-2 uppercase tracking-wider flex justify-center items-center gap-1">
+              <p className="text-xs text-red-600 font-black mt-2 uppercase tracking-wider flex justify-center items-center gap-1">
                 <AlertTriangle size={12} />
-                Dinheiro sem retorno (Lixo)
+                Gasto por toda a sua vida a troco de nada
               </p>
             </div>
           </div>
 
+          {/* Warning Message High Visibility */}
           <div className="mt-8 pt-6 border-t border-slate-100">
-            <p className="text-sm text-slate-500 text-center italic">
-              "Vocês já pagam pelo sistema, mas estão recebendo produtos químicos e plástico em troca."
-            </p>
+            <div className="bg-amber-100 border-l-4 border-amber-500 p-4 rounded-r-lg shadow-sm">
+                <p className="text-slate-800 text-center font-bold text-sm md:text-base leading-tight">
+                "Vocês já pagam pelo sistema, mas estão recebendo produtos químicos e plástico em troca."
+                </p>
+            </div>
           </div>
         </div>
 
@@ -122,15 +170,17 @@ export const ComparisonCalculator: React.FC<ComparisonCalculatorProps> = ({ onSe
                     <span className="text-3xl mt-2">$</span>
                     {currentPlan.amount}
                 </div>
-                <p className="text-lg text-emerald-400 font-medium mt-1">
-                   Economia mensal real: <span className="text-white bg-emerald-600 px-2 rounded">+$109</span>
-                </p>
+                {monthlyTotal > 0 && (
+                    <p className="text-lg text-emerald-400 font-medium mt-1">
+                    Diferença Real: <span className="text-white bg-emerald-600 px-2 rounded">{ (monthlyTotal - currentPlan.amount) > 0 ? `Economia de $${monthlyTotal - currentPlan.amount}` : `Investimento de $${Math.abs(monthlyTotal - currentPlan.amount)}` }</span>
+                    </p>
+                )}
                 </>
               )}
             </div>
 
             {/* Plan Selector */}
-            <div className="grid grid-cols-4 gap-2 mb-8">
+            <div className="grid grid-cols-3 md:grid-cols-5 gap-2 mb-8">
               {plans.map((plan) => (
                 <button
                   key={plan.id}
@@ -144,8 +194,8 @@ export const ComparisonCalculator: React.FC<ComparisonCalculatorProps> = ({ onSe
                       : 'bg-slate-800/50 border-slate-700 text-slate-400 hover:bg-slate-700 hover:text-white'
                   }`}
                 >
-                  <span className="text-sm font-bold">{plan.label}</span>
-                  {!plan.isFull && <span className="text-[10px] opacity-75">{plan.sub}</span>}
+                  <span className="text-xs md:text-sm font-bold whitespace-nowrap">{plan.label}</span>
+                  {!plan.isFull && <span className="text-[9px] md:text-[10px] opacity-75 hidden md:block">{plan.sub}</span>}
                 </button>
               ))}
             </div>
