@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Leaf, Award, Heart, RefreshCw, DollarSign, Users, ChevronDown, Check } from 'lucide-react';
+import { Leaf, DollarSign, Check } from 'lucide-react';
 
 interface SoapLifestyleProps {
   onTotalChange: (total: number) => void;
@@ -11,7 +11,6 @@ export const SoapLifestyle: React.FC<SoapLifestyleProps> = ({ onTotalChange }) =
   const [bathroom, setBathroom] = useState<number>(0);
   
   const totalSpend = laundry + kitchen + bathroom;
-  const aquafeelCost = 16.25; // $390 / 24 months
 
   useEffect(() => {
     onTotalChange(totalSpend);
@@ -148,7 +147,9 @@ export const SoapLifestyle: React.FC<SoapLifestyleProps> = ({ onTotalChange }) =
                         style={{ width: totalSpend > 0 ? `${(16.25 / (totalSpend || 1)) * 100}%` : '5%' }}
                       ></div>
                     </div>
-                    <p className="text-[10px] text-slate-400 mt-1">*Custo do frete ($390) diluído em 24 meses.</p>
+                    <p className="text-[11px] text-amber-200/80 mt-2 leading-tight">
+                        *Custo do frete ($390) dividido por 24 meses (durabilidade). Estamos falando de <strong>$16.25/mês</strong> para ter a melhor qualidade de sabão orgânico para sua casa, para seus filhos e para sua saúde.
+                    </p>
                   </div>
 
                   {/* Bar Chart 3: Aquafeel Referral */}
