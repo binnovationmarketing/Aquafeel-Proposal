@@ -53,7 +53,7 @@ export const translations = {
       partner: "Parceria Exclusiva",
       title: "Vida Orgânica",
       subtitle: "Elimine produtos químicos agressivos. Nós fornecemos todo o sabão, shampoo e produtos de limpeza que sua casa precisa.",
-      features: "100% Orgânico, Hipoalergênico e Seguro para Pets/Crianças.",
+      features: "100% Orgánico, Hipoalergênico e Seguro para Pets/Crianças.",
       currentSpend: "Seus Gastos Atuais",
       spendSub: "Quanto você deixa no mercado mensalmente?",
       laundry: "Lavanderia",
@@ -371,7 +371,7 @@ export const translations = {
       howTo: "¿Cómo funciona la reposición?",
       howTo1: "El lote inicial dura aprox. 2 años (familia de 4-5).",
       howTo2: "Para reponer: Recomiende 1 familia calificada O pague solo el envío ($390).",
-      howTo3: "Garantía de 25 años = Jabón por 25 años."
+      howTo3: "Garantía de 25 anos = Jabón por 25 anos."
     },
     whiteGlove: {
       goldStandard: "Estándar de Oro",
