@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Lock, ChevronRight, ShieldCheck } from 'lucide-react';
+import { Lock, ChevronRight, ShieldCheck, ArrowLeft } from 'lucide-react';
 import { Language, translations } from '../utils/i18n';
 
 interface WelcomeScreenProps {
@@ -101,15 +101,16 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
           </div>
         ) : (
           // STEP 2: FORM
-          <div className="animate-in fade-in slide-in-from-right-8 duration-500">
+          <div className="animate-in fade-in slide-in-from-right-8 duration-500 relative">
             <button 
               onClick={() => setStep('lang')}
-              className="absolute top-6 left-6 text-slate-500 hover:text-white transition-colors text-xs uppercase font-bold tracking-wider flex items-center gap-1"
+              className="absolute -top-2 left-0 text-slate-500 hover:text-white transition-colors text-xs uppercase font-bold tracking-wider flex items-center gap-1 group"
             >
-              ← Voltar / Back
+              <ArrowLeft size={14} className="group-hover:-translate-x-1 transition-transform" />
+              Voltar / Back
             </button>
 
-            <div className="text-center mb-8 pt-4">
+            <div className="text-center mb-8 pt-6">
               <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-amber-400 to-amber-600 rounded-2xl mb-6 shadow-lg shadow-amber-500/20">
                 <Lock size={32} className="text-white" />
               </div>
