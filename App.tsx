@@ -7,27 +7,28 @@ import { ContaminantTruths } from './components/ContaminantTruths';
 import { Testimonials } from './components/Testimonials';
 import { FAQ } from './components/FAQ';
 import { WhiteGloveService } from './components/WhiteGloveService';
+import { SoapLifestyle } from './components/SoapLifestyle';
 import { Phone, Lock, ChevronRight } from 'lucide-react';
 
 function App() {
   const [selectedPlan, setSelectedPlan] = useState<string>('180x');
   const [expirationDate, setExpirationDate] = useState<Date | null>(null);
+  
+  // Estado para armazenar o gasto total de limpeza calculado no módulo SoapLifestyle
+  const [cleaningTotal, setCleaningTotal] = useState<number>(0);
 
   // Lógica de Urgência Persistente
   useEffect(() => {
-    // Tenta recuperar a data de início do localStorage
     const storedStartDate = localStorage.getItem('proposalFirstAccess');
     let startDate: Date;
 
     if (storedStartDate) {
       startDate = new Date(parseInt(storedStartDate));
     } else {
-      // Se não existir (primeiro acesso), define agora
       startDate = new Date();
       localStorage.setItem('proposalFirstAccess', startDate.getTime().toString());
     }
 
-    // Define a data de expiração para 48 horas após o início
     const expDate = new Date(startDate.getTime() + (48 * 60 * 60 * 1000));
     setExpirationDate(expDate);
   }, []);
@@ -36,7 +37,6 @@ function App() {
     setSelectedPlan(plan);
   };
 
-  // Se a data ainda não carregou, não renderiza componentes dependentes de data com erro
   if (!expirationDate) return null;
 
   return (
@@ -59,6 +59,10 @@ function App() {
 
       <ContaminantTruths />
       
+      {/* Novo Módulo de Sabão e Estilo de Vida */}
+      <SoapLifestyle onTotalChange={setCleaningTotal} />
+      
+      {/* Instalação Rebrand (Antigo White Glove) */}
       <WhiteGloveService />
 
       <div className="max-w-5xl mx-auto px-4 py-16">
@@ -95,7 +99,6 @@ function App() {
          </div>
       </div>
       
-      {/* Calculadora em destaque antes dos depoimentos */}
       <div className="relative z-20 py-12 bg-slate-50 border-t border-slate-200">
         <div className="text-center mb-10 px-4">
              <h2 className="text-3xl md:text-4xl font-serif font-bold text-slate-900">
@@ -105,7 +108,8 @@ function App() {
         </div>
         <ComparisonCalculator 
           onSelectPlan={handlePlanSelect} 
-          expirationDate={expirationDate} 
+          expirationDate={expirationDate}
+          cleaningTotal={cleaningTotal}
         />
       </div>
 
