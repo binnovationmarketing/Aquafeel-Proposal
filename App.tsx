@@ -67,6 +67,10 @@ function App() {
   const displayName = spouse 
     ? `${name} & ${spouse}` 
     : name;
+  
+  const whatsappMessage = spouse 
+    ? `Ol%C3%A1%20Henrique%2C%20${name}%20e%20${spouse}%20aqui.`
+    : `Ol%C3%A1%20Henrique%2C%20${name}%20aqui.`;
 
   return (
     <div className="min-h-screen bg-slate-50 font-sans selection:bg-aqua-200 selection:text-aqua-900">
@@ -164,7 +168,7 @@ function App() {
           <div className="text-center md:text-right flex flex-col items-center md:items-end">
              <p className="text-sm text-slate-400 mb-4 font-medium">{t.footer.talkTo}</p>
              <a 
-               href={`https://wa.me/12407806473?text=Ol%C3%A1%20Henrique%2C%20${name}%20aqui.%20`}
+               href={`https://wa.me/12407806473?text=${whatsappMessage}`}
                target="_blank"
                rel="noopener noreferrer"
                className="bg-white text-slate-950 pl-6 pr-2 py-2 rounded-full font-bold flex items-center justify-between gap-4 hover:bg-aqua-50 transition-all group shadow-lg shadow-white/10"
