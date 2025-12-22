@@ -19,41 +19,48 @@ function App() {
   
   // Estado para os nomes e idioma
   const [clientData, setClientData] = useState<{name: string, spouse: string, lang: Language} | null>(null);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   // Lógica de Inicialização (Data e Nomes)
   useEffect(() => {
-    // 1. Recuperar Data
-    const storedStartDate = localStorage.getItem('proposalFirstAccess');
+    // 1. Recuperar Data - Usando chave V3 para forçar novo ciclo
+    const storedStartDate = localStorage.getItem('proposalFirstAccess_v3');
     let startDate: Date;
 
     if (storedStartDate) {
       startDate = new Date(parseInt(storedStartDate));
     } else {
       startDate = new Date();
-      localStorage.setItem('proposalFirstAccess', startDate.getTime().toString());
+      localStorage.setItem('proposalFirstAccess_v3', startDate.getTime().toString());
     }
     const expDate = new Date(startDate.getTime() + (48 * 60 * 60 * 1000));
     setExpirationDate(expDate);
 
-    // 2. Recuperar Nomes e Idioma
-    const storedClient = localStorage.getItem('proposalClientData_v2'); // Mudamos a key para invalidar cache antigo se houver
+    // 2. Recuperar Nomes e Idioma - Usando chave V3 para limpar cache antigo dos testes
+    const storedClient = localStorage.getItem('proposalClientData_v3');
     if (storedClient) {
-      setClientData(JSON.parse(storedClient));
+      try {
+        setClientData(JSON.parse(storedClient));
+      } catch (e) {
+        console.error("Erro ao ler dados do cliente", e);
+        localStorage.removeItem('proposalClientData_v3');
+      }
     }
+    setIsLoaded(true);
   }, []);
 
   const handleClientEntry = (name: string, spouse: string, lang: Language) => {
     const data = { name, spouse, lang };
     setClientData(data);
-    localStorage.setItem('proposalClientData_v2', JSON.stringify(data));
+    localStorage.setItem('proposalClientData_v3', JSON.stringify(data));
   };
 
   const handlePlanSelect = (plan: string) => {
     setSelectedPlan(plan);
   };
 
-  // Se não temos data ainda (mount inicial), retorna null
-  if (!expirationDate) return null;
+  // Previne "flickering" enquanto carrega do localStorage
+  if (!isLoaded || !expirationDate) return null;
 
   // Se não temos dados do cliente, mostra tela de boas-vindas
   if (!clientData) {
