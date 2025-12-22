@@ -409,7 +409,7 @@ const esTranslations: TranslationStructure = {
     accept: "ACEPTAR OFERTA AHORA",
     offerValid: "Oferta válida hasta",
     benefits: {
-      tank: "Sistema Actualizado (2 Tanques)",
+      tank: "Sistema Atualizado (2 Tanques)",
       ro: "Agua Ultra Pura (RO)",
       discount: "Descuento Cliente Antiguo",
       payment: "Primer Pago:",
