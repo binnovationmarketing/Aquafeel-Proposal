@@ -23,27 +23,27 @@ function App() {
 
   // Lógica de Inicialização (Data e Nomes)
   useEffect(() => {
-    // 1. Recuperar Data - Usando chave V3 para forçar novo ciclo
-    const storedStartDate = localStorage.getItem('proposalFirstAccess_v3');
+    // 1. Recuperar Data - Usando chave V4 para forçar novo ciclo e garantir que a tela apareça
+    const storedStartDate = localStorage.getItem('proposalFirstAccess_v4');
     let startDate: Date;
 
     if (storedStartDate) {
       startDate = new Date(parseInt(storedStartDate));
     } else {
       startDate = new Date();
-      localStorage.setItem('proposalFirstAccess_v3', startDate.getTime().toString());
+      localStorage.setItem('proposalFirstAccess_v4', startDate.getTime().toString());
     }
     const expDate = new Date(startDate.getTime() + (48 * 60 * 60 * 1000));
     setExpirationDate(expDate);
 
-    // 2. Recuperar Nomes e Idioma - Usando chave V3 para limpar cache antigo dos testes
-    const storedClient = localStorage.getItem('proposalClientData_v3');
+    // 2. Recuperar Nomes e Idioma - Usando chave V4 para limpar cache antigo
+    const storedClient = localStorage.getItem('proposalClientData_v4');
     if (storedClient) {
       try {
         setClientData(JSON.parse(storedClient));
       } catch (e) {
         console.error("Erro ao ler dados do cliente", e);
-        localStorage.removeItem('proposalClientData_v3');
+        localStorage.removeItem('proposalClientData_v4');
       }
     }
     setIsLoaded(true);
@@ -52,7 +52,7 @@ function App() {
   const handleClientEntry = (name: string, spouse: string, lang: Language) => {
     const data = { name, spouse, lang };
     setClientData(data);
-    localStorage.setItem('proposalClientData_v3', JSON.stringify(data));
+    localStorage.setItem('proposalClientData_v4', JSON.stringify(data));
   };
 
   const handlePlanSelect = (plan: string) => {

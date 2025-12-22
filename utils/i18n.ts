@@ -124,7 +124,7 @@ const ptTranslations = {
     title: "Por que NÃO fechar agora?",
     subtitle: "Respondemos as dúvidas que ninguém tem coragem de perguntar.",
     q1: "Minha água parece limpa, será que preciso mesmo?",
-    a1: "Visualmente, sim. Mas os contaminantes modernos como PFAS são invisíveis. Instalar o sistema é como um seguro de saúde.",
+    a1: "Visualmente, sim. Mas os contaminantes modernos como PFAS são invisibles. Instalar o sistema é como um seguro de saúde.",
     q2: "Posso encontrar algo mais barato no Home Depot?",
     a2: "Sim, mas são amadores. O Aquafeel é tratamento industrial miniaturizado. O barato sai caro quando precisa trocar em 3 anos.",
     q3: "não quer mais uma conta mensal agora.",
@@ -373,9 +373,9 @@ const esTranslations: TranslationStructure = {
     free: "GRATIS",
     note: "*Costo de envío ($390) dividido por 24 meses. Son $16.25/mes por la salud de su familia.",
     howTo: "¿Cómo funciona la reposición?",
-    howTo1: "El lote inicial dura aprox. 2 anos (familia de 4-5).",
+    howTo1: "El lote inicial dura aprox. 2 años (familia de 4-5).",
     howTo2: "Para reponer: Recomiende 1 familia calificada O pague solo el envío ($390).",
-    howTo3: "Garantía de 25 anos = Jabón por 25 anos."
+    howTo3: "Garantía de 25 años = Jabón por 25 años."
   },
   whiteGlove: {
     goldStandard: "Estándar de Oro",
