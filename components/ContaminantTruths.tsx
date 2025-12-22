@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Skull, FlaskConical, Droplets, AlertTriangle } from 'lucide-react';
 import { Language, translations } from '../utils/i18n';
 

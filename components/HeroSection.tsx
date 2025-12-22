@@ -1,5 +1,5 @@
 import React from 'react';
-import { ShieldCheck, Star, Award, Sparkles, Home } from 'lucide-react';
+import { ShieldCheck, Star, Sparkles, Home } from 'lucide-react';
 import { Language, translations } from '../utils/i18n';
 
 interface HeroSectionProps {
