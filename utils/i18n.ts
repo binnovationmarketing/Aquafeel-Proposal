@@ -257,7 +257,7 @@ const enTranslations: TranslationStructure = {
     accept: "ACCEPT OFFER NOW",
     offerValid: "Offer valid until",
     benefits: {
-      tank: "Sistema Atualizado (2 Tanques)",
+      tank: "Updated System (2 Tanks)",
       ro: "Ultra Pure Water (RO)",
       discount: "Old Client Discount",
       payment: "First Payment:",
@@ -287,7 +287,7 @@ const enTranslations: TranslationStructure = {
   urgency: {
     expires: "Offer Expires in:",
     commission: "I waived $1,000 of my commission to approve this condition.",
-    limit: "LIMITE:",
+    limit: "LIMIT:",
     footer: "After the timer hits zero, the proposal returns to original market value."
   },
   footer: {
@@ -409,7 +409,7 @@ const esTranslations: TranslationStructure = {
     accept: "ACEPTAR OFERTA AHORA",
     offerValid: "Oferta válida hasta",
     benefits: {
-      tank: "Sistema Atualizado (2 Tanques)",
+      tank: "Sistema Actualizado (2 Tanques)",
       ro: "Agua Ultra Pura (RO)",
       discount: "Descuento Cliente Antiguo",
       payment: "Primer Pago:",
