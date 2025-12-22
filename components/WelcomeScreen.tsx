@@ -21,13 +21,18 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
     setStep('form');
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = () => {
     if (!name.trim()) {
       setError(t.error);
       return;
     }
-    onComplete(name, spouse, lang);
+    onComplete(name.trim(), spouse.trim(), lang);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      handleSubmit();
+    }
   };
 
   return (
@@ -100,14 +105,14 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
             </div>
           </div>
         ) : (
-          // STEP 2: FORM
-          <div className="animate-in fade-in slide-in-from-right-8 duration-500 relative">
+          // STEP 2: FORM (Using divs instead of form tag)
+          <div className="animate-in fade-in slide-in-from-right-8 duration-500 relative" onKeyDown={handleKeyDown}>
             <button 
               onClick={() => setStep('lang')}
               className="absolute -top-2 left-0 text-slate-500 hover:text-white transition-colors text-xs uppercase font-bold tracking-wider flex items-center gap-1 group"
             >
               <ArrowLeft size={14} className="group-hover:-translate-x-1 transition-transform" />
-              Voltar / Back
+              {t.backButton}
             </button>
 
             <div className="text-center mb-8 pt-6">
@@ -121,7 +126,7 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
               </p>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-5">
+            <div className="space-y-5">
               <div>
                 <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2 ml-1">
                   {t.yourName}
@@ -155,13 +160,13 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
               )}
 
               <button
-                type="submit"
+                onClick={handleSubmit}
                 className="w-full bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white font-bold py-4 rounded-xl shadow-lg shadow-emerald-900/40 flex items-center justify-center gap-2 group transition-all transform hover:-translate-y-1"
               >
                 <span>{t.accessButton}</span>
                 <ChevronRight size={20} className="group-hover:translate-x-1 transition-transform" />
               </button>
-            </form>
+            </div>
 
             <div className="mt-8 pt-6 border-t border-white/5 text-center">
               <div className="flex items-center justify-center gap-2 text-xs text-slate-500 font-medium">

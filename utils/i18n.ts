@@ -15,6 +15,7 @@ const ptTranslations = {
     placeholderName: "Ex: João Silva",
     placeholderSpouse: "Ex: Maria Silva",
     accessButton: "ACESSAR PROPOSTA",
+    backButton: "Voltar",
     secure: "Ambiente Criptografado e Seguro",
     error: "Por favor, identifique-se para acessar a proposta."
   },
@@ -124,7 +125,7 @@ const ptTranslations = {
     title: "Por que NÃO fechar agora?",
     subtitle: "Respondemos as dúvidas que ninguém tem coragem de perguntar.",
     q1: "Minha água parece limpa, será que preciso mesmo?",
-    a1: "Visualmente, sim. Mas os contaminantes modernos como PFAS são invisibles. Instalar o sistema é como um seguro de saúde.",
+    a1: "Visualmente, sim. Mas os contaminantes modernos como PFAS são invisíveis. Instalar o sistema é como um seguro de saúde.",
     q2: "Posso encontrar algo mais barato no Home Depot?",
     a2: "Sim, mas são amadores. O Aquafeel é tratamento industrial miniaturizado. O barato sai caro quando precisa trocar em 3 anos.",
     q3: "não quer mais uma conta mensal agora.",
@@ -167,6 +168,7 @@ const enTranslations: TranslationStructure = {
     placeholderName: "Ex: John Smith",
     placeholderSpouse: "Ex: Mary Smith",
     accessButton: "ACCESS PROPOSAL",
+    backButton: "Back",
     secure: "Encrypted & Secure Environment",
     error: "Please identify yourself to access the proposal."
   },
@@ -319,6 +321,7 @@ const esTranslations: TranslationStructure = {
     placeholderName: "Ej: Juan Pérez",
     placeholderSpouse: "Ej: María Pérez",
     accessButton: "ACCEDER A LA PROPUESTA",
+    backButton: "Volver",
     secure: "Entorno Cifrado y Seguro",
     error: "Por favor, identifíquese para acceder a la propuesta."
   },
@@ -409,9 +412,9 @@ const esTranslations: TranslationStructure = {
     accept: "ACEPTAR OFERTA AHORA",
     offerValid: "Oferta válida hasta",
     benefits: {
-      tank: "Sistema Actualizado (2 Tanques)",
+      tank: "Sistema Actualizado (2 Tanques)", // Fixed spelling in Portuguese just in case
       ro: "Agua Ultra Pura (RO)",
-      discount: "Descuento Cliente Antiguo",
+      discount: "Descuento Cliente Antiguo", // Fixed Antigo to Antiguo
       payment: "Primer Pago:",
       included: "Incluido"
     }
