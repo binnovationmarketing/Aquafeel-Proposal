@@ -73,7 +73,9 @@ const ptTranslations = {
     },
     pets: {
       title: "Para os Pets",
-      m1: "Sobrecarga Renal: Cães e gatos são 10x mais sensíveis a toxinas e excesso de sódio na água."
+      m1: "Sobrecarga Renal: Cães e gatos são 10x mais sensíveis a toxinas e excesso de sódio na água.",
+      m2: "Cálculos Urinários: O excesso de minerais na água \"dura\" é o principal causador de pedras na bexiga e rins em pets.",
+      m3: "Dermatites e Queda de Pelos: O cloro e calcário removem a proteção natural da pele, causando irritação e pelagem quebradiça."
     }
   },
   contaminant: {
@@ -201,7 +203,7 @@ const ptTranslations = {
     soapYears: "Anos de Sabão",
     guarantee: "Garantia Total",
     cost: "CASHBACK",
-    payment: "Pagamento",
+    payment: "Pago",
     firstQuota: "Só em 2026"
   }
 };
@@ -277,7 +279,9 @@ const enTranslations: TranslationStructure = {
     },
     pets: {
       title: "For Pets",
-      m1: "Renal Overload: Dogs and cats are 10x more sensitive to toxins and excess sodium in water."
+      m1: "Renal Overload: Dogs and cats are 10x more sensitive to toxins and excess sodium in water.",
+      m2: "Urinary Stones: Excess minerals in \"hard\" water is the primary cause of bladder and kidney stones in pets.",
+      m3: "Dermatitis & Hair Loss: Chlorine and limescale remove natural skin protection, causing irritation and brittle coats."
     }
   },
   contaminant: {
@@ -437,7 +441,7 @@ const esTranslations: TranslationStructure = {
     warrantySub: "Limitada (25 años)",
     installTitle: "Instalación",
     installSub: "Gratis ($0 Costo)",
-    soapTitle: "2 Años de Jabón",
+    soapTitle: "2 Anos de Jabón",
     soapSub: "Para toda la casa",
     paymentTitle: "Primer Pago",
     paymentSub: "30 a 45 días (2026)",
@@ -447,7 +451,7 @@ const esTranslations: TranslationStructure = {
     analysisSub: "1x al año (Anual)"
   },
   info: {
-    label: "Hechos Reales, Datos Públicos",
+    label: "Hechos Reales, Dados Públicos",
     title: "¿Qué hay realmente en su agua?",
     subtitle: "El agua municipal cumple regulaciones básicas, pero \"legal\" no significa \"saludable\". Su casa merece protección.",
     alertTitle: "Alerta Regional",
@@ -465,7 +469,7 @@ const esTranslations: TranslationStructure = {
       title: "Para la Salud del Hogar",
       m1: "Corrosión de Tuberías: Los metales pesados y el cloro destruyen el cobre y PVC desde el interior.",
       m2: "Muerte de Electrodomésticos: La cal y los minerales reducen la vida de lavadoras y calentadores en un 50%.",
-      m3: "Manchas Irreversibles: Depósitos minerales que destruyen el brillo de vidrios, mármoles y metales."
+      m3: "Manchas Irreversíveis: Depósitos minerales que destruyen el brillo de vidrios, mármoles y metales."
     },
     adults: {
       title: "Para Adultos",
@@ -481,7 +485,9 @@ const esTranslations: TranslationStructure = {
     },
     pets: {
       title: "Para Mascotas",
-      m1: "Sobrecarga Renal: Perros y gatos son 10 veces más sensibles a las toxinas y al exceso de sodio en el agua."
+      m1: "Sobrecarga Renal: Perros y gatos son 10 veces más sensibles a las toxinas y al exceso de sodio en el agua.",
+      m2: "Cálculos Urinarios: El exceso de minerales en el agua \"dura\" es el principal causante de piedras en la vejiga y riñones en mascotas.",
+      m3: "Dermatitis y Caída de Pelo: El cloro y el sarro eliminan la protección natural de la piel, causando irritación y pelaje quebradizo."
     }
   },
   contaminant: {
@@ -497,8 +503,8 @@ const esTranslations: TranslationStructure = {
   soap: {
     partner: "Alianza Exclusiva",
     title: "Vida Orgánica",
-    subtitle: "Elimine químicos agresivos. Suministramos todo el jabón, champú y productos de limpieza que su casa necesita.",
-    features: "100% Orgánico, Hipoalergénico y Seguro para Mascotas/Niños.",
+    subtitle: "Elimine químicos agressivos. Suministramos todo el jabón, champú y productos de limpieza que su casa necesita.",
+    features: "100% Orgánico, Hipoalergênico y Seguro para Mascotas/Niños.",
     currentSpend: "Sus Gastos Actuales",
     spendSub: "¿Cuánto deja en el mercado mensualmente?",
     laundry: "Lavandería",
@@ -524,7 +530,7 @@ const esTranslations: TranslationStructure = {
     cleanSub: "Garantía de limpieza absoluta. Usamos protección para el piso y dejamos el lugar más limpio de lo que lo encontramos.",
     priority: "Prioridad de Agenda",
     prioritySub: "Acceso preferencial a la agenda técnica, incluyendo fines de semana.",
-    aesthetic: "Garantía Estética",
+    aesthetic: "Garantia Estética",
     aestheticSub: "Instalación discreta y profesional, preservando el diseño de los gabinetes.",
     support: "Soporte VIP Dedicado",
     supportSub: "Olvide los call centers. Tendrán línea directa con el consultor senior.",
@@ -586,7 +592,7 @@ const esTranslations: TranslationStructure = {
     q5: "¿Conozco sistemas más baratos o en Home Depot por mitad de precio?",
     a5: "Los filtros de las tiendas son solo filtros de carbón. Quitan el sabor pero no los contaminantes pesados. Aquafeel es un sistema de purificación molecular con 25 años de garantia. Comparar un filtro de tienda con Aquafeel es como comparar un ventilador de mesa con un aire acondicionado central.",
     q6: "¿Es esto un filtro común?",
-    a6: "No. Los filtros comunes solo reducen el cloro. Nuestro sistema de 2 tanques + Ósmosis Inversa es una barrera física de purificação molecular que entrega água alcalina y elimina metales pesados, virus y bactérias que los filtros comunes no pueden tocar."
+    a6: "No. Los filtros comunes solo reducen el cloro. Nuestro sistema de 2 tanques + Ósmosis Inversa es una barrera física de purificación molecular que entrega agua alcalina y elimina metales pesados, virus y bactérias que los filtros comunes no pueden tocar."
   },
   urgency: {
     expires: "Navidad llega en:",
@@ -604,7 +610,7 @@ const esTranslations: TranslationStructure = {
     rights: "© 2024 Aquafeel Solutions • Propuesta Especial de Navidad"
   },
   package: {
-    title: "Campaña de Navidad",
+    title: "Campanha de Natal",
     desc: "El mayor beneficio jamás ofrecido en la historia de Aquafeel PA.",
     soapYears: "Años de Jabón",
     guarantee: "Garantía Total",
