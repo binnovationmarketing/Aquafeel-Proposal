@@ -4,6 +4,7 @@ import { ComparisonCalculator } from './components/ComparisonCalculator';
 import { InfoSection } from './components/InfoSection';
 import { UrgencyBanner } from './components/UrgencyBanner';
 import { ContaminantTruths } from './components/ContaminantTruths';
+import { WaterMalefices } from './components/WaterMalefices';
 import { Testimonials } from './components/Testimonials';
 import { FAQ } from './components/FAQ';
 import { WhiteGloveService } from './components/WhiteGloveService';
@@ -144,6 +145,7 @@ function App() {
       <HeroSection clientName={name} spouseName={spouse} lang={lang} />
       <InfoSection lang={lang} />
       <ContaminantTruths lang={lang} />
+      <WaterMalefices lang={lang} />
       <SoapLifestyle onTotalChange={setCleaningTotal} lang={lang} />
       <WhiteGloveService clientName={name} spouseName={spouse} lang={lang} />
 

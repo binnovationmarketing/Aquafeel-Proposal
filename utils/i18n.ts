@@ -1,46 +1,80 @@
 export type Language = 'pt' | 'en' | 'es';
 
-// Definimos a estrutura base baseada no Português para garantir que todos tenham as mesmas chaves
 type TranslationStructure = typeof ptTranslations;
 
 const ptTranslations = {
   welcome: {
     title: "Bem-vindo",
-    subtitle: "Selecione seu idioma para continuar",
-    restricted: "Área Restrita",
-    system: "Sistema de Propostas VIP - Aquafeel Solutions",
-    identify: "Identifique-se para liberar o acesso.",
+    subtitle: "Acesso exclusivo à proposta",
+    restricted: "Área de Acesso Restrito",
+    system: "Aquafeel Intelligence System",
+    identify: "Por favor, identifique-se para descriptografar sua proposta.",
     yourName: "SEU NOME",
     spouseName: "NOME DO CÔNJUGE (OPCIONAL)",
     placeholderName: "Ex: João Silva",
     placeholderSpouse: "Ex: Maria Silva",
-    accessButton: "ACESSAR PROPOSTA",
+    accessButton: "LIBERAR ACESSO VIP",
     backButton: "Voltar",
-    secure: "Ambiente Criptografado e Seguro",
-    error: "Por favor, identifique-se para acessar a proposta."
+    secure: "Protocolo de Segurança Criptografado",
+    error: "Identificação necessária para prosseguir."
   },
   hero: {
-    platinum: "Cliente Platinum Return",
-    welcomeHome: "Bem-vindos à Casa Nova,",
-    subtitle: "Vocês já conhecem a importância de uma água pura. Para o novo lar, preparamos o nosso sistema mais avançado:",
-    systemName: "Tanque Duplo + Osmose Reversa.",
-    warranty: "Garantia",
-    warrantySub: "Vitalícia",
-    discount: "Desconto VIP",
-    installation: "Instalação",
-    free: "Grátis (0 Custo)"
+    platinum: "Regalo de Navidad Exclusivo",
+    welcomeHome: "A Aquafeel vai te dar",
+    subtitle: "Qualifique-se para o programa de água limpa antes de 25/12 e receba um presente único:",
+    systemName: "$1.000 DÓLARES DE CASHBACK.",
+    cashbackTitle: "CASHBACK NATAL",
+    cashbackValue: "+$1.000,00",
+    warrantyTitle: "Garantia Vitalícia",
+    warrantySub: "Limitada (25 anos)",
+    installTitle: "Instalação",
+    installSub: "Grátis ($0 Custo)",
+    soapTitle: "2 Anos de Sabão",
+    soapSub: "Para toda a casa",
+    paymentTitle: "Primeiro Pagamento",
+    paymentSub: "30 a 45 dias (2026)",
+    penaltyTitle: "Sem Penalidade",
+    penaltySub: "Antecipe seus pagamentos",
+    analysisTitle: "Análise de Água",
+    analysisSub: "1x por ano (Anual)"
   },
   info: {
     label: "Fatos Reais, Dados Públicos",
     title: "O Que Está Realmente na Sua Água?",
     subtitle: "A água municipal cumpre regulamentos básicos, mas \"legal\" não significa \"saudável\". Sua nova casa merece proteção contra os contaminantes modernos.",
     alertTitle: "Alerta Regional",
-    alertBody: "Estudios recentes indicam altos níveis de PFAS (Químicos Eternos), Chumbo e Cloro nas redes de abastecimento. Estes compostos se acumulam no corpo e nos encanamentos.",
+    alertBody: "Estudos recentes indicam altos níveis de PFAS (Químicos Eternos), Chumbo e Cloro nas redes de abastecimento. Estes compostos se acumulam no corpo e nos encanamentos.",
     analysisTitle: "Análise Aquafeel",
     analysisBody: "Nosso sistema de Tanque Duplo + Osmose Reversa é a única barreira física real entre sua família e estes contaminantes.",
     virus: "Elimina 99.9% de Vírus e Bactérias",
     heavyMetals: "Remove Metais Pesados (Chumbo, Mercúrio)",
     chlorine: "Neutraliza Cloro e Cloraminas"
+  },
+  malefices: {
+    title: "Top 10 Malefícios da Água Contaminada",
+    subtitle: "O que você não vê está destruindo seu patrimônio e a saúde de quem você ama.",
+    home: {
+      title: "Para a Saúde do Lar",
+      m1: "Corrosão das Tubulações: Metais pesados e cloro destroem o cobre e PVC por dentro.",
+      m2: "Morte de Eletrodomésticos: Calcário e minerais reduzem a vida de máquinas e aquecedores em 50%.",
+      m3: "Manchas Irreversíveis: Depósitos minerais que destroem o brilho de vidros, mármores e metais."
+    },
+    adults: {
+      title: "Para os Adultos",
+      m1: "Danos à Pele e Cabelo: O cloro remove a oleosidade natural, causando envelhecimento precoce.",
+      m2: "Desreguladores Endócrinos: PFAS e químicos afetam o equilíbrio hormonal e metabolismo.",
+      m3: "Acúmulo de Metais: Chumbo e mercúrio se acumulam no organismo ao longo de décadas."
+    },
+    children: {
+      title: "Para as Crianças",
+      m1: "Riscos no Desenvolvimento: O chumbo na água é ligado a atrasos cognitivos e de crescimento.",
+      m2: "Imunidade Fragilizada: Exposição constante a bactérias e vírus que sobrevivem ao tratamento comum.",
+      m3: "Problemas Respiratórios: Vapores de cloro no banho podem agravar asma e bronquite."
+    },
+    pets: {
+      title: "Para os Pets",
+      m1: "Sobrecarga Renal: Cães e gatos são 10x mais sensíveis a toxinas e excesso de sódio na água."
+    }
   },
   contaminant: {
     label: "Alerta ao Consumidor",
@@ -62,7 +96,7 @@ const ptTranslations = {
     laundry: "Lavanderia",
     kitchen: "Cozinha",
     bathroom: "Banheiro",
-    total: "Total Mensal Atual",
+    total: "Total Mensual Atual",
     reality: "Realidade Aquafeel",
     market: "Mercado Tradicional",
     freight: "Aquafeel (Frete)",
@@ -93,26 +127,31 @@ const ptTranslations = {
     problemSub: "Gastos que você já tem hoje",
     waterDrink: "Água para Beber",
     waterCook: "Água para Cozinhar",
-    cleaning: "Produtos de Limpieza",
+    cleaning: "Produtos de Limpeza",
     fillChart: "Preencha o gráfico acima!",
     currentMonthly: "SEU GASTO ATUAL MENSAL",
     waste: "Gasto por toda a sua vida a troco de nada",
-    warning: "\"Vocês já pagam pelo sistema, mas estão recebendo produtos químicos e plástico em troca.\"",
-    solutionTitle: "A Decisão Inteligente",
-    solutionSub: "Investimento com Retorno",
+    warning: "\"Você já paga pelo sistema, mas está recebendo produtos químicos e plástico em troca.\"",
+    solutionTitle: "O Presente de Natal",
+    solutionSub: "Dinheiro direto na sua mão",
     difference: "Economia de",
     months: "Meses",
     cash: "À Vista",
-    accept: "ACEITAR OFERTA AGORA",
-    negotiate: "FALAR COM CONSULTOR",
-    offerValid: "Oferta válida até",
-    offerExpired: "OFERTA EXPIRADA",
+    accept: "GARANTIR MEU CASHBACK",
+    negotiate: "FALAR COM O HENRIQUE",
+    offerValid: "Válido até 25 de Dezembro!",
+    offerExpired: "OFERTA ENCERRADA",
+    disclaimer: "*consulte seu consultor para maiores informações.",
     benefits: {
-      tank: "Sistema Atualizado (2 Tanques)",
-      ro: "Água Ultra Pura (RO)",
-      discount: "Desconto Cliente Antigo",
-      discountExpired: "Desconto Expirado",
+      tank: "Sistema Premium de ultra purificação (2 Tanques)",
+      ro: "Osmose Reversa Inclusa (Água Alcalina)",
+      downpayment: "0 Downpayment",
+      taxes: "0 Taxes",
+      installation: "0 Instalação",
+      discount: "CASHBACK DE NATAL",
+      discountExpired: "Natal já passou",
       payment: "Primeiro Pagamento:",
+      paymentDesc: "30 a 45 dias após recebimento das garantias - 2026",
       included: "Incluso",
       standardPrice: "Preço Regular"
     }
@@ -125,70 +164,83 @@ const ptTranslations = {
     t3: "O sabão que eles dão dura uma eternidade e é ótimo. Só a economia de supermercado já pagou metade da parcela."
   },
   faq: {
-    transparency: "Transparência Total",
+    transparency: "Transparencia Total",
     title: "Por que NÃO fechar agora?",
     subtitle: "Respondemos as dúvidas que ninguém tem coragem de perguntar.",
-    q1: "Minha água parece limpa, será que preciso mesmo?",
-    a1: "Visualmente, sim. Mas os contaminantes modernos como PFAS são invisíveis. Instalar o sistema é como um seguro de saúde.",
-    q2: "Posso encontrar algo mais barato no Home Depot?",
-    a2: "Sim, mas são amadores. O Aquafeel é tratamento industrial miniaturizado. O barato sai caro quando precisa trocar em 3 anos.",
+    q1: "Como funciona o Cashback de $1.000?",
+    a1: "Ao qualificar e instalar seu sistema até dia 25/12, você recebe mil dólares para usar como quiser. É um incentivo real da unidade PA.",
+    q2: "Posso usar os $1.000 para abater no valor?",
+    a2: "Você pode usar como quiser! O dinheiro é seu. Muitos clientes usam para os presentes de Natal da família.",
     q3: "não quer mais uma conta mensal agora.",
-    a3: "Entendemos. Por isso o primeiro pagamento é só em Março de 2026. É uma troca de despesa (mercado por sistema), não uma nova conta.",
-    q4: "E se eu mudar de casa de novo?",
-    a4: "Nós movemos o sistema para a próxima casa. O investimento acompanha a família."
+    a3: "Entendemos. Por isso o primeiro pagamento é só em 2026. Com os $1.000 de cashback, você cobre o custo de vida por meses!",
+    q4: "Se eu me mudar posso levar o sistema? Quanto vai custar?",
+    a4: "Sim, você pode levar o sistema para sua nova casa! Entretanto, para remover o sistema da sua casa com segurança e levar até a outra casa, há um pequeno custo técnico. Este custo pode ser pago por você ou pode ser totalmente bonificado (GRÁTIS) apenas recomendando nosso trabalho para outra família que se qualifique para o programa.",
+    q5: "Conheço sistemas mais baratos ou no Home Depot por metade do preço?",
+    a5: "Filtros de lojas de varejo são apenas 'filtros de carvão'. Eles retiram o gosto, mas não os contaminantes pesados. O Aquafeel é um sistema de purificação molecular com 25 anos de garantia. Comparar um filtro de loja com Aquafeel é como comparar um ventilador de mesa com um sistema de ar condicionado central.",
+    q6: "Isso é um filtro comum?",
+    a6: "Não. Filtros comuns apenas reduzem o cloro. Nosso sistema de 2 tanques + Osmose Reversa é uma barreira física de purificação molecular que entrega água alcalina e remove metais pesados, vírus e bactérias que filtros comuns não conseguem tocar."
   },
   urgency: {
-    expires: "Oferta Expira em:",
-    expiredTitle: "OFERTA EXPIRADA",
-    commission: "Abri mão de $1.000 da minha comissão para aprovar esta condição.",
-    limit: "LIMITE:",
-    footer: "Após o cronômetro zerar, a proposta retorna ao valor original.",
-    expiredText: "O prazo de 48h para o desconto de $1.000 encerrou. Os valores retornaram à tabela oficial.",
-    expiredButton: "Tentar uma exceção agora"
+    expires: "Natal chegando em:",
+    expiredTitle: "OFERTA ENCERRADA",
+    commission: "Presente de Natal exclusivo da Aquafeel Solutions PA.",
+    limit: "PRAZO FINAL:",
+    footer: "Após o dia 25, o bônus de $1.000 cashback será removido.",
+    expiredText: "O bônus de $1.000 cashback de Natal encerrou no dia 25/12.",
+    expiredButton: "Verificar se ainda há bônus"
   },
   footer: {
     slogan: "Elevando o padrão de vida através da purificação de água.",
     talkTo: "Falar diretamente com seu Consultor",
-    button: "Falar com Carlos Henrique",
-    rights: "© 2024 Aquafeel Solutions • Proposta Confidencial"
+    button: "Falar com o Henrique",
+    rights: "© 2024 Aquafeel Solutions • Proposta Especial de Natal"
   },
   package: {
-    title: "Pacote Completo",
-    desc: "Como clientes de elite retornando à nossa família, removemos todas as barreiras.",
+    title: "Campanha de Natal",
+    desc: "O maior benefício já oferecido na história da Aquafeel PA.",
     soapYears: "Anos de Sabão",
     guarantee: "Garantia Total",
-    cost: "Custo Inicial",
+    cost: "CASHBACK",
     payment: "Pagamento",
-    firstQuota: "Primeira Cota em Março"
+    firstQuota: "Só em 2026"
   }
 };
 
 const enTranslations: TranslationStructure = {
   welcome: {
     title: "Welcome",
-    subtitle: "Select your language to continue",
-    restricted: "Restricted Area",
-    system: "VIP Proposal System - Aquafeel Solutions",
-    identify: "Please identify yourself to access.",
+    subtitle: "Exclusive proposal access",
+    restricted: "Restricted Access Area",
+    system: "Aquafeel Intelligence System",
+    identify: "Please identify yourself to decrypt your proposal.",
     yourName: "YOUR NAME",
     spouseName: "SPOUSE'S NAME (OPTIONAL)",
     placeholderName: "Ex: John Smith",
     placeholderSpouse: "Ex: Mary Smith",
-    accessButton: "ACCESS PROPOSAL",
+    accessButton: "UNLOCK VIP ACCESS",
     backButton: "Back",
-    secure: "Encrypted & Secure Environment",
-    error: "Please identify yourself to access the proposal."
+    secure: "Encrypted Security Protocol",
+    error: "Identification required to proceed."
   },
   hero: {
-    platinum: "Platinum Return Client",
-    welcomeHome: "Welcome to your New Home,",
-    subtitle: "You already know the importance of pure water. For your new home, we prepared our most advanced system:",
-    systemName: "Double Tank + Reverse Osmosis.",
-    warranty: "Warranty",
-    warrantySub: "Lifetime",
-    discount: "VIP Discount",
-    installation: "Installation",
-    free: "Free ($0 Cost)"
+    platinum: "Exclusive Christmas Gift",
+    welcomeHome: "Aquafeel will give you",
+    subtitle: "Qualify for the clean water program before 12/25 and receive a unique gift:",
+    systemName: "$1,000 DOLLARS CASHBACK.",
+    cashbackTitle: "CHRISTMAS CASHBACK",
+    cashbackValue: "+$1,000.00",
+    warrantyTitle: "Lifetime Warranty",
+    warrantySub: "Limited (25 years)",
+    installTitle: "Installation",
+    installSub: "Free ($0 Cost)",
+    soapTitle: "2 Years of Soap",
+    soapSub: "For the whole house",
+    paymentTitle: "First Payment",
+    paymentSub: "30 to 45 days (2026)",
+    penaltyTitle: "No Penalty",
+    penaltySub: "Anticipate your payments",
+    analysisTitle: "Water Analysis",
+    analysisSub: "1x per year (Annual)"
   },
   info: {
     label: "Real Facts, Public Data",
@@ -201,6 +253,32 @@ const enTranslations: TranslationStructure = {
     virus: "Eliminates 99.9% of Virus & Bacteria",
     heavyMetals: "Removes Heavy Metals (Lead, Mercury)",
     chlorine: "Neutralizes Chlorine & Chloramines"
+  },
+  malefices: {
+    title: "Top 10 Harmful Effects of Contaminated Water",
+    subtitle: "What you don't see is destroying your property and your loved ones' health.",
+    home: {
+      title: "For the Home",
+      m1: "Pipe Corrosion: Heavy metals and chlorine destroy copper and PVC from the inside.",
+      m2: "Appliance Death: Limescale and minerals reduce the life of washers and heaters by 50%.",
+      m3: "Irreversible Stains: Mineral deposits that destroy the shine of glass, marble, and metals."
+    },
+    adults: {
+      title: "For Adults",
+      m1: "Skin and Hair Damage: Chlorine removes natural oils, causing premature aging.",
+      m2: "Endocrine Disruptors: PFAS and chemicals affect hormonal balance and metabolism.",
+      m3: "Metal Accumulation: Lead and mercury accumulate in the body over decades."
+    },
+    children: {
+      title: "For Children",
+      m1: "Developmental Risks: Lead in water is linked to cognitive and growth delays.",
+      m2: "Fragile Immunity: Constant exposure to bacteria and viruses that survive common treatment.",
+      m3: "Respiratory Issues: Chlorine vapors during showers can aggravate asthma and bronchitis."
+    },
+    pets: {
+      title: "For Pets",
+      m1: "Renal Overload: Dogs and cats are 10x more sensitive to toxins and excess sodium in water."
+    }
   },
   contaminant: {
     label: "Consumer Alert",
@@ -237,7 +315,7 @@ const enTranslations: TranslationStructure = {
   whiteGlove: {
     goldStandard: "Gold Standard",
     title: "Aquafeel Excellence Protocol",
-    subtitle: "Your new home deserves respect. Our technical team follows a rigorous protocol designed for high-end residences.",
+    subtitle: "Your new home deserves respect. Our technical team follows a protocol rigorous designed for high-end residences.",
     clean: "Immaculate Environment",
     cleanSub: "Absolute cleanliness guarantee. Our team uses floor protection and leaves the site cleaner than found.",
     priority: "Schedule Priority",
@@ -258,21 +336,26 @@ const enTranslations: TranslationStructure = {
     currentMonthly: "YOUR CURRENT MONTHLY SPEND",
     waste: "Spent for life with zero return",
     warning: "\"You are already paying for the system, but receiving chemicals and plastic in exchange.\"",
-    solutionTitle: "The Smart Decision",
-    solutionSub: "Investment with Return",
+    solutionTitle: "The Christmas Gift",
+    solutionSub: "Cash straight into your hand",
     difference: "Savings of",
     months: "Months",
     cash: "Cash",
-    accept: "ACCEPT OFFER NOW",
-    negotiate: "CONTACT CONSULTANT",
-    offerValid: "Offer valid until",
+    accept: "CLAIM MY CASHBACK",
+    negotiate: "TALK TO HENRIQUE",
+    offerValid: "Valid until Dec 25th!",
     offerExpired: "OFFER EXPIRED",
+    disclaimer: "*Consult your representative for more information.",
     benefits: {
-      tank: "Updated System (2 Tanks)",
-      ro: "Ultra Pure Water (RO)",
-      discount: "Old Client Discount",
-      discountExpired: "Discount Expired",
+      tank: "Ultra-purification Premium System (2 Tanks)",
+      ro: "Reverse Osmosis Included (Alkaline Water)",
+      downpayment: "0 Downpayment",
+      taxes: "0 Taxes",
+      installation: "0 Installation",
+      discount: "CHRISTMAS CASHBACK",
+      discountExpired: "Christmas is over",
       payment: "First Payment:",
+      paymentDesc: "30 to 45 days after receiving warranties - 2026",
       included: "Included",
       standardPrice: "Standard Price"
     }
@@ -288,67 +371,80 @@ const enTranslations: TranslationStructure = {
     transparency: "Total Transparency",
     title: "Why NOT close now?",
     subtitle: "We answer the doubts no one has the courage to ask.",
-    q1: "My water looks clean, do I really need this?",
-    a1: "Visually, yes. But modern contaminants like PFAS are invisible. Installing the system is like health insurance.",
-    q2: "Can I find something cheaper at Home Depot?",
-    a2: "Sure, but those are amateur filters. Aquafeel is miniaturized industrial treatment. Cheap becomes expensive later.",
+    q1: "How does the $1,000 Cashback work?",
+    a1: "By qualifying and installing your system by 12/25, you receive $1,000 to use as you wish. It's a real incentive from our unit.",
+    q2: "Can I use the $1,000 to lower the total?",
+    a2: "You can use it however you want! It's your money. Many clients use it for family Christmas gifts.",
     q3: "doesn't want another monthly bill right now.",
-    a3: "We understand. That's why the first payment is only in March 2026. It's an expense swap, not a new bill.",
-    q4: "What if I move again?",
-    a4: "We move the system to your next house. The investment follows the family."
+    a3: "We understand. That's why the first payment is only in 2026. With $1,000 cashback, you cover your costs for months!",
+    q4: "If I move can I take the system? How much will it cost?",
+    a4: "Yes, you can take the system to your new home! However, to safely remove and transport the system, there is a small technical fee. This cost can be paid by you or can be completely covered (FREE) simply by recommending our work to another family that qualifies for the program.",
+    q5: "I know cheaper systems or Home Depot for half the price?",
+    a5: "Retail store filters are just carbon filters. They remove taste but not heavy contaminants. Aquafeel is a molecular purification system with a 25-year warranty. Comparing a store filter to Aquafeel is like comparing a table fan to a central AC system.",
+    q6: "Is this just a common filter?",
+    a6: "No. Common filters only reduce chlorine. Our 2-tank system + Reverse Osmosis is a physical molecular purification barrier that delivers alkaline water and removes heavy metals, viruses, and bacteria that store filters can't touch."
   },
   urgency: {
-    expires: "Offer Expires in:",
+    expires: "Christmas arriving in:",
     expiredTitle: "OFFER EXPIRED",
-    commission: "I waived $1,000 of my commission to approve this condition.",
-    limit: "LIMIT:",
-    footer: "After the timer hits zero, the proposal returns to original market value.",
-    expiredText: "The 48h deadline for the $1,000 discount has ended. Values have returned to the official table.",
-    expiredButton: "Try an exception now"
+    commission: "Exclusive Christmas Gift from Aquafeel Solutions PA.",
+    limit: "DEADLINE:",
+    footer: "After the timer hits zero, the $1,000 cashback benefit will be removed.",
+    expiredText: "The $1,000 Christmas cashback benefit ended on 12/25.",
+    expiredButton: "Check for remaining bonuses"
   },
   footer: {
     slogan: "Raising the standard of living through water purification.",
     talkTo: "Speak directly with your Consultant",
-    button: "Speak with Carlos Henrique",
-    rights: "© 2024 Aquafeel Solutions • Confidential Proposal"
+    button: "Speak with Henrique",
+    rights: "© 2024 Aquafeel Solutions • Christmas Special Proposal"
   },
   package: {
-    title: "Complete Package",
-    desc: "As elite clients returning to our family, we removed all barriers.",
+    title: "Christmas Campaign",
+    desc: "The biggest benefit ever offered in Aquafeel PA history.",
     soapYears: "Years of Soap",
     guarantee: "Total Warranty",
-    cost: "Upfront Cost",
+    cost: "CASHBACK",
     payment: "Payment",
-    firstQuota: "First Installment in March"
+    firstQuota: "Only 2026"
   }
 };
 
 const esTranslations: TranslationStructure = {
   welcome: {
     title: "Bienvenido",
-    subtitle: "Seleccione su idioma para continuar",
-    restricted: "Área Restringida",
-    system: "Sistema de Propuesta VIP - Aquafeel Solutions",
-    identify: "Identifíquese para liberar el acceso.",
+    subtitle: "Acceso exclusivo a la propuesta",
+    restricted: "Área de Acceso Restringido",
+    system: "Aquafeel Intelligence System",
+    identify: "Por favor, identifíquese para descifrar su propuesta.",
     yourName: "SU NOMBRE",
     spouseName: "NOMBRE DEL CÓNYUGE (OPCIONAL)",
     placeholderName: "Ej: Juan Pérez",
     placeholderSpouse: "Ej: María Pérez",
-    accessButton: "ACCEDER A LA PROPUESTA",
+    accessButton: "LIBERAR ACCESO VIP",
     backButton: "Volver",
-    secure: "Entorno Cifrado y Seguro",
-    error: "Por favor, identifíquese para acceder a la propuesta."
+    secure: "Protocolo de Seguridad Cifrado",
+    error: "Identificación necesaria para continuar."
   },
   hero: {
-    platinum: "Cliente Platinum Return",
-    welcomeHome: "Bienvenidos a Casa Nueva,",
-    subtitle: "Ya conocen la importancia del agua pura. Para su nuevo hogar, preparamos nuestro sistema más avanzado:",
-    systemName: "Tanque Doble + Ósmosis Inversa.",
-    warranty: "Garantía",
-    warrantySub: "Vitalicia",
-    discount: "Descuento VIP",
-    installation: "Instalación",
-    free: "Gratis ($0 Costo)"
+    platinum: "Regalo de Navidad Exclusivo",
+    welcomeHome: "Aquafeel te dará",
+    subtitle: "Califica para el programa de agua limpia antes del 25/12 y recibe un regalo único:",
+    systemName: "$1.000 DÓLARES DE CASHBACK.",
+    cashbackTitle: "CASHBACK NAVIDAD",
+    cashbackValue: "+$1.000,00",
+    warrantyTitle: "Garantía Vitalicia",
+    warrantySub: "Limitada (25 años)",
+    installTitle: "Instalación",
+    installSub: "Gratis ($0 Costo)",
+    soapTitle: "2 Años de Jabón",
+    soapSub: "Para toda la casa",
+    paymentTitle: "Primer Pago",
+    paymentSub: "30 a 45 días (2026)",
+    penaltyTitle: "Sin Penalidad",
+    penaltySub: "Anticipe sus pagos",
+    analysisTitle: "Análisis de Agua",
+    analysisSub: "1x al año (Anual)"
   },
   info: {
     label: "Hechos Reales, Datos Públicos",
@@ -360,14 +456,40 @@ const esTranslations: TranslationStructure = {
     analysisBody: "Nuestro sistema de Tanque Doble + Ósmosis Inversa es la única barrera física real entre su familia y estos contaminantes.",
     virus: "Elimina 99.9% de Virus y Bacterias",
     heavyMetals: "Elimina Metales Pesados (Plomo, Mercurio)",
-    chlorine: "Neutraliza Cloro y Cloraminas"
+    chlorine: "Neutraliza Cloro e Cloraminas"
+  },
+  malefices: {
+    title: "Top 10 Efectos Nocivos del Agua Contaminada",
+    subtitle: "Lo que no ves está destruyendo tu patrimonio y la salud de quienes amas.",
+    home: {
+      title: "Para la Salud del Hogar",
+      m1: "Corrosión de Tuberías: Los metales pesados y el cloro destruyen el cobre y PVC desde el interior.",
+      m2: "Muerte de Electrodomésticos: La cal y los minerales reducen la vida de lavadoras y calentadores en un 50%.",
+      m3: "Manchas Irreversibles: Depósitos minerales que destruyen el brillo de vidrios, mármoles y metales."
+    },
+    adults: {
+      title: "Para Adultos",
+      m1: "Daño en Piel y Cabello: El cloro elimina los aceites naturales, causando envejecimiento prematuro.",
+      m2: "Disruptores Endocrinos: PFAS y químicos afectan el equilibrio hormonal y el metabolismo.",
+      m3: "Acumulación de Metales: El plomo y el mercurio se acumulan en el organismo durante décadas."
+    },
+    children: {
+      title: "Para Niños",
+      m1: "Riesgos en el Desarrollo: El plomo en el agua está ligado a retrasos cognitivos y de crecimiento.",
+      m2: "Inmunidad Fragilizada: Exposición constante a bacterias y virus que sobreviven al tratamiento común.",
+      m3: "Problemas Respiratorios: Los vapores de cloro durante la ducha pueden agravar el asma y la bronquitis."
+    },
+    pets: {
+      title: "Para Mascotas",
+      m1: "Sobrecarga Renal: Perros y gatos son 10 veces más sensibles a las toxinas y al exceso de sodio en el agua."
+    }
   },
   contaminant: {
     label: "Alerta al Consumidor",
     title: "Lo que no sabe le está costando caro",
     subtitle: "Invirtió en una casa hermosa, pero sigue trayendo \"enemigos\" adentro a través de las compras de supermercado.",
     bottleTitle: "La Farsa del Agua Embotellada",
-    bottleBody: "Paga caro por agua que a menudo es solo agua del grifo filtrada. Peor aún: el plástico libera Ftalatos y BPA.",
+    bottleBody: "Paga caro por agua que a menudo es solo agua del grifo filtrada. Peor aún: el plástico libera Ftalatos e BPA.",
     soapTitle: "Veneno en la Lavandería",
     soapBody: "Los jabones tradicionales son a base de petróleo y grasa animal. No limpian; \"enmascaran\" la suciedad con químicos.",
     final: "Con Aquafeel + Pure Selects, elimina el 100% de estos riesgos inmediatamente."
@@ -397,7 +519,7 @@ const esTranslations: TranslationStructure = {
   whiteGlove: {
     goldStandard: "Estándar de Oro",
     title: "Protocolo de Excelencia Aquafeel",
-    subtitle: "Su nueva casa merece respeto. Nuestro equipo técnico sigue un protocolo riguroso para residencias de alto nivel.",
+    subtitle: "Su nueva casa merece respeto. Nuestro equipo técnico sigue un protocolo riguroso para residências de alto nivel.",
     clean: "Ambiente Impecable",
     cleanSub: "Garantía de limpieza absoluta. Usamos protección para el piso y dejamos el lugar más limpio de lo que lo encontramos.",
     priority: "Prioridad de Agenda",
@@ -418,21 +540,26 @@ const esTranslations: TranslationStructure = {
     currentMonthly: "SU GASTO MENSUAL ACTUAL",
     waste: "Gasto de por vida sin retorno",
     warning: "\"Ya están pagando por el sistema, pero recibiendo químicos y plástico a cambio.\"",
-    solutionTitle: "La Decisión Inteligente",
-    solutionSub: "Inversión con Retorno",
+    solutionTitle: "El Regalo de Navidad",
+    solutionSub: "Dinero directo en su mano",
     difference: "Ahorro de",
     months: "Meses",
-    cash: "Contado",
-    accept: "ACEPTAR OFERTA AHORA",
-    negotiate: "CONTACTAR CONSULTOR",
-    offerValid: "Oferta válida hasta",
+    cash: "Al Contado",
+    accept: "RECLAMAR MI CASHBACK",
+    negotiate: "HABLAR CON HENRIQUE",
+    offerValid: "¡Válido hasta el 25 de Dic!",
     offerExpired: "OFERTA EXPIRADA",
+    disclaimer: "*Consulte a su consultor para mayor información.",
     benefits: {
-      tank: "Sistema Actualizado (2 Tanques)",
-      ro: "Agua Ultra Pura (RO)",
-      discount: "Descuento Cliente Antiguo",
-      discountExpired: "Descuento Expirado",
+      tank: "Sistema Premium de ultra purificación (2 Tanques)",
+      ro: "Ósmosis Inversa Incluida (Agua Alcalina)",
+      downpayment: "0 Downpayment",
+      taxes: "0 Taxes",
+      installation: "0 Instalación",
+      discount: "CASHBACK NAVIDAD",
+      discountExpired: "Navidad ya pasó",
       payment: "Primer Pago:",
+      paymentDesc: "30 a 45 días después de recibir garantías - 2026",
       included: "Incluido",
       standardPrice: "Precio Regular"
     }
@@ -448,38 +575,42 @@ const esTranslations: TranslationStructure = {
     transparency: "Transparencia Total",
     title: "¿Por qué NO cerrar ahora?",
     subtitle: "Respondemos las dudas que nadie tiene el coraje de preguntar.",
-    q1: "Mi agua parece limpia, ¿realmente necesito esto?",
-    a1: "Visualmente, sí. Pero los contaminantes modernos como PFAS son invisibles. Instalar el sistema es como un seguro de salud.",
-    q2: "¿Puedo encontrar algo más barato en Home Depot?",
-    a2: "Seguro, pero son filtros aficionados. Aquafeel es tratamiento industrial miniaturizado. Lo barato sale caro.",
+    q1: "¿Cómo funciona el Cashback de $1.000?",
+    a1: "Al calificar e instalar su sistema antes del 25/12, recibe mil dólares para usar como quiera. Es un incentivo real de nuestra unidad.",
+    q2: "¿Puedo usar los $1.000 para bajar el total?",
+    a2: "¡Puede usarlo como quiera! El dinero es suyo. Muchos clientes lo usan para los regalos de Navidad.",
     q3: "no quiere otra cuenta mensual ahora.",
-    a3: "Entendemos. Por eso el primer pago es solo en Marzo de 2026. Es un cambio de gasto, no una cuenta nueva.",
-    q4: "¿Y si me mudo de casa otra vez?",
-    a4: "Movemos el sistema a su próxima casa. La inversión acompaña a la familia."
+    a3: "Entendemos. Por eso el primer pago es solo en 2026. Con los $1.000 de cashback, cubre sus gastos por meses.",
+    q4: "¿Si me mudo puedo llevar el sistema? ¿Cuánto costará?",
+    a4: "¡Sí, puedes llevar el sistema a tu nueva casa! Sin embargo, para desmontar y transportar el sistema de forma segura, hay un pequeño costo técnico. Este costo puede ser pagado por usted o puede ser totalmente bonificado (GRATIS) simplemente recomendando nuestro trabajo a otra familia calificada.",
+    q5: "¿Conozco sistemas más baratos o en Home Depot por mitad de precio?",
+    a5: "Los filtros de las tiendas son solo filtros de carbón. Quitan el sabor pero no los contaminantes pesados. Aquafeel es un sistema de purificación molecular con 25 años de garantia. Comparar un filtro de tienda con Aquafeel es como comparar un ventilador de mesa con un aire acondicionado central.",
+    q6: "¿Es esto un filtro común?",
+    a6: "No. Los filtros comunes solo reducen el cloro. Nuestro sistema de 2 tanques + Ósmosis Inversa es una barrera física de purificação molecular que entrega água alcalina y elimina metales pesados, virus y bactérias que los filtros comunes no pueden tocar."
   },
   urgency: {
-    expires: "Oferta Expira en:",
+    expires: "Navidad llega en:",
     expiredTitle: "OFERTA EXPIRADA",
-    commission: "Renuncié a $1,000 de mi comisión para aprobar esta condición.",
-    limit: "LÍMITE:",
-    footer: "Después de que el temporizador llegue a cero, la propuesta vuelve al valor original.",
-    expiredText: "El plazo de 48h para el descuento de $1,000 ha terminado. Los valores han vuelto a la tabla oficial.",
-    expiredButton: "Intentar una excepción ahora"
+    commission: "Regalo de Navidad exclusivo de Aquafeel Solutions PA.",
+    limit: "PLAZO FINAL:",
+    footer: "Después del 25, el beneficio de $1.000 cashback será eliminado.",
+    expiredText: "El beneficio de $1.000 cashback de Navidad terminó el 25/12.",
+    expiredButton: "Verificar si hay bonos restantes"
   },
   footer: {
     slogan: "Elevando el nivel de vida a través de la purificación del agua.",
     talkTo: "Hablar directamente con su Consultor",
-    button: "Hablar con Carlos Henrique",
-    rights: "© 2024 Aquafeel Solutions • Propuesta Confidencial"
+    button: "Hablar con Henrique",
+    rights: "© 2024 Aquafeel Solutions • Propuesta Especial de Navidad"
   },
   package: {
-    title: "Paquete Completo",
-    desc: "Como clientes de élite regresando a nuestra familia, eliminamos todas las barreras.",
+    title: "Campaña de Navidad",
+    desc: "El mayor beneficio jamás ofrecido en la historia de Aquafeel PA.",
     soapYears: "Años de Jabón",
     guarantee: "Garantía Total",
-    cost: "Costo Inicial",
+    cost: "CASHBACK",
     payment: "Pago",
-    firstQuota: "Primera Cuota en Marzo"
+    firstQuota: "Solo 2026"
   }
 };
 

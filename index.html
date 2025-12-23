@@ -8,11 +8,16 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Montserrat:wght@300;400;600;700;800;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
     <style>
       /* Regra de segurança para esconder qualquer imagem que falhe ou esteja vazia */
       img:not([src]), img[src=""], img[src="undefined"] {
         display: none !important;
+      }
+      .glass-card {
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
       }
     </style>
     <script>
@@ -20,7 +25,7 @@
         theme: {
           extend: {
             fontFamily: {
-              sans: ['Inter', 'sans-serif'],
+              sans: ['Montserrat', 'Inter', 'sans-serif'],
               serif: ['Playfair Display', 'serif'],
             },
             colors: {
@@ -32,14 +37,12 @@
                 600: '#0284c7',
                 800: '#075985',
                 900: '#0c4a6e',
-                950: '#082f49',
+                950: '#020d1a',
               },
-              danger: {
-                50: '#fef2f2',
-                100: '#fee2e2',
-                500: '#ef4444',
-                600: '#dc2626',
-                900: '#7f1d1d',
+              gold: {
+                400: '#f6e05e',
+                500: '#ecc94b',
+                600: '#d69e2e',
               }
             }
           }
@@ -59,7 +62,7 @@
 }
 </script>
 </head>
-  <body class="bg-gray-50 text-slate-800 antialiased">
+  <body class="bg-[#020d1a] text-slate-200 antialiased">
     <div id="root"></div>
     <script type="module" src="/index.tsx"></script>
   </body>
