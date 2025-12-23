@@ -42,11 +42,11 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
         
         {step === 'lang' ? (
           <div className="text-center animate-in fade-in slide-in-from-bottom-4 duration-500">
-            <div className="mb-10 inline-block w-full max-w-[300px]">
+            <div className="mb-10 flex justify-center">
               <img 
                 src={ASSETS.LOGO_WHITE} 
                 alt="Aquafeel Solutions" 
-                className="w-full h-auto object-contain drop-shadow-2xl"
+                className="w-full max-w-[320px] h-auto object-contain drop-shadow-2xl mix-blend-lighten"
               />
             </div>
             
@@ -80,8 +80,8 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
             </button>
 
             <div className="text-center mb-8 pt-6">
-              <div className="mb-6 inline-block w-[220px]">
-                <img src={ASSETS.LOGO_WHITE} alt="Aquafeel" className="w-full h-auto object-contain drop-shadow-2xl" />
+              <div className="mb-6 flex justify-center">
+                <img src={ASSETS.LOGO_WHITE} alt="Aquafeel" className="w-full max-w-[240px] h-auto object-contain drop-shadow-2xl mix-blend-lighten" />
               </div>
               <div className="flex items-center justify-center gap-2 mb-2">
                  <Lock size={16} className="text-emerald-500" />
