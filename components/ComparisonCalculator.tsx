@@ -39,11 +39,12 @@ export const ComparisonCalculator: React.FC<ComparisonCalculatorProps> = ({
   const cashPrice = isExpired ? 8790 : 7790;
   const subText = isExpired ? '' : '$1.000 OFF';
 
+  // Adicionado isFull: false para todos os planos padrão para satisfazer o TypeScript
   const plans = [
-    { id: '180x', label: `180 ${t.months}`, sub: '', amount: 111, icon: Calendar },
-    { id: '120x', label: `120 ${t.months}`, sub: '', amount: 150, icon: Calendar }, 
-    { id: '60x', label: `60 ${t.months}`, sub: '', amount: 185, icon: Calendar }, 
-    { id: '4x', label: `4 ${t.months}`, sub: '', amount: 2197, icon: Calendar }, 
+    { id: '180x', label: `180 ${t.months}`, sub: '', amount: 111, icon: Calendar, isFull: false },
+    { id: '120x', label: `120 ${t.months}`, sub: '', amount: 150, icon: Calendar, isFull: false }, 
+    { id: '60x', label: `60 ${t.months}`, sub: '', amount: 185, icon: Calendar, isFull: false }, 
+    { id: '4x', label: `4 ${t.months}`, sub: '', amount: 2197, icon: Calendar, isFull: false }, 
     { id: 'cash', label: t.cash, sub: subText, amount: cashPrice, icon: DollarSign, isFull: true },
   ];
 
