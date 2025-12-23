@@ -9,6 +9,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+      /* Regra de segurança para esconder qualquer imagem que falhe ou esteja vazia */
+      img:not([src]), img[src=""], img[src="undefined"] {
+        display: none !important;
+      }
+    </style>
     <script>
       tailwind.config = {
         theme: {
@@ -21,6 +27,7 @@
               aqua: {
                 50: '#f0f9ff',
                 100: '#e0f2fe',
+                200: '#bae6fd',
                 500: '#0ea5e9',
                 600: '#0284c7',
                 800: '#075985',

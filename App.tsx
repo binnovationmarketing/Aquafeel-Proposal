@@ -9,9 +9,8 @@ import { FAQ } from './components/FAQ';
 import { WhiteGloveService } from './components/WhiteGloveService';
 import { SoapLifestyle } from './components/SoapLifestyle';
 import { WelcomeScreen } from './components/WelcomeScreen';
-import { Phone, Lock, ChevronRight, LogOut, Globe } from 'lucide-react';
+import { Phone, Lock, ChevronRight, LogOut, Globe, Droplets } from 'lucide-react';
 import { Language, translations } from './utils/i18n';
-import { ASSETS } from './utils/assets';
 
 function App() {
   const [expirationDate, setExpirationDate] = useState<Date | null>(null);
@@ -111,13 +110,15 @@ function App() {
 
   return (
     <div className="min-h-screen bg-slate-50 font-sans selection:bg-aqua-200 selection:text-aqua-900">
-      <nav className="bg-white/95 backdrop-blur-md py-4 px-4 md:px-8 shadow-md flex justify-between items-center sticky top-0 z-50 border-b border-slate-100 transition-all duration-300 h-20 md:h-28">
-        <div className="flex items-center gap-1 h-full">
-          <img 
-            src={ASSETS.LOGO_BLUE} 
-            alt="Aquafeel Solutions" 
-            className="h-full w-auto object-contain mix-blend-multiply"
-          />
+      <nav className="bg-white px-4 md:px-8 shadow-md flex justify-between items-center sticky top-0 z-50 border-b border-slate-100 h-24 md:h-28">
+        <div className="flex items-center gap-3">
+          <div className="bg-aqua-600 p-2 rounded-xl text-white shadow-lg shadow-aqua-500/20">
+            <Droplets size={28} fill="currentColor" />
+          </div>
+          <div className="flex flex-col leading-none">
+            <span className="text-2xl md:text-3xl font-black text-aqua-950 tracking-tighter uppercase">AQUAFEEL</span>
+            <span className="text-[10px] md:text-xs font-bold text-aqua-600 tracking-[0.4em] uppercase ml-0.5">Solutions PA</span>
+          </div>
         </div>
         
         <div className="flex items-center gap-2 md:gap-4">
@@ -174,19 +175,24 @@ function App() {
 
       <footer className="bg-slate-950 text-white py-16 border-t border-slate-900 relative overflow-hidden">
         <div className="max-w-6xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-10 relative z-10">
-          <div className="text-center md:text-left">
-            <img src={ASSETS.LOGO_WHITE} alt="Aquafeel Solutions" className="h-14 w-auto mb-4 mx-auto md:mx-0 object-contain" />
-            <p className="text-slate-400 text-sm max-w-md">{t.footer.slogan}</p>
+          <div className="text-center md:text-left flex items-center gap-4">
+            <div className="bg-white/10 p-3 rounded-2xl border border-white/10 shadow-xl">
+              <Droplets size={36} className="text-aqua-400" fill="currentColor" />
+            </div>
+            <div className="flex flex-col">
+              <span className="text-3xl font-black tracking-tighter text-white uppercase leading-none">AQUAFEEL</span>
+              <span className="text-sm font-bold text-aqua-400 tracking-[0.4em] uppercase mt-1">Solutions PA</span>
+            </div>
           </div>
           <div className="text-center md:text-right flex flex-col items-center md:items-end">
-             <a href={`https://wa.me/12407806473?text=${whatsappMessage}`} target="_blank" className="bg-white text-slate-950 px-6 py-2 rounded-full font-bold flex items-center gap-4 hover:bg-aqua-50 transition-all shadow-lg">
+             <a href={`https://wa.me/12407806473?text=${whatsappMessage}`} target="_blank" className="bg-white text-slate-950 px-6 py-3 rounded-full font-black flex items-center gap-4 hover:bg-aqua-50 transition-all shadow-xl group">
                <Phone size={18} className="text-aqua-600" />
-               {t.footer.button}
-               <ChevronRight size={16} />
+               <span className="uppercase tracking-wide">{t.footer.button}</span>
+               <ChevronRight size={16} className="group-hover:translate-x-1 transition-transform" />
              </a>
           </div>
         </div>
-        <div className="text-center mt-16 text-slate-600 text-xs uppercase tracking-widest font-semibold">{t.footer.rights}</div>
+        <div className="text-center mt-16 text-slate-600 text-xs uppercase tracking-widest font-semibold border-t border-white/5 pt-8">{t.footer.rights}</div>
       </footer>
     </div>
   );

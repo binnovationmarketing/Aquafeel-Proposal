@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { Lock, ChevronRight, ShieldCheck, ArrowLeft } from 'lucide-react';
+import { Lock, ChevronRight, ShieldCheck, ArrowLeft, Droplets } from 'lucide-react';
 import { Language, translations } from '../utils/i18n';
-import { ASSETS } from '../utils/assets';
 
 interface WelcomeScreenProps {
   onComplete: (clientName: string, spouseName: string, lang: Language) => void;
@@ -42,12 +41,12 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
         
         {step === 'lang' ? (
           <div className="text-center animate-in fade-in slide-in-from-bottom-4 duration-500">
-            <div className="mb-10 flex justify-center">
-              <img 
-                src={ASSETS.LOGO_WHITE} 
-                alt="Aquafeel Solutions" 
-                className="w-full max-w-[320px] h-auto object-contain drop-shadow-2xl mix-blend-lighten"
-              />
+            <div className="mb-10 flex flex-col items-center">
+              <div className="bg-aqua-600/20 p-5 rounded-3xl mb-4 border border-aqua-500/30 shadow-2xl">
+                <Droplets size={64} className="text-aqua-400" fill="currentColor" />
+              </div>
+              <h2 className="text-4xl font-black text-white tracking-tighter uppercase leading-none">AQUAFEEL</h2>
+              <p className="text-sm font-bold text-aqua-400 tracking-[0.4em] uppercase mt-1">Solutions PA</p>
             </div>
             
             <p className="text-slate-400 text-sm mb-8 font-medium">
@@ -55,17 +54,17 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
             </p>
 
             <div className="grid gap-4">
-              <button onClick={() => handleLangSelect('en')} className="flex items-center gap-4 bg-slate-800/50 hover:bg-slate-700/80 border border-white/10 p-4 rounded-xl transition-all group">
+              <button onClick={() => handleLangSelect('en')} className="flex items-center gap-4 bg-slate-800/50 hover:bg-slate-700/80 border border-white/10 p-4 rounded-xl transition-all group w-full text-left">
                 <img src="https://flagcdn.com/w160/us.png" alt="USA" className="w-12 h-8 object-cover rounded shadow-md" />
                 <div className="text-left"><div className="font-bold text-white text-lg">English</div><div className="text-xs text-slate-400">United States</div></div>
                 <ChevronRight className="ml-auto text-slate-500 group-hover:text-white" />
               </button>
-              <button onClick={() => handleLangSelect('es')} className="flex items-center gap-4 bg-slate-800/50 hover:bg-slate-700/80 border border-white/10 p-4 rounded-xl transition-all group">
+              <button onClick={() => handleLangSelect('es')} className="flex items-center gap-4 bg-slate-800/50 hover:bg-slate-700/80 border border-white/10 p-4 rounded-xl transition-all group w-full text-left">
                 <img src="https://flagcdn.com/w160/es.png" alt="ES" className="w-12 h-8 object-cover rounded shadow-md" />
                 <div className="text-left"><div className="font-bold text-white text-lg">Español</div><div className="text-xs text-slate-400">España / Latino</div></div>
                 <ChevronRight className="ml-auto text-slate-500 group-hover:text-white" />
               </button>
-              <button onClick={() => handleLangSelect('pt')} className="flex items-center gap-4 bg-slate-800/50 hover:bg-slate-700/80 border border-white/10 p-4 rounded-xl transition-all group">
+              <button onClick={() => handleLangSelect('pt')} className="flex items-center gap-4 bg-slate-800/50 hover:bg-slate-700/80 border border-white/10 p-4 rounded-xl transition-all group w-full text-left">
                 <img src="https://flagcdn.com/w160/br.png" alt="BR" className="w-12 h-8 object-cover rounded shadow-md" />
                 <div className="text-left"><div className="font-bold text-white text-lg">Português</div><div className="text-xs text-slate-400">Brasil / Portugal</div></div>
                 <ChevronRight className="ml-auto text-slate-500 group-hover:text-white" />
@@ -80,8 +79,12 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
             </button>
 
             <div className="text-center mb-8 pt-6">
-              <div className="mb-6 flex justify-center">
-                <img src={ASSETS.LOGO_WHITE} alt="Aquafeel" className="w-full max-w-[240px] h-auto object-contain drop-shadow-2xl mix-blend-lighten" />
+               <div className="mb-6 flex flex-col items-center">
+                <div className="bg-aqua-600/20 p-3 rounded-2xl mb-2 border border-aqua-500/30 shadow-xl">
+                    <Droplets size={32} className="text-aqua-400" fill="currentColor" />
+                </div>
+                <h2 className="text-2xl font-black text-white tracking-tighter uppercase leading-none">AQUAFEEL</h2>
+                <p className="text-[10px] font-bold text-aqua-400 tracking-[0.4em] uppercase mt-1">Solutions PA</p>
               </div>
               <div className="flex items-center justify-center gap-2 mb-2">
                  <Lock size={16} className="text-emerald-500" />
