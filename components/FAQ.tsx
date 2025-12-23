@@ -69,6 +69,26 @@ export const FAQ: React.FC<FAQProps> = ({ spouseName, lang }) => {
                     {t.a4}
                 </div>
             </details>
+
+            <details className="group bg-slate-50 rounded-xl overflow-hidden transition-all duration-300 open:bg-white open:shadow-lg open:ring-1 open:ring-slate-200">
+                <summary className="flex items-center justify-between p-6 cursor-pointer list-none">
+                    <span className="font-bold text-slate-800">"{t.q5}"</span>
+                    <Plus className="text-slate-400 group-open:rotate-45 transition-transform duration-300" />
+                </summary>
+                <div className="px-6 pb-6 pt-0 text-slate-600 leading-relaxed border-t border-slate-100/0 group-open:border-slate-100 pt-4 mt-2">
+                    {t.a5}
+                </div>
+            </details>
+
+            <details className="group bg-slate-50 rounded-xl overflow-hidden transition-all duration-300 open:bg-white open:shadow-lg open:ring-1 open:ring-slate-200">
+                <summary className="flex items-center justify-between p-6 cursor-pointer list-none">
+                    <span className="font-bold text-slate-800">"{t.q6}"</span>
+                    <Plus className="text-slate-400 group-open:rotate-45 transition-transform duration-300" />
+                </summary>
+                <div className="px-6 pb-6 pt-0 text-slate-600 leading-relaxed border-t border-slate-100/0 group-open:border-slate-100 pt-4 mt-2">
+                    {t.a6}
+                </div>
+            </details>
         </div>
       </div>
     </section>
