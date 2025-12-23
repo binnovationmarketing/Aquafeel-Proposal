@@ -24,6 +24,28 @@ function App() {
 
   // Lógica de Inicialização
   useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const debugMode = params.get('mode');
+
+    // --- MODO DE TESTE (CHEAT CODES) ---
+    if (debugMode === 'reset') {
+      localStorage.removeItem('proposalFirstAccess');
+      localStorage.removeItem('proposalClientData');
+      console.log("Memória limpa! Recarregando como novo usuário...");
+      // Remove o parametro mode=reset da URL para não loopar e recarrega
+      const newUrl = window.location.href.replace('&mode=reset', '').replace('?mode=reset', '');
+      window.history.replaceState({}, document.title, newUrl);
+    }
+    
+    if (debugMode === 'expired') {
+       // Força uma data de 3 dias atrás
+       const threeDaysAgo = new Date();
+       threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
+       localStorage.setItem('proposalFirstAccess', threeDaysAgo.getTime().toString());
+       console.log("Modo Expirado Ativado!");
+    }
+    // -----------------------------------
+
     // 1. Recuperar Data
     const storedStartDate = localStorage.getItem('proposalFirstAccess');
     let startDate: Date;
@@ -46,7 +68,6 @@ function App() {
 
     // 2. Tentar Ler da URL (Link Mágico)
     // Exemplo: site.com/?n=Aline&s=Sinval&l=pt
-    const params = new URLSearchParams(window.location.search);
     const urlName = params.get('n') || params.get('name'); // Aceita 'n' ou 'name'
     const urlSpouse = params.get('s') || params.get('spouse'); // Aceita 's' ou 'spouse'
     const urlLang = params.get('l') || params.get('lang'); // Aceita 'l' ou 'lang'
