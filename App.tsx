@@ -111,12 +111,12 @@ function App() {
 
   return (
     <div className="min-h-screen bg-slate-50 font-sans selection:bg-aqua-200 selection:text-aqua-900">
-      <nav className="bg-white/90 backdrop-blur-md py-3 px-4 md:px-6 shadow-sm flex justify-between items-center sticky top-0 z-50 border-b border-slate-100 transition-all duration-300">
-        <div className="flex items-center gap-1">
+      <nav className="bg-white/95 backdrop-blur-md py-4 px-4 md:px-8 shadow-md flex justify-between items-center sticky top-0 z-50 border-b border-slate-100 transition-all duration-300 h-20 md:h-28">
+        <div className="flex items-center gap-1 h-full">
           <img 
             src={ASSETS.LOGO_BLUE} 
             alt="Aquafeel Solutions" 
-            className="h-10 md:h-16 w-auto object-contain"
+            className="h-full w-auto object-contain mix-blend-multiply"
           />
         </div>
         
@@ -175,7 +175,7 @@ function App() {
       <footer className="bg-slate-950 text-white py-16 border-t border-slate-900 relative overflow-hidden">
         <div className="max-w-6xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-10 relative z-10">
           <div className="text-center md:text-left">
-            <img src={ASSETS.LOGO_WHITE} alt="Aquafeel Solutions" className="h-12 w-auto mb-4 mx-auto md:mx-0 object-contain" />
+            <img src={ASSETS.LOGO_WHITE} alt="Aquafeel Solutions" className="h-14 w-auto mb-4 mx-auto md:mx-0 object-contain" />
             <p className="text-slate-400 text-sm max-w-md">{t.footer.slogan}</p>
           </div>
           <div className="text-center md:text-right flex flex-col items-center md:items-end">
