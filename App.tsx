@@ -13,7 +13,6 @@ import { Phone, Lock, ChevronRight } from 'lucide-react';
 import { Language, translations } from './utils/i18n';
 
 function App() {
-  const [selectedPlan, setSelectedPlan] = useState<string>('180x');
   const [expirationDate, setExpirationDate] = useState<Date | null>(null);
   const [cleaningTotal, setCleaningTotal] = useState<number>(0);
   const [isExpired, setIsExpired] = useState(false);
@@ -68,13 +67,14 @@ function App() {
 
     // 2. Tentar Ler da URL (Link Mágico)
     // Exemplo: site.com/?n=Aline&s=Sinval&l=pt
-    const urlName = params.get('n') || params.get('name'); // Aceita 'n' ou 'name'
-    const urlSpouse = params.get('s') || params.get('spouse'); // Aceita 's' ou 'spouse'
-    const urlLang = params.get('l') || params.get('lang'); // Aceita 'l' ou 'lang'
+    const paramsUrl = new URLSearchParams(window.location.search);
+    const urlName = paramsUrl.get('n') || paramsUrl.get('name'); // Aceita 'n' ou 'name'
+    const urlSpouse = paramsUrl.get('s') || paramsUrl.get('spouse'); // Aceita 's' ou 'spouse'
+    const urlLang = paramsUrl.get('l') || paramsUrl.get('lang'); // Aceita 'l' ou 'lang'
 
     if (urlName) {
       // Se tiver nome na URL, força o login
-      const selectedLang: Language = (urlLang === 'en' || urlLang === 'es' || urlLang === 'pt') ? urlLang : 'pt';
+      const selectedLang: Language = (urlLang === 'en' || urlLang === 'es' || urlLang === 'pt') ? (urlLang as Language) : 'pt';
       const data = { 
         name: urlName, 
         spouse: urlSpouse || '', 
@@ -110,7 +110,8 @@ function App() {
   };
 
   const handlePlanSelect = (plan: string) => {
-    setSelectedPlan(plan);
+    // Apenas log para debug, o estado é controlado internamente no componente
+    console.log("Plan selected:", plan);
   };
 
   // Timer para checar expiração em tempo real
