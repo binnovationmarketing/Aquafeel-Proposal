@@ -1,13 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { Clock, AlertOctagon } from 'lucide-react';
+import { Clock, AlertOctagon, Ban } from 'lucide-react';
 import { Language, translations } from '../utils/i18n';
 
 interface UrgencyBannerProps {
   expirationDate: Date;
   lang: Language;
+  isExpired?: boolean;
+  whatsappMessage?: string;
 }
 
-export const UrgencyBanner: React.FC<UrgencyBannerProps> = ({ expirationDate, lang }) => {
+export const UrgencyBanner: React.FC<UrgencyBannerProps> = ({ 
+    expirationDate, 
+    lang, 
+    isExpired = false,
+    whatsappMessage 
+}) => {
   const t = translations[lang].urgency;
   
   // Função auxiliar para cálculo do tempo
@@ -28,12 +35,13 @@ export const UrgencyBanner: React.FC<UrgencyBannerProps> = ({ expirationDate, la
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
 
   useEffect(() => {
+    if (isExpired) return;
     const timer = setInterval(() => {
       setTimeLeft(calculateTimeLeft());
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [expirationDate]);
+  }, [expirationDate, isExpired]);
 
   // Formatação de data adaptada para cada idioma
   const formattedDate = expirationDate.toLocaleDateString(
@@ -45,6 +53,39 @@ export const UrgencyBanner: React.FC<UrgencyBannerProps> = ({ expirationDate, la
     }
   );
 
+  // RENDERIZAÇÃO QUANDO EXPIRADO (ZONA VERMELHA)
+  if (isExpired) {
+    return (
+        <div className="bg-red-700 border-t-4 border-red-500 py-6 px-4 sticky bottom-0 z-50 md:relative shadow-[0_-10px_40px_rgba(220,38,38,0.3)] animate-in slide-in-from-bottom duration-700">
+            <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
+                <div className="flex items-center gap-5">
+                    <div className="bg-white text-red-600 p-3 rounded-full shadow-lg">
+                        <Ban size={32} strokeWidth={3} />
+                    </div>
+                    <div>
+                        <h3 className="font-black text-white text-xl md:text-3xl uppercase tracking-tight drop-shadow-md">
+                        {t.expiredTitle}
+                        </h3>
+                        <p className="text-red-100 mt-1 text-sm md:text-base font-medium max-w-lg">
+                        {t.expiredText}
+                        </p>
+                    </div>
+                </div>
+                
+                <a 
+                    href={`https://wa.me/12407806473?text=${whatsappMessage}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-white text-red-700 hover:bg-red-50 px-8 py-3 rounded-full font-black uppercase tracking-wide text-sm shadow-xl transform transition-all hover:scale-105 active:scale-95"
+                >
+                    {t.expiredButton}
+                </a>
+            </div>
+        </div>
+    );
+  }
+
+  // RENDERIZAÇÃO NORMAL (CONTAGEM REGRESSIVA)
   return (
     <div className="bg-slate-900 border-y-4 border-amber-500 py-6 px-4 sticky bottom-0 z-50 md:relative shadow-[0_-10px_40px_rgba(0,0,0,0.5)]">
       <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">

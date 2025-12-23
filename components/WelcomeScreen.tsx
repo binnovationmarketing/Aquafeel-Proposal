@@ -36,7 +36,7 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 min-h-screen bg-[#0B1120] flex items-center justify-center p-4 overflow-y-auto">
+    <div className="fixed inset-0 z-[100] min-h-screen bg-[#0B1120] flex items-center justify-center p-4 overflow-y-auto">
       {/* Background Effects */}
       <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5 pointer-events-none"></div>
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-emerald-600/20 rounded-full blur-[120px] animate-pulse pointer-events-none"></div>
@@ -105,7 +105,7 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
             </div>
           </div>
         ) : (
-          // STEP 2: FORM (Using divs instead of form tag)
+          // STEP 2: FORM (Using divs instead of form tag to avoid refresh)
           <div className="animate-in fade-in slide-in-from-right-8 duration-500 relative" onKeyDown={handleKeyDown}>
             <button 
               onClick={() => setStep('lang')}

@@ -35,7 +35,7 @@ const ptTranslations = {
     title: "O Que Está Realmente na Sua Água?",
     subtitle: "A água municipal cumpre regulamentos básicos, mas \"legal\" não significa \"saudável\". Sua nova casa merece proteção contra os contaminantes modernos.",
     alertTitle: "Alerta Regional",
-    alertBody: "Estudos recentes indicam altos níveis de PFAS (Químicos Eternos), Chumbo e Cloro nas redes de abastecimento. Estes compostos se acumulam no corpo e nos encanamentos.",
+    alertBody: "Estudios recentes indicam altos níveis de PFAS (Químicos Eternos), Chumbo e Cloro nas redes de abastecimento. Estes compostos se acumulam no corpo e nos encanamentos.",
     analysisTitle: "Análise Aquafeel",
     analysisBody: "Nosso sistema de Tanque Duplo + Osmose Reversa é a única barreira física real entre sua família e estes contaminantes.",
     virus: "Elimina 99.9% de Vírus e Bactérias",
@@ -93,7 +93,7 @@ const ptTranslations = {
     problemSub: "Gastos que você já tem hoje",
     waterDrink: "Água para Beber",
     waterCook: "Água para Cozinhar",
-    cleaning: "Produtos de Limpeza",
+    cleaning: "Produtos de Limpieza",
     fillChart: "Preencha o gráfico acima!",
     currentMonthly: "SEU GASTO ATUAL MENSAL",
     waste: "Gasto por toda a sua vida a troco de nada",
@@ -104,13 +104,17 @@ const ptTranslations = {
     months: "Meses",
     cash: "À Vista",
     accept: "ACEITAR OFERTA AGORA",
+    negotiate: "FALAR COM CONSULTOR",
     offerValid: "Oferta válida até",
+    offerExpired: "OFERTA EXPIRADA",
     benefits: {
       tank: "Sistema Atualizado (2 Tanques)",
       ro: "Água Ultra Pura (RO)",
       discount: "Desconto Cliente Antigo",
+      discountExpired: "Desconto Expirado",
       payment: "Primeiro Pagamento:",
-      included: "Incluso"
+      included: "Incluso",
+      standardPrice: "Preço Regular"
     }
   },
   testimonials: {
@@ -135,9 +139,12 @@ const ptTranslations = {
   },
   urgency: {
     expires: "Oferta Expira em:",
+    expiredTitle: "OFERTA EXPIRADA",
     commission: "Abri mão de $1.000 da minha comissão para aprovar esta condição.",
     limit: "LIMITE:",
-    footer: "Após o cronômetro zerar, a proposta retorna ao valor original."
+    footer: "Após o cronômetro zerar, a proposta retorna ao valor original.",
+    expiredText: "O prazo de 48h para o desconto de $1.000 encerrou. Os valores retornaram à tabela oficial.",
+    expiredButton: "Tentar uma exceção agora"
   },
   footer: {
     slogan: "Elevando o padrão de vida através da purificação de água.",
@@ -257,13 +264,17 @@ const enTranslations: TranslationStructure = {
     months: "Months",
     cash: "Cash",
     accept: "ACCEPT OFFER NOW",
+    negotiate: "CONTACT CONSULTANT",
     offerValid: "Offer valid until",
+    offerExpired: "OFFER EXPIRED",
     benefits: {
       tank: "Updated System (2 Tanks)",
       ro: "Ultra Pure Water (RO)",
       discount: "Old Client Discount",
+      discountExpired: "Discount Expired",
       payment: "First Payment:",
-      included: "Included"
+      included: "Included",
+      standardPrice: "Standard Price"
     }
   },
   testimonials: {
@@ -288,9 +299,12 @@ const enTranslations: TranslationStructure = {
   },
   urgency: {
     expires: "Offer Expires in:",
+    expiredTitle: "OFFER EXPIRED",
     commission: "I waived $1,000 of my commission to approve this condition.",
     limit: "LIMIT:",
-    footer: "After the timer hits zero, the proposal returns to original market value."
+    footer: "After the timer hits zero, the proposal returns to original market value.",
+    expiredText: "The 48h deadline for the $1,000 discount has ended. Values have returned to the official table.",
+    expiredButton: "Try an exception now"
   },
   footer: {
     slogan: "Raising the standard of living through water purification.",
@@ -410,13 +424,17 @@ const esTranslations: TranslationStructure = {
     months: "Meses",
     cash: "Contado",
     accept: "ACEPTAR OFERTA AHORA",
+    negotiate: "CONTACTAR CONSULTOR",
     offerValid: "Oferta válida hasta",
+    offerExpired: "OFERTA EXPIRADA",
     benefits: {
-      tank: "Sistema Actualizado (2 Tanques)", // Fixed spelling in Portuguese just in case
+      tank: "Sistema Actualizado (2 Tanques)",
       ro: "Agua Ultra Pura (RO)",
-      discount: "Descuento Cliente Antiguo", // Fixed Antigo to Antiguo
+      discount: "Descuento Cliente Antiguo",
+      discountExpired: "Descuento Expirado",
       payment: "Primer Pago:",
-      included: "Incluido"
+      included: "Incluido",
+      standardPrice: "Precio Regular"
     }
   },
   testimonials: {
@@ -441,9 +459,12 @@ const esTranslations: TranslationStructure = {
   },
   urgency: {
     expires: "Oferta Expira en:",
+    expiredTitle: "OFERTA EXPIRADA",
     commission: "Renuncié a $1,000 de mi comisión para aprobar esta condición.",
     limit: "LÍMITE:",
-    footer: "Después de que el temporizador llegue a cero, la propuesta vuelve al valor original."
+    footer: "Después de que el temporizador llegue a cero, la propuesta vuelve al valor original.",
+    expiredText: "El plazo de 48h para el descuento de $1,000 ha terminado. Los valores han vuelto a la tabla oficial.",
+    expiredButton: "Intentar una excepción ahora"
   },
   footer: {
     slogan: "Elevando el nivel de vida a través de la purificación del agua.",

@@ -8,7 +8,8 @@ import {
   Calendar, 
   DollarSign,
   ArrowRight,
-  Utensils
+  Utensils,
+  Ban
 } from 'lucide-react';
 import { Language, translations } from '../utils/i18n';
 
@@ -17,21 +18,33 @@ interface ComparisonCalculatorProps {
   expirationDate: Date;
   cleaningTotal: number;
   lang: Language;
+  whatsappMessage: string;
+  isExpired?: boolean;
 }
 
-export const ComparisonCalculator: React.FC<ComparisonCalculatorProps> = ({ onSelectPlan, expirationDate, cleaningTotal, lang }) => {
+export const ComparisonCalculator: React.FC<ComparisonCalculatorProps> = ({ 
+    onSelectPlan, 
+    expirationDate, 
+    cleaningTotal, 
+    lang, 
+    whatsappMessage,
+    isExpired = false 
+}) => {
   const [selectedPlan, setSelectedPlan] = useState<string>('180x');
   const [waterDrinking, setWaterDrinking] = useState<number>(0);
   const [waterCooking, setWaterCooking] = useState<number>(0);
   const t = translations[lang].calculator;
 
-  // Preços atualizados conforme solicitação
+  // Preços
+  const cashPrice = isExpired ? 8790 : 7790;
+  const subText = isExpired ? '' : '$1.000 OFF';
+
   const plans = [
     { id: '180x', label: `180 ${t.months}`, sub: '', amount: 111, icon: Calendar },
     { id: '120x', label: `120 ${t.months}`, sub: '', amount: 150, icon: Calendar }, 
     { id: '60x', label: `60 ${t.months}`, sub: '', amount: 185, icon: Calendar }, 
     { id: '4x', label: `4 ${t.months}`, sub: '', amount: 2197, icon: Calendar }, 
-    { id: 'cash', label: t.cash, sub: '$1.000 OFF', amount: 7790, icon: DollarSign, isFull: true },
+    { id: 'cash', label: t.cash, sub: subText, amount: cashPrice, icon: DollarSign, isFull: true },
   ];
 
   const currentPlan = plans.find(p => p.id === selectedPlan) || plans[0];
@@ -145,22 +158,26 @@ export const ComparisonCalculator: React.FC<ComparisonCalculatorProps> = ({ onSe
         </div>
 
         {/* RIGHT SIDE: THE SOLUTION (Aquafeel VIP) */}
-        <div className="bg-[#0f172a] text-white p-6 md:p-10 flex flex-col relative overflow-hidden">
+        <div className={`text-white p-6 md:p-10 flex flex-col relative overflow-hidden transition-colors duration-500 ${isExpired ? 'bg-slate-900' : 'bg-[#0f172a]'}`}>
            {/* Background decorative shine */}
-           <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500 rounded-full blur-[100px] opacity-20 pointer-events-none"></div>
-           <div className="absolute top-0 right-0 bg-emerald-500 text-white text-[10px] font-bold px-3 py-1 rounded-bl-lg uppercase tracking-wider z-10">VIP</div>
+           {!isExpired && (
+             <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500 rounded-full blur-[100px] opacity-20 pointer-events-none"></div>
+           )}
+           <div className={`absolute top-0 right-0 text-[10px] font-bold px-3 py-1 rounded-bl-lg uppercase tracking-wider z-10 ${isExpired ? 'bg-red-600 text-white' : 'bg-emerald-500 text-white'}`}>
+             {isExpired ? t.offerExpired : 'VIP'}
+           </div>
 
           <div className="relative z-10 h-full flex flex-col">
             <div className="text-center mb-6">
               <h2 className="text-3xl font-black text-white uppercase tracking-tight">{t.solutionTitle}</h2>
-              <p className="text-xs font-bold text-emerald-400 tracking-widest uppercase mt-1">{t.solutionSub}</p>
+              <p className={`text-xs font-bold tracking-widest uppercase mt-1 ${isExpired ? 'text-red-400' : 'text-emerald-400'}`}>{t.solutionSub}</p>
             </div>
 
             <div className="text-center mb-8 relative">
               {currentPlan.isFull ? (
                   <div className="flex flex-col items-center">
-                    <span className="text-slate-400 line-through text-lg font-bold mb-1">$8,790</span>
-                    <div className="text-6xl font-black text-white tracking-tighter text-emerald-400">
+                    {!isExpired && <span className="text-slate-400 line-through text-lg font-bold mb-1">$8,790</span>}
+                    <div className={`text-6xl font-black text-white tracking-tighter ${isExpired ? 'text-white' : 'text-emerald-400'}`}>
                         ${currentPlan.amount.toLocaleString()}
                     </div>
                   </div>
@@ -171,8 +188,8 @@ export const ComparisonCalculator: React.FC<ComparisonCalculatorProps> = ({ onSe
                     {currentPlan.amount}
                 </div>
                 {monthlyTotal > 0 && (
-                    <p className="text-lg text-emerald-400 font-medium mt-1">
-                    {t.difference}: <span className="text-white bg-emerald-600 px-2 rounded">${Math.abs(monthlyTotal - currentPlan.amount)}</span>
+                    <p className={`text-lg font-medium mt-1 ${isExpired ? 'text-slate-400' : 'text-emerald-400'}`}>
+                    {t.difference}: <span className={`text-white px-2 rounded ${isExpired ? 'bg-slate-700' : 'bg-emerald-600'}`}>${Math.abs(monthlyTotal - currentPlan.amount)}</span>
                     </p>
                 )}
                 </>
@@ -190,7 +207,9 @@ export const ComparisonCalculator: React.FC<ComparisonCalculatorProps> = ({ onSe
                   }}
                   className={`flex flex-col items-center justify-center p-2 rounded-xl border transition-all duration-200 w-[48%] sm:w-[30%] md:w-auto md:flex-1 ${
                     selectedPlan === plan.id 
-                      ? 'bg-emerald-600 border-emerald-500 text-white shadow-lg shadow-emerald-900/50 scale-105 relative z-10' 
+                      ? (isExpired 
+                          ? 'bg-slate-700 border-slate-500 text-white' 
+                          : 'bg-emerald-600 border-emerald-500 text-white shadow-lg shadow-emerald-900/50 scale-105 relative z-10')
                       : 'bg-slate-800/50 border-slate-700 text-slate-400 hover:bg-slate-700 hover:text-white'
                   }`}
                 >
@@ -200,20 +219,30 @@ export const ComparisonCalculator: React.FC<ComparisonCalculatorProps> = ({ onSe
             </div>
 
             {/* Benefits List - Focado no que a Aline Ganha */}
-            <div className="bg-slate-800/50 rounded-xl p-5 mb-8 border border-slate-700">
+            <div className={`rounded-xl p-5 mb-8 border ${isExpired ? 'bg-red-900/10 border-red-900/30' : 'bg-slate-800/50 border-slate-700'}`}>
                 <div className="grid grid-cols-1 gap-3 text-sm">
                     <div className="flex justify-between items-center text-white border-b border-slate-700/50 pb-2">
-                        <span className="flex items-center gap-2"><CheckCircle2 size={16} className="text-emerald-400"/> {t.benefits.tank}</span>
+                        <span className="flex items-center gap-2"><CheckCircle2 size={16} className={isExpired ? 'text-slate-500' : 'text-emerald-400'}/> {t.benefits.tank}</span>
                         <span className="font-bold">{t.benefits.included}</span>
                     </div>
                     <div className="flex justify-between items-center text-white border-b border-slate-700/50 pb-2">
-                        <span className="flex items-center gap-2"><CheckCircle2 size={16} className="text-emerald-400"/> {t.benefits.ro}</span>
+                        <span className="flex items-center gap-2"><CheckCircle2 size={16} className={isExpired ? 'text-slate-500' : 'text-emerald-400'}/> {t.benefits.ro}</span>
                         <span className="font-bold">{t.benefits.included}</span>
                     </div>
-                    <div className="flex justify-between items-center text-white border-b border-slate-700/50 pb-2">
-                        <span className="flex items-center gap-2 text-amber-400 font-bold"><Gift size={16}/> {t.benefits.discount}</span>
-                        <span className="font-bold text-amber-400">-$1.000,00</span>
-                    </div>
+                    
+                    {/* Linha do Desconto Dinâmica */}
+                    {isExpired ? (
+                        <div className="flex justify-between items-center text-slate-400 border-b border-slate-700/50 pb-2">
+                            <span className="flex items-center gap-2 text-red-400 font-bold"><Ban size={16}/> {t.benefits.discountExpired}</span>
+                            <span className="font-bold text-red-400 line-through">-$1.000,00</span>
+                        </div>
+                    ) : (
+                        <div className="flex justify-between items-center text-white border-b border-slate-700/50 pb-2">
+                            <span className="flex items-center gap-2 text-amber-400 font-bold"><Gift size={16}/> {t.benefits.discount}</span>
+                            <span className="font-bold text-amber-400">-$1.000,00</span>
+                        </div>
+                    )}
+
                     <div className="flex justify-between items-center text-white pt-1 bg-amber-500/10 p-2 rounded">
                         <span className="flex items-center gap-2 text-white font-bold"><Calendar size={16}/> {t.benefits.payment}</span>
                         <span className="font-black text-amber-400 text-lg uppercase">MAR 2026</span>
@@ -224,16 +253,20 @@ export const ComparisonCalculator: React.FC<ComparisonCalculatorProps> = ({ onSe
             {/* Action Buttons */}
             <div className="mt-auto space-y-4">
               <a 
-                href={`https://wa.me/12407806473?text=${lang === 'pt' ? 'Ol%C3%A1' : 'Hello'}`}
+                href={`https://wa.me/12407806473?text=${whatsappMessage}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full bg-emerald-500 hover:bg-emerald-400 text-white font-black text-lg py-4 rounded-xl shadow-lg shadow-emerald-900/40 transform transition-all hover:-translate-y-1 flex items-center justify-center gap-3 cursor-pointer group"
+                className={`w-full font-black text-lg py-4 rounded-xl shadow-lg transform transition-all hover:-translate-y-1 flex items-center justify-center gap-3 cursor-pointer group ${
+                    isExpired 
+                    ? 'bg-red-600 hover:bg-red-500 text-white shadow-red-900/40' 
+                    : 'bg-emerald-500 hover:bg-emerald-400 text-white shadow-emerald-900/40'
+                }`}
               >
-                <span>{t.accept}</span>
+                <span>{isExpired ? t.negotiate : t.accept}</span>
                 <ArrowRight className="group-hover:translate-x-1 transition-transform" size={24} />
               </a>
-              <p className="text-center text-slate-400 text-[10px]">
-                {t.offerValid} {dateString}
+              <p className={`text-center text-[10px] ${isExpired ? 'text-red-400 font-bold' : 'text-slate-400'}`}>
+                {isExpired ? t.offerExpired : `${t.offerValid} ${dateString}`}
               </p>
             </div>
           </div>

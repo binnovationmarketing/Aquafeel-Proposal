@@ -16,14 +16,15 @@ function App() {
   const [selectedPlan, setSelectedPlan] = useState<string>('180x');
   const [expirationDate, setExpirationDate] = useState<Date | null>(null);
   const [cleaningTotal, setCleaningTotal] = useState<number>(0);
+  const [isExpired, setIsExpired] = useState(false);
   
   // Estado para os nomes e idioma
   const [clientData, setClientData] = useState<{name: string, spouse: string, lang: Language} | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
 
-  // Lógica de Inicialização (Data e Nomes)
+  // Lógica de Inicialização
   useEffect(() => {
-    // 1. Recuperar Data - Usando chave limpa (sem versão _vX)
+    // 1. Recuperar Data
     const storedStartDate = localStorage.getItem('proposalFirstAccess');
     let startDate: Date;
 
@@ -33,19 +34,51 @@ function App() {
       startDate = new Date();
       localStorage.setItem('proposalFirstAccess', startDate.getTime().toString());
     }
+    // Expira em 48h
     const expDate = new Date(startDate.getTime() + (48 * 60 * 60 * 1000));
     setExpirationDate(expDate);
 
-    // 2. Recuperar Nomes e Idioma - Usando chave limpa
+    // Checar se já expirou
+    const now = new Date();
+    if (now > expDate) {
+      setIsExpired(true);
+    }
+
+    // 2. Tentar Ler da URL (Link Mágico)
+    // Exemplo: site.com/?n=Aline&s=Sinval&l=pt
+    const params = new URLSearchParams(window.location.search);
+    const urlName = params.get('n') || params.get('name'); // Aceita 'n' ou 'name'
+    const urlSpouse = params.get('s') || params.get('spouse'); // Aceita 's' ou 'spouse'
+    const urlLang = params.get('l') || params.get('lang'); // Aceita 'l' ou 'lang'
+
+    if (urlName) {
+      // Se tiver nome na URL, força o login
+      const selectedLang: Language = (urlLang === 'en' || urlLang === 'es' || urlLang === 'pt') ? urlLang : 'pt';
+      const data = { 
+        name: urlName, 
+        spouse: urlSpouse || '', 
+        lang: selectedLang 
+      };
+      setClientData(data);
+      localStorage.setItem('proposalClientData', JSON.stringify(data));
+      setIsLoaded(true);
+      return; // Sai da função para não ler o localStorage antigo
+    }
+
+    // 3. Recuperar Cliente do LocalStorage (se não veio da URL)
     const storedClient = localStorage.getItem('proposalClientData');
     if (storedClient) {
       try {
-        setClientData(JSON.parse(storedClient));
+        const parsed = JSON.parse(storedClient);
+        if (parsed && parsed.name) {
+          setClientData(parsed);
+        }
       } catch (e) {
-        console.error("Erro ao ler dados do cliente", e);
+        console.error("Dados corrompidos, resetando...", e);
         localStorage.removeItem('proposalClientData');
       }
     }
+    
     setIsLoaded(true);
   }, []);
 
@@ -59,25 +92,53 @@ function App() {
     setSelectedPlan(plan);
   };
 
-  // Previne "flickering" enquanto carrega do localStorage
+  // Timer para checar expiração em tempo real
+  useEffect(() => {
+    if (!expirationDate) return;
+    const interval = setInterval(() => {
+        if (new Date() > expirationDate) {
+            setIsExpired(true);
+        }
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [expirationDate]);
+
+  // Previne "flickering"
   if (!isLoaded || !expirationDate) return null;
 
-  // Se não temos dados do cliente, mostra tela de boas-vindas
+  // Se não tem cliente, mostra WelcomeScreen
   if (!clientData) {
     return <WelcomeScreen onComplete={handleClientEntry} />;
   }
 
   const { lang, name, spouse } = clientData;
-  const t = translations[lang];
+  const t = translations[lang || 'pt']; // Fallback seguro
 
-  // Helpers para exibição de nomes
-  const displayName = spouse 
-    ? `${name} & ${spouse}` 
-    : name;
+  const displayName = spouse ? `${name} & ${spouse}` : name;
   
-  const whatsappMessage = spouse 
-    ? `Ol%C3%A1%20Henrique%2C%20${name}%20e%20${spouse}%20aqui.`
-    : `Ol%C3%A1%20Henrique%2C%20${name}%20aqui.`;
+  // Mensagem personalizada e codificada para o WhatsApp
+  const getMessage = (expired: boolean) => {
+    const isPt = lang === 'pt';
+    const isEn = lang === 'en';
+    
+    if (expired) {
+        if (isEn) return `Hello Henrique, *${name}* here. I missed the 48h deadline but I'm really interested. Is there any exception possible?`;
+        if (!isPt) return `Hola Henrique, soy *${name}*. Perdí el plazo de 48h pero estoy muy interesado. ¿Hay alguna excepción posible?`;
+        return `Olá Henrique, *${name}* aqui. Perdi o prazo de 48h mas tenho muito interesse. Existe alguma exceção possível?`;
+    }
+
+    if (spouse) {
+        if (isEn) return `Hello Henrique, *${name} and ${spouse}* here. We saw the VIP proposal and want to secure our spot.`;
+        if (!isPt) return `Hola Henrique, aquí *${name} y ${spouse}*. Vimos la propuesta VIP y queremos asegurar nuestro lugar.`;
+        return `Olá Henrique, *${name} e ${spouse}* aqui. Vimos a proposta VIP e queremos garantir nossa condição especial.`;
+    } else {
+        if (isEn) return `Hello Henrique, *${name}* here. I saw the VIP proposal and want to secure my spot.`;
+        if (!isPt) return `Hola Henrique, aquí *${name}*. Vi la propuesta VIP y quiero asegurar mi lugar.`;
+        return `Olá Henrique, *${name}* aqui. Vi a proposta VIP e quero garantir minha condição especial.`;
+    }
+  };
+  
+  const whatsappMessage = encodeURIComponent(getMessage(isExpired));
 
   return (
     <div className="min-h-screen bg-slate-50 font-sans selection:bg-aqua-200 selection:text-aqua-900">
@@ -96,13 +157,9 @@ function App() {
       </nav>
 
       <HeroSection clientName={name} spouseName={spouse} lang={lang} />
-
       <InfoSection lang={lang} />
-
       <ContaminantTruths lang={lang} />
-      
       <SoapLifestyle onTotalChange={setCleaningTotal} lang={lang} />
-      
       <WhiteGloveService clientName={name} spouseName={spouse} lang={lang} />
 
       <div className="max-w-5xl mx-auto px-4 py-16">
@@ -153,14 +210,19 @@ function App() {
           expirationDate={expirationDate}
           cleaningTotal={cleaningTotal}
           lang={lang}
+          whatsappMessage={whatsappMessage}
+          isExpired={isExpired}
         />
       </div>
 
       <Testimonials lang={lang} />
-      
       <FAQ spouseName={spouse || name} lang={lang} />
-
-      <UrgencyBanner expirationDate={expirationDate} lang={lang} />
+      <UrgencyBanner 
+        expirationDate={expirationDate} 
+        lang={lang} 
+        isExpired={isExpired}
+        whatsappMessage={whatsappMessage}
+      />
 
       <footer className="bg-slate-950 text-white py-16 border-t border-slate-900 relative overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
@@ -171,7 +233,6 @@ function App() {
               {t.footer.slogan}
             </p>
           </div>
-          
           <div className="text-center md:text-right flex flex-col items-center md:items-end">
              <p className="text-sm text-slate-400 mb-4 font-medium">{t.footer.talkTo}</p>
              <a 
