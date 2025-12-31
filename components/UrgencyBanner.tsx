@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Clock, AlertOctagon, Ban } from 'lucide-react';
+import { Clock, AlertOctagon, Ban, MessageSquare } from 'lucide-react';
 import { Language, translations } from '../utils/i18n';
 
 interface UrgencyBannerProps {
@@ -19,7 +19,6 @@ export const UrgencyBanner: React.FC<UrgencyBannerProps> = ({
 }) => {
   const t = translations[lang].urgency;
   
-  // Função auxiliar para cálculo do tempo
   const calculateTimeLeft = () => {
     const now = new Date();
     const difference = expirationDate.getTime() - now.getTime();
@@ -45,7 +44,6 @@ export const UrgencyBanner: React.FC<UrgencyBannerProps> = ({
     return () => clearInterval(timer);
   }, [expirationDate, isExpired]);
 
-  // Formatação de data adaptada para cada idioma
   const formattedDate = expirationDate.toLocaleDateString(
     lang === 'en' ? 'en-US' : lang === 'es' ? 'es-ES' : 'pt-BR', 
     {
@@ -55,29 +53,30 @@ export const UrgencyBanner: React.FC<UrgencyBannerProps> = ({
     }
   );
 
-  // RENDERIZAÇÃO QUANDO EXPIRADO (ZONA VERMELHA)
+  // RENDERIZAÇÃO QUANDO EXPIRADO (ZONA DE GLOW VERMELHO PULSANTE)
   if (isExpired) {
     return (
-        <div className="bg-red-700 border-t-4 border-red-500 py-6 px-4 sticky bottom-0 z-50 md:relative shadow-[0_-10px_40px_rgba(220,38,38,0.3)] animate-in slide-in-from-bottom duration-700">
+        <div className="bg-red-600 py-6 px-4 sticky bottom-0 z-50 md:relative shadow-[0_-10px_60px_rgba(220,38,38,0.8)] animate-pulse border-t border-white/20">
             <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
-                <div className="flex items-center gap-5">
-                    <div className="bg-white text-red-600 p-3 rounded-full shadow-lg">
-                        <Ban size={32} strokeWidth={3} />
+                <div className="flex flex-col md:flex-row items-center gap-5">
+                    <div className="bg-white text-red-600 p-3 rounded-full shadow-2xl shrink-0">
+                        <AlertOctagon size={32} strokeWidth={3} />
                     </div>
-                    <div>
-                        <h3 className="font-black text-white text-xl md:text-3xl uppercase tracking-tight drop-shadow-md">
-                        {t.expiredTitle}
+                    <div className="space-y-1">
+                        <h3 className="font-black text-white text-xl md:text-3xl uppercase tracking-tighter drop-shadow-lg">
+                          {t.expiredTitle}
                         </h3>
-                        <p className="text-red-100 mt-1 text-sm md:text-base font-medium max-w-lg">
-                        {t.expiredText}
+                        <p className="text-white font-bold text-xs md:text-sm max-w-lg leading-tight opacity-90">
+                          {t.expiredText}
                         </p>
                     </div>
                 </div>
                 
                 <button 
                     onClick={onOpenAnalyst}
-                    className="bg-white text-red-700 hover:bg-red-50 px-8 py-3 rounded-full font-black uppercase tracking-wide text-sm shadow-xl transform transition-all hover:scale-105 active:scale-95"
+                    className="bg-white text-red-600 hover:bg-slate-100 px-10 py-4 rounded-2xl font-black uppercase tracking-widest text-sm shadow-[0_10px_30px_rgba(0,0,0,0.3)] transform transition-all hover:scale-105 active:scale-95 flex items-center gap-3"
                 >
+                    <MessageSquare size={18} />
                     {t.expiredButton}
                 </button>
             </div>

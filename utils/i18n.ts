@@ -140,7 +140,7 @@ const ptTranslations = {
     waste: "Gasto por toda a sua vida a troco de nada",
     warning: "\"Você já paga pelo sistema, mas está recebendo produtos químicos e plástico em troca.\"",
     solutionTitle: "Simulador Aquafeel Solutions",
-    solutionSub: "Mensalidades fixas de acordo com seu crédito",
+    solutionSub: "Mensualidades fixas de acordo com seu crédito",
     selectRegion: "Selecione sua Localização:",
     selectCredit: "PERFIL DE CRÉDITO",
     creditRanges: {
@@ -160,7 +160,7 @@ const ptTranslations = {
     months: "Meses",
     accept: "GARANTIR 3 MESES GRÁTIS",
     negotiate: "FALAR COM O CONSULTOR",
-    offerExpired: "OFERTA ENCERRADA",
+    offerExpired: "OFERTA EXPIRADA",
     offerValid: "Válido por tempo limitado!",
     disclaimer: "*consulte seu consultor para maiores informações.",
     proposalSub: "Valores com 3 meses livres de pagamento e 2 anos de sabão para toda a casa (lavanderia + cozinha + banheiro)."
@@ -208,12 +208,12 @@ const ptTranslations = {
   },
   urgency: {
     expires: "Oferta expira em:",
-    expiredTitle: "OFERTA ENCERRADA",
+    expiredTitle: "OFERTA EXPIRADA",
     commission: "Benefício exclusivo da Aquafeel Solutions PA.",
     limit: "PRAZO FINAL:",
     footer: "Após o prazo, o benefício de 3 meses grátis será removido.",
-    expiredText: "O benefício de ativação encerrou.",
-    expiredButton: "Verificar disponibilidade"
+    expiredText: "Falar com o consultor para verificar a disponibilidade de algum programa ainda com 3 meses livres de pagamento.",
+    expiredButton: "FALAR COM CONSULTOR"
   },
   footer: {
     rights: "© 2024 Aquafeel Solutions • Proposta Especial de Ativação",
@@ -476,8 +476,8 @@ const enTranslations: TranslationStructure = {
     commission: "Exclusive benefit from Aquafeel Solutions PA.",
     limit: "DEADLINE:",
     footer: "After the timer hits zero, the 3 months free benefit will be removed.",
-    expiredText: "The activation benefit has ended.",
-    expiredButton: "Check availability"
+    expiredText: "Talk to our consultant to check availability for programs with 3 free months.",
+    expiredButton: "TALK TO CONSULTANT"
   },
   footer: {
     rights: "© 2024 Aquafeel Solutions • Special Activation Proposal",
@@ -569,7 +569,7 @@ const esTranslations: TranslationStructure = {
   info: {
     label: "Hechos Reales, Datos Públicos",
     title: "¿Qué hay realmente en su agua?",
-    subtitle: "El agua municipal cumple regulaciones básicas, pero \"legal\" no significa \"saudável\". Su casa merece protección.",
+    subtitle: "El agua municipal cumple regulaciones básicas, mas \"legal\" no significa \"saudável\". Su casa merece protección.",
     alertTitle: "Alerta Regional",
     alertBody: "Estudios recientes indican altos niveles de PFAS, Plomo y Cloro.",
     analysisTitle: "Análisis Aquafeel",
@@ -740,8 +740,8 @@ const esTranslations: TranslationStructure = {
     commission: "Beneficio exclusivo Aquafeel Solutions.",
     limit: "PLAZO:",
     footer: "El beneficio será eliminado al terminar.",
-    expiredText: "El beneficio terminó.",
-    expiredButton: "Ver disponibilidad"
+    expiredText: "Hable con el consultor para verificar disponibilidad de programa con 3 meses gratis.",
+    expiredButton: "HABLAR CON CONSULTOR"
   },
   footer: {
     rights: "© 2024 Aquafeel Solutions",
