@@ -114,8 +114,8 @@ function App() {
   
   const whatsappMessage = encodeURIComponent(
     isExpired 
-      ? `Olá Henrique, *${name}* aqui. Perdi o prazo de 48h mas tenho interesse.` 
-      : `Olá Henrique, *${name}* aqui. Vi a proposta VIP e quero garantir meus 3 meses grátis.`
+      ? `Olá Consultor, *${name}* aqui. Perdi o prazo de 48h mas tenho interesse.` 
+      : `Olá Consultor, *${name}* aqui. Vi a proposta VIP e quero garantir meus 3 meses grátis.`
   );
 
   return (
@@ -176,7 +176,7 @@ function App() {
       <div className="relative z-20 py-10 md:py-12 bg-slate-50 border-t border-slate-200">
         <div className="text-center mb-8 md:mb-10 px-4">
              <h2 className="text-2xl md:text-4xl font-serif font-bold text-slate-900 leading-tight">{lang === 'pt' ? 'Sua Proposta Exclusiva' : 'Your Exclusive Proposal'}</h2>
-             <p className="text-sm md:text-base text-slate-500 mt-2 px-4">{lang === 'pt' ? 'Valores aplicados com desconto de comissão ($1.000 OFF).' : 'Values with commission discount ($1,000 OFF).'}</p>
+             <p className="text-sm md:text-base text-slate-500 mt-2 px-4">{t.calculator.proposalSub}</p>
         </div>
         <ComparisonCalculator 
           onSelectPlan={() => {}} 
@@ -190,8 +190,10 @@ function App() {
         
         <div className="mt-12 px-4">
           <UrgencyGraph 
-            initialMonthly={cleaningTotal + waterTotal} 
-            fixedMonthly={185} 
+            waterMonthly={waterTotal} 
+            soapMonthly={cleaningTotal}
+            fixedMonthly={185}
+            cashPrice={8990}
             lang={lang} 
           />
         </div>

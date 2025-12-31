@@ -46,7 +46,7 @@ const ptTranslations = {
     alertBody: "Estudos recentes indicam altos níveis de PFAS (Químicos Eternos), Chumbo e Cloro nas redes de abastecimento. Estes compostos se acumulam no corpo e nos encanamentos.",
     analysisTitle: "Análise Aquafeel",
     analysisBody: "Nosso sistema de Tanque Duplo + Osmose Reversa é a única barreira física real entre sua família e estes contaminantes.",
-    virus: "Elimina 99.9% de Vírus e Bacterias",
+    virus: "Elimina 99.9% de Vírus e Bactérias",
     heavyMetals: "Remove Metais Pesados (Chumbo, Mercúrio)",
     chlorine: "Neutraliza Cloro e Cloraminas"
   },
@@ -108,8 +108,8 @@ const ptTranslations = {
     buyGallon: "Galão 3.75L (Unitário)",
     buyPack: "Pacote (Case)",
     priceLabel: "Preço que você paga ($)",
-    qtyWeekly: "Quantos pacotes por semana?",
-    qtyDaily: "Quantos galões por dia?",
+    qtyWeekly: "Pacotes por semana",
+    qtyDaily: "Galões por dia",
     includeCooking: "Incluir mesmo valor para Cozinhar/Lavar alimentos?",
     cookingManual: "Valor adicional para Cozinhar/Lavar ($/mês)",
     drinking: "Água somente para BEBER",
@@ -139,7 +139,7 @@ const ptTranslations = {
     currentMonthly: "SEU GASTO ATUAL MENSAL",
     waste: "Gasto por toda a sua vida a troco de nada",
     warning: "\"Você já paga pelo sistema, mas está recebendo produtos químicos e plástico em troca.\"",
-    solutionTitle: "Simulador Aquafinance",
+    solutionTitle: "Simulador Aquafeel Solutions",
     solutionSub: "Mensalidades fixas de acordo com seu crédito",
     selectRegion: "Selecione sua Localização:",
     selectCredit: "PERFIL DE CRÉDITO",
@@ -159,10 +159,11 @@ const ptTranslations = {
     cash: "À Vista",
     months: "Meses",
     accept: "GARANTIR 3 MESES GRÁTIS",
-    negotiate: "FALAR COM O HENRIQUE",
+    negotiate: "FALAR COM O CONSULTOR",
     offerExpired: "OFERTA ENCERRADA",
     offerValid: "Válido por tempo limitado!",
-    disclaimer: "*consulte seu consultor para maiores informações."
+    disclaimer: "*consulte seu consultor para maiores informações.",
+    proposalSub: "Valores com 3 meses livres de pagamento e 2 anos de sabão para toda a casa (lavanderia + cozinha + banheiro)."
   },
   graph: {
     title: "A Armadilha da Inflação",
@@ -174,7 +175,7 @@ const ptTranslations = {
     insight: "Há 10 anos, água custava $2.50. Hoje custa $5.00."
   },
   modal: {
-    title: "Selecione seu Analista de Água",
+    title: "Selecione seu Consultor",
     subtitle: "Com quem você gostaria de falar para ativar seu benefício?",
     confirmTitle: "Confirmar Seleção",
     confirmMessage: "Você deseja se conectar com {name}?",
@@ -203,7 +204,7 @@ const ptTranslations = {
     q5: "Conheço sistemas mais baratos ou no Home Depot por metade do preço?",
     a5: "Filtros de lojas de varejo são apenas 'filtros de carvão'. Aquafeel é um sistema de purificação molecular.",
     q6: "Isso é um filtro comum?",
-    a6: "Não. Nosso sistema de 2 tanques + Osmose Reversa é uma barreira física de purificação molecular."
+    a6: "No. Nosso sistema de 2 tanques + Osmose Reversa é uma barreira física de purificação molecular."
   },
   urgency: {
     expires: "Oferta expira em:",
@@ -216,7 +217,7 @@ const ptTranslations = {
   },
   footer: {
     rights: "© 2024 Aquafeel Solutions • Proposta Especial de Ativação",
-    button: "Falar com o Henrique"
+    button: "Falar com Consultor"
   },
   package: {
     title: "Promoção de Ativação",
@@ -371,8 +372,8 @@ const enTranslations: TranslationStructure = {
     buyGallon: "Gallon 3.75L (Single)",
     buyPack: "Pack (Case)",
     priceLabel: "Price you pay ($)",
-    qtyWeekly: "How many cases per week?",
-    qtyDaily: "How many gallons per day?",
+    qtyWeekly: "Cases per week",
+    qtyDaily: "Gallons per day",
     includeCooking: "Include the same amount for Cooking/Washing food?",
     cookingManual: "Additional amount for Cooking ($/month)",
     drinking: "Water for DRINKING only",
@@ -402,7 +403,7 @@ const enTranslations: TranslationStructure = {
     currentMonthly: "YOUR CURRENT MONTHLY SPEND",
     waste: "Spent for life with zero return",
     warning: "\"You are already paying for the system, but receiving chemicals and plastic in exchange.\"",
-    solutionTitle: "Aquafinance Simulator",
+    solutionTitle: "Aquafeel Solutions Simulator",
     solutionSub: "Fixed payments according to your credit",
     selectRegion: "Select Location:",
     selectCredit: "CREDIT PROFILE",
@@ -422,10 +423,11 @@ const enTranslations: TranslationStructure = {
     cash: "Cash",
     months: "Months",
     accept: "CLAIM 3 MONTHS FREE",
-    negotiate: "TALK TO HENRIQUE",
+    negotiate: "TALK TO CONSULTANT",
     offerExpired: "OFFER EXPIRED",
     offerValid: "Valid for a limited time!",
-    disclaimer: "*Consult your representative for more info."
+    disclaimer: "*Consult your representative for more info.",
+    proposalSub: "Values with 3 months payment free and 2 years of soap for the entire house (laundry + kitchen + bathroom)."
   },
   graph: {
     title: "The Inflation Trap",
@@ -437,7 +439,7 @@ const enTranslations: TranslationStructure = {
     insight: "10 years ago, a water case was $2.50. Today it's $5.00."
   },
   modal: {
-    title: "Select your Water Analyst",
+    title: "Select your Consultant",
     subtitle: "Who would you like to speak with to activate your benefit?",
     confirmTitle: "Confirm Selection",
     confirmMessage: "Do you want to connect with {name}?",
@@ -479,7 +481,7 @@ const enTranslations: TranslationStructure = {
   },
   footer: {
     rights: "© 2024 Aquafeel Solutions • Special Activation Proposal",
-    button: "Talk to Henrique"
+    button: "Talk to Consultant"
   },
   package: {
     title: "Activation Campaign",
@@ -634,8 +636,8 @@ const esTranslations: TranslationStructure = {
     buyGallon: "Galón 3.75L (Unidad)",
     buyPack: "Caja/Pack",
     priceLabel: "Precio ($)",
-    qtyWeekly: "¿Cuántas cajas por semana?",
-    qtyDaily: "¿Cuántos galones por día?",
+    qtyWeekly: "Cajas por semana",
+    qtyDaily: "Galones por día",
     includeCooking: "¿Incluir para Cocinar?",
     cookingManual: "Valor adicional Cocina ($/mes)",
     drinking: "Solo para BEBER",
@@ -664,8 +666,8 @@ const esTranslations: TranslationStructure = {
     fillChart: "¡Complete arriba!",
     currentMonthly: "SU GASTO MENSUAL",
     waste: "Gasto de por vida sin retorno",
-    warning: "Ya está pagando por salud, pero recibe químicos.",
-    solutionTitle: "Simulador Aquafinance",
+    warning: "Ya está pagando por salud, mas recebe químicos.",
+    solutionTitle: "Simulador Aquafeel Solutions",
     solutionSub: "Mensualidades fijas",
     selectRegion: "Seleccione Ubicación:",
     selectCredit: "PERFIL DE CRÉDITO",
@@ -685,10 +687,11 @@ const esTranslations: TranslationStructure = {
     cash: "Contado",
     months: "Meses",
     accept: "GARANTIZAR 3 MESES GRATIS",
-    negotiate: "HABLAR CON HENRIQUE",
+    negotiate: "HABLAR CON CONSULTOR",
     offerExpired: "OFERTA EXPIRADA",
     offerValid: "¡Válido por tiempo limitado!",
-    disclaimer: "*Consulte a su consultor."
+    disclaimer: "*Consulte a su consultor.",
+    proposalSub: "Valores con 3 meses de pago libre y 2 años de jabón para toda la casa (lavandería + cocina + baño)."
   },
   graph: {
     title: "La Trampa de Inflación",
@@ -700,7 +703,7 @@ const esTranslations: TranslationStructure = {
     insight: "Hace 10 años, el agua costaba $2.50. Hoy $5.00."
   },
   modal: {
-    title: "Seleccione Analista",
+    title: "Seleccione Consultor",
     subtitle: "¿Con quién desea hablar?",
     confirmTitle: "Confirmar",
     confirmMessage: "¿Desea hablar con {name}?",
@@ -742,7 +745,7 @@ const esTranslations: TranslationStructure = {
   },
   footer: {
     rights: "© 2024 Aquafeel Solutions",
-    button: "Hablar con Henrique"
+    button: "Hablar con Consultor"
   },
   package: {
     title: "Campaña Activación",
@@ -761,7 +764,7 @@ const esTranslations: TranslationStructure = {
     currentSpend: "Gasto Actual",
     spendSub: "¿Cuánto gasta en el súper?",
     laundry: "Lavandería",
-    kitchen: "Cocina",
+    kitchen: "Cozinha",
     bathroom: "Baño",
     total: "Total",
     reality: "Realidad Aquafeel",
