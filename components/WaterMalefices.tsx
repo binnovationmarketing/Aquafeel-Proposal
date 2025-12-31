@@ -97,7 +97,7 @@ export const WaterMalefices: React.FC<WaterMaleficesProps> = ({ lang }) => {
           <div className="relative z-10">
             <Droplets className="mx-auto mb-4 text-aqua-400 w-10 h-10 md:w-12 md:h-12" size={48} />
             <p className="text-base md:text-xl font-medium max-w-2xl mx-auto italic leading-relaxed px-2">
-              "A qualidade da água que entra em sua casa define a longevidade da sua família e do seu investimento imobiliário."
+              "{t.quote}"
             </p>
           </div>
         </div>

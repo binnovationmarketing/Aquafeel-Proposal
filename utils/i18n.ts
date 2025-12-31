@@ -19,12 +19,12 @@ const ptTranslations = {
     error: "Identificação necessária para prosseguir."
   },
   hero: {
-    platinum: "Regalo de Navidad Exclusivo",
+    platinum: "Oferta VIP Exclusiva",
     welcomeHome: "A Aquafeel vai te dar",
-    subtitle: "Qualifique-se para o programa de água limpa antes de 25/12 e receba um presente único:",
-    systemName: "$1.000 DÓLARES DE CASHBACK.",
-    cashbackTitle: "CASHBACK NATAL",
-    cashbackValue: "+$1.000,00",
+    subtitle: "Qualifique-se para o programa de água limpa e receba um benefício único:",
+    systemName: "3 MESES LIVRES DE PAGAMENTO.",
+    cashbackTitle: "CARÊNCIA TOTAL",
+    cashbackValue: "3 MESES GRÁTIS",
     warrantyTitle: "Garantia Vitalícia",
     warrantySub: "Limitada (25 anos)",
     installTitle: "Instalação",
@@ -32,7 +32,7 @@ const ptTranslations = {
     soapTitle: "2 Anos de Sabão",
     soapSub: "Para toda a casa",
     paymentTitle: "Primeiro Pagamento",
-    paymentSub: "30 a 45 dias (2026)",
+    paymentSub: "No 4º mês (90 dias)",
     penaltyTitle: "Sem Penalidade",
     penaltySub: "Antecipe seus pagamentos",
     analysisTitle: "Análise de Água",
@@ -53,6 +53,7 @@ const ptTranslations = {
   malefices: {
     title: "Top 10 Malefícios da Água Contaminada",
     subtitle: "O que você não vê está destruindo seu patrimônio e a saúde de quem você ama.",
+    quote: "A qualidade da água que entra em sua casa define a longevidade da sua família e do seu investimento imobiliário.",
     home: {
       title: "Para a Saúde do Lar",
       m1: "Corrosão das Tubulações: Metais pesados e cloro destroem o cobre e PVC por dentro.",
@@ -104,6 +105,7 @@ const ptTranslations = {
     freight: "Aquafeel (Frete)",
     referral: "Aquafeel (Recomendação)",
     free: "GRÁTIS",
+    learnMore: "Saiba mais em:",
     note: "*Custo do frete ($390) dividido por 24 meses. Estamos falando de $16.25/mês pela saúde da sua família.",
     howTo: "Como funciona a reposição?",
     howTo1: "O lote inicial dura aprox. 2 anos (família de 4-5 pessoas).",
@@ -134,14 +136,14 @@ const ptTranslations = {
     currentMonthly: "SEU GASTO ATUAL MENSAL",
     waste: "Gasto por toda a sua vida a troco de nada",
     warning: "\"Você já paga pelo sistema, mas está recebendo produtos químicos e plástico em troca.\"",
-    solutionTitle: "O Presente de Natal",
-    solutionSub: "Dinheiro direto na sua mão",
+    solutionTitle: "Oferta de Ativação",
+    solutionSub: "Benefício direto para sua família",
     difference: "Economia de",
     months: "Meses",
     cash: "À Vista",
-    accept: "GARANTIR MEU CASHBACK",
+    accept: "GARANTIR 3 MESES GRÁTIS",
     negotiate: "FALAR COM O HENRIQUE",
-    offerValid: "Válido até 25 de Dezembro!",
+    offerValid: "Válido por tempo limitado!",
     offerExpired: "OFERTA ENCERRADA",
     disclaimer: "*consulte seu consultor para maiores informações.",
     benefits: {
@@ -150,10 +152,10 @@ const ptTranslations = {
       downpayment: "0 Downpayment",
       taxes: "0 Taxes",
       installation: "0 Instalação",
-      discount: "CASHBACK DE NATAL",
-      discountExpired: "Natal já passou",
+      discount: "3 MESES GRÁTIS",
+      discountExpired: "Promoção encerrada",
       payment: "Primeiro Pagamento:",
-      paymentDesc: "30 a 45 dias após recebimento das garantias - 2026",
+      paymentDesc: "Só após 90 dias - Comece a pagar no 4º mês",
       included: "Incluso",
       standardPrice: "Preço Regular"
     }
@@ -169,12 +171,12 @@ const ptTranslations = {
     transparency: "Transparencia Total",
     title: "Por que NÃO fechar agora?",
     subtitle: "Respondemos as dúvidas que ninguém tem coragem de perguntar.",
-    q1: "Como funciona o Cashback de $1.000?",
-    a1: "Ao qualificar e instalar seu sistema até dia 25/12, você recebe mil dólares para usar como quiser. É um incentivo real da unidade PA.",
-    q2: "Posso usar os $1.000 para abater no valor?",
-    a2: "Você pode usar como quiser! O dinheiro é seu. Muitos clientes usam para os presentes de Natal da família.",
+    q1: "Como funcionam os 3 meses grátis?",
+    a1: "Ao qualificar seu sistema hoje, você recebe uma carência total. Sua primeira parcela será apenas no 4º mês após a instalação.",
+    q2: "Posso pagar à vista com desconto?",
+    a2: "Sim! Para pagamentos à vista, oferecemos uma condição diferenciada que equivale ao benefício das parcelas livres.",
     q3: "não quer mais uma conta mensal agora.",
-    a3: "Entendemos. Por isso o primeiro pagamento é só em 2026. Com os $1.000 de cashback, você cobre o custo de vida por meses!",
+    a3: "Entendemos. Por isso você tem 3 meses de folga total. Comece a pagar apenas quando já estiver sentindo a economia no bolso!",
     q4: "Se eu me mudar posso levar o sistema? Quanto vai custar?",
     a4: "Sim, você pode levar o sistema para sua nova casa! Entretanto, para remover o sistema da sua casa com segurança e levar até a outra casa, há um pequeno custo técnico. Este custo pode ser pago por você ou pode ser totalmente bonificado (GRÁTIS) apenas recomendando nosso trabalho para outra família que se qualifique para o programa.",
     q5: "Conheço sistemas mais baratos ou no Home Depot por metade do preço?",
@@ -183,28 +185,28 @@ const ptTranslations = {
     a6: "Não. Filtros comuns apenas reduzem o cloro. Nosso sistema de 2 tanques + Osmose Reversa é uma barreira física de purificação molecular que entrega água alcalina e remove metais pesados, vírus e bactérias que filtros comuns não conseguem tocar."
   },
   urgency: {
-    expires: "Natal chegando em:",
+    expires: "Oferta expira em:",
     expiredTitle: "OFERTA ENCERRADA",
-    commission: "Presente de Natal exclusivo da Aquafeel Solutions PA.",
+    commission: "Benefício exclusivo da Aquafeel Solutions PA.",
     limit: "PRAZO FINAL:",
-    footer: "Após o dia 25, o bônus de $1.000 cashback será removido.",
-    expiredText: "O bônus de $1.000 cashback de Natal encerrou no dia 25/12.",
-    expiredButton: "Verificar se ainda há bônus"
+    footer: "Após o prazo, o benefício de 3 meses grátis será removido.",
+    expiredText: "O benefício de ativação encerrou.",
+    expiredButton: "Verificar disponibilidade"
   },
   footer: {
     slogan: "Elevando o padrão de vida através da purificação de água.",
     talkTo: "Falar diretamente com seu Consultor",
     button: "Falar com o Henrique",
-    rights: "© 2024 Aquafeel Solutions • Proposta Especial de Natal"
+    rights: "© 2024 Aquafeel Solutions • Proposta Especial de Ativação"
   },
   package: {
-    title: "Campanha de Natal",
+    title: "Promoção de Ativação",
     desc: "O maior benefício já oferecido na história da Aquafeel PA.",
     soapYears: "Anos de Sabão",
     guarantee: "Garantia Total",
-    cost: "CASHBACK",
-    payment: "Pago",
-    firstQuota: "Só em 2026"
+    cost: "3 MESES FREE",
+    payment: "Pagamento",
+    firstQuota: "Só no 4º mês"
   }
 };
 
@@ -225,12 +227,12 @@ const enTranslations: TranslationStructure = {
     error: "Identification required to proceed."
   },
   hero: {
-    platinum: "Exclusive Christmas Gift",
+    platinum: "Exclusive VIP Offer",
     welcomeHome: "Aquafeel will give you",
-    subtitle: "Qualify for the clean water program before 12/25 and receive a unique gift:",
-    systemName: "$1,000 DOLLARS CASHBACK.",
-    cashbackTitle: "CHRISTMAS CASHBACK",
-    cashbackValue: "+$1,000.00",
+    subtitle: "Qualify for the clean water program and receive a unique benefit:",
+    systemName: "3 MONTHS PAYMENT FREE.",
+    cashbackTitle: "TOTAL GRACE PERIOD",
+    cashbackValue: "3 MONTHS FREE",
     warrantyTitle: "Lifetime Warranty",
     warrantySub: "Limited (25 years)",
     installTitle: "Installation",
@@ -238,7 +240,7 @@ const enTranslations: TranslationStructure = {
     soapTitle: "2 Years of Soap",
     soapSub: "For the whole house",
     paymentTitle: "First Payment",
-    paymentSub: "30 to 45 days (2026)",
+    paymentSub: "On the 4th month (90 days)",
     penaltyTitle: "No Penalty",
     penaltySub: "Anticipate your payments",
     analysisTitle: "Water Analysis",
@@ -259,6 +261,7 @@ const enTranslations: TranslationStructure = {
   malefices: {
     title: "Top 10 Harmful Effects of Contaminated Water",
     subtitle: "What you don't see is destroying your property and your loved ones' health.",
+    quote: "The quality of the water that enters your home defines the longevity of your family and your real estate investment.",
     home: {
       title: "For the Home",
       m1: "Pipe Corrosion: Heavy metals and chlorine destroy copper and PVC from the inside.",
@@ -310,6 +313,7 @@ const enTranslations: TranslationStructure = {
     freight: "Aquafeel (Shipping)",
     referral: "Aquafeel (Referral)",
     free: "FREE",
+    learnMore: "Learn more at:",
     note: "*Shipping cost ($390) divided by 24 months. That's $16.25/mo for your family's health.",
     howTo: "How does replenishment work?",
     howTo1: "Initial batch lasts approx. 2 years (family of 4-5).",
@@ -340,14 +344,14 @@ const enTranslations: TranslationStructure = {
     currentMonthly: "YOUR CURRENT MONTHLY SPEND",
     waste: "Spent for life with zero return",
     warning: "\"You are already paying for the system, but receiving chemicals and plastic in exchange.\"",
-    solutionTitle: "The Christmas Gift",
-    solutionSub: "Cash straight into your hand",
+    solutionTitle: "Activation Offer",
+    solutionSub: "Direct benefit for your family",
     difference: "Savings of",
     months: "Months",
     cash: "Cash",
-    accept: "CLAIM MY CASHBACK",
+    accept: "CLAIM 3 MONTHS FREE",
     negotiate: "TALK TO HENRIQUE",
-    offerValid: "Valid until Dec 25th!",
+    offerValid: "Valid for a limited time!",
     offerExpired: "OFFER EXPIRED",
     disclaimer: "*Consult your representative for more information.",
     benefits: {
@@ -356,10 +360,10 @@ const enTranslations: TranslationStructure = {
       downpayment: "0 Downpayment",
       taxes: "0 Taxes",
       installation: "0 Installation",
-      discount: "CHRISTMAS CASHBACK",
-      discountExpired: "Christmas is over",
+      discount: "3 MONTHS FREE",
+      discountExpired: "Promotion ended",
       payment: "First Payment:",
-      paymentDesc: "30 to 45 days after receiving warranties - 2026",
+      paymentDesc: "Only after 90 days - Start paying on the 4th month",
       included: "Included",
       standardPrice: "Standard Price"
     }
@@ -375,12 +379,12 @@ const enTranslations: TranslationStructure = {
     transparency: "Total Transparency",
     title: "Why NOT close now?",
     subtitle: "We answer the doubts no one has the courage to ask.",
-    q1: "How does the $1,000 Cashback work?",
-    a1: "By qualifying and installing your system by 12/25, you receive $1,000 to use as you wish. It's a real incentive from our unit.",
-    q2: "Can I use the $1,000 to lower the total?",
-    a2: "You can use it however you want! It's your money. Many clients use it for family Christmas gifts.",
+    q1: "How do the 3 free months work?",
+    a1: "By qualifying your system today, you receive a full grace period. Your first installment will be only in the 4th month after installation.",
+    q2: "Can I pay in cash with a discount?",
+    a2: "Yes! For cash payments, we offer a special condition equivalent to the free monthly payments benefit.",
     q3: "doesn't want another monthly bill right now.",
-    a3: "We understand. That's why the first payment is only in 2026. With $1,000 cashback, you cover your costs for months!",
+    a3: "We understand. That's why you have 3 months of total break. Start paying only when you're already feeling the savings in your pocket!",
     q4: "If I move can I take the system? How much will it cost?",
     a4: "Yes, you can take the system to your new home! However, to safely remove and transport the system, there is a small technical fee. This cost can be paid by you or can be completely covered (FREE) simply by recommending our work to another family that qualifies for the program.",
     q5: "I know cheaper systems or Home Depot for half the price?",
@@ -389,28 +393,28 @@ const enTranslations: TranslationStructure = {
     a6: "No. Common filters only reduce chlorine. Our 2-tank system + Reverse Osmosis is a physical molecular purification barrier that delivers alkaline water and removes heavy metals, viruses, and bacteria that store filters can't touch."
   },
   urgency: {
-    expires: "Christmas arriving in:",
+    expires: "Offer expires in:",
     expiredTitle: "OFFER EXPIRED",
-    commission: "Exclusive Christmas Gift from Aquafeel Solutions PA.",
+    commission: "Exclusive benefit from Aquafeel Solutions PA.",
     limit: "DEADLINE:",
-    footer: "After the timer hits zero, the $1,000 cashback benefit will be removed.",
-    expiredText: "The $1,000 Christmas cashback benefit ended on 12/25.",
-    expiredButton: "Check for remaining bonuses"
+    footer: "After the timer hits zero, the 3 months free benefit will be removed.",
+    expiredText: "The activation benefit has ended.",
+    expiredButton: "Check availability"
   },
   footer: {
     slogan: "Raising the standard of living through water purification.",
     talkTo: "Speak directly with your Consultant",
     button: "Speak with Henrique",
-    rights: "© 2024 Aquafeel Solutions • Christmas Special Proposal"
+    rights: "© 2024 Aquafeel Solutions • Special Activation Proposal"
   },
   package: {
-    title: "Christmas Campaign",
+    title: "Activation Campaign",
     desc: "The biggest benefit ever offered in Aquafeel PA history.",
     soapYears: "Years of Soap",
     guarantee: "Total Warranty",
-    cost: "CASHBACK",
+    cost: "3 MONTHS FREE",
     payment: "Payment",
-    firstQuota: "Only 2026"
+    firstQuota: "Only 4th month"
   }
 };
 
@@ -431,27 +435,27 @@ const esTranslations: TranslationStructure = {
     error: "Identificación necesaria para continuar."
   },
   hero: {
-    platinum: "Regalo de Navidad Exclusivo",
+    platinum: "Oferta VIP Exclusiva",
     welcomeHome: "Aquafeel te dará",
-    subtitle: "Califica para el programa de agua limpia antes del 25/12 y recibe un regalo único:",
-    systemName: "$1.000 DÓLARES DE CASHBACK.",
-    cashbackTitle: "CASHBACK NAVIDAD",
-    cashbackValue: "+$1.000,00",
+    subtitle: "Califica para el programa de agua limpia y recibe un beneficio único:",
+    systemName: "3 MESES LIBRES DE PAGO.",
+    cashbackTitle: "PERÍODO DE GRACIA",
+    cashbackValue: "3 MESES GRATIS",
     warrantyTitle: "Garantía Vitalicia",
     warrantySub: "Limitada (25 años)",
     installTitle: "Instalación",
     installSub: "Gratis ($0 Costo)",
-    soapTitle: "2 Anos de Jabón",
+    soapTitle: "2 Años de Jabón",
     soapSub: "Para toda la casa",
     paymentTitle: "Primer Pago",
-    paymentSub: "30 a 45 días (2026)",
+    paymentSub: "En el 4º mes (90 días)",
     penaltyTitle: "Sin Penalidad",
     penaltySub: "Anticipe sus pagos",
     analysisTitle: "Análisis de Agua",
     analysisSub: "1x al año (Anual)"
   },
   info: {
-    label: "Hechos Reales, Dados Públicos",
+    label: "Hechos Reales, Datos Públicos",
     title: "¿Qué hay realmente en su agua?",
     subtitle: "El agua municipal cumple regulaciones básicas, pero \"legal\" no significa \"saludable\". Su casa merece protección.",
     alertTitle: "Alerta Regional",
@@ -465,26 +469,27 @@ const esTranslations: TranslationStructure = {
   malefices: {
     title: "Top 10 Efectos Nocivos del Agua Contaminada",
     subtitle: "Lo que no ves está destruyendo tu patrimonio y la salud de quienes amas.",
+    quote: "La calidad del agua que entra en su casa define la longevidad de su familia y de su inversión inmobiliaria.",
     home: {
-      title: "Para la Salud del Hogar",
+      title: "En el Hogar",
       m1: "Corrosión de Tuberías: Los metales pesados y el cloro destruyen el cobre y PVC desde el interior.",
       m2: "Muerte de Electrodomésticos: La cal y los minerales reducen la vida de lavadoras y calentadores en un 50%.",
-      m3: "Manchas Irreversíveis: Depósitos minerales que destruyen el brillo de vidrios, mármoles y metales."
+      m3: "Manchas Irreversibles: Depósitos minerales que destruyen el brillo de vidrios, mármoles y metales."
     },
     adults: {
-      title: "Para Adultos",
+      title: "En Adultos",
       m1: "Daño en Piel y Cabello: El cloro elimina los aceites naturales, causando envejecimiento prematuro.",
       m2: "Disruptores Endocrinos: PFAS y químicos afectan el equilibrio hormonal y el metabolismo.",
       m3: "Acumulación de Metales: El plomo y el mercurio se acumulan en el organismo durante décadas."
     },
     children: {
-      title: "Para Niños",
+      title: "En Niños",
       m1: "Riesgos en el Desarrollo: El plomo en el agua está ligado a retrasos cognitivos y de crecimiento.",
       m2: "Inmunidad Fragilizada: Exposición constante a bacterias y virus que sobreviven al tratamiento común.",
       m3: "Problemas Respiratorios: Los vapores de cloro durante la ducha pueden agravar el asma y la bronquitis."
     },
     pets: {
-      title: "Para Mascotas",
+      title: "En Mascotas",
       m1: "Sobrecarga Renal: Perros y gatos son 10 veces más sensibles a las toxinas y al exceso de sodio en el agua.",
       m2: "Cálculos Urinarios: El exceso de minerales en el agua \"dura\" es el principal causante de piedras en la vejiga y riñones en mascotas.",
       m3: "Dermatitis y Caída de Pelo: El cloro y el sarro eliminan la protección natural de la piel, causando irritación y pelaje quebradizo."
@@ -516,6 +521,7 @@ const esTranslations: TranslationStructure = {
     freight: "Aquafeel (Envío)",
     referral: "Aquafeel (Recomendación)",
     free: "GRATIS",
+    learnMore: "Más información en:",
     note: "*Costo de envío ($390) dividido por 24 meses. Son $16.25/mes por la salud de su familia.",
     howTo: "¿Cómo funciona la reposición?",
     howTo1: "El lote inicial dura aprox. 2 años (familia de 4-5).",
@@ -546,14 +552,14 @@ const esTranslations: TranslationStructure = {
     currentMonthly: "SU GASTO MENSUAL ACTUAL",
     waste: "Gasto de por vida sin retorno",
     warning: "\"Ya están pagando por el sistema, pero recibiendo químicos y plástico a cambio.\"",
-    solutionTitle: "El Regalo de Navidad",
-    solutionSub: "Dinero directo en su mano",
+    solutionTitle: "Oferta de Activación",
+    solutionSub: "Beneficio directo para su familia",
     difference: "Ahorro de",
     months: "Meses",
     cash: "Al Contado",
-    accept: "RECLAMAR MI CASHBACK",
+    accept: "GARANTIZAR 3 MESES GRATIS",
     negotiate: "HABLAR CON HENRIQUE",
-    offerValid: "¡Válido hasta el 25 de Dic!",
+    offerValid: "¡Válido por tiempo limitado!",
     offerExpired: "OFERTA EXPIRADA",
     disclaimer: "*Consulte a su consultor para mayor información.",
     benefits: {
@@ -562,10 +568,10 @@ const esTranslations: TranslationStructure = {
       downpayment: "0 Downpayment",
       taxes: "0 Taxes",
       installation: "0 Instalación",
-      discount: "CASHBACK NAVIDAD",
-      discountExpired: "Navidad ya pasó",
+      discount: "3 MESES GRATIS",
+      discountExpired: "Promoción terminada",
       payment: "Primer Pago:",
-      paymentDesc: "30 a 45 días después de recibir garantías - 2026",
+      paymentDesc: "Solo después de 90 días - Empiece a pagar en el 4º mes",
       included: "Incluido",
       standardPrice: "Precio Regular"
     }
@@ -581,12 +587,12 @@ const esTranslations: TranslationStructure = {
     transparency: "Transparencia Total",
     title: "¿Por qué NO cerrar ahora?",
     subtitle: "Respondemos las dudas que nadie tiene el coraje de preguntar.",
-    q1: "¿Cómo funciona el Cashback de $1.000?",
-    a1: "Al calificar e instalar su sistema antes del 25/12, recibe mil dólares para usar como quiera. Es un incentivo real de nuestra unidad.",
-    q2: "¿Puedo usar los $1.000 para bajar el total?",
-    a2: "¡Puede usarlo como quiera! El dinero es suyo. Muchos clientes lo usan para los regalos de Navidad.",
+    q1: "¿Cómo funcionan los 3 meses gratis?",
+    a1: "Al calificar su sistema hoy, recibe un período de gracia total. Su primera cuota será recién en el 4º mes después de la instalación.",
+    q2: "¿Puedo pagar al contado con descuento?",
+    a2: "¡Sí! Para pagos al contado, ofrecemos una condición especial equivalente al beneficio de las mensualidades libres.",
     q3: "no quiere otra cuenta mensual ahora.",
-    a3: "Entendemos. Por eso el primer pago es solo en 2026. Con los $1.000 de cashback, cubre sus gastos por meses.",
+    a3: "Entendemos. Por eso tiene 3 meses de descanso total. ¡Empiece a pagar solo cuando ya esté sintiendo el ahorro en su bolsillo!",
     q4: "¿Si me mudo puedo llevar el sistema? ¿Cuánto costará?",
     a4: "¡Sí, puedes llevar el sistema a tu nueva casa! Sin embargo, para desmontar y transportar el sistema de forma segura, hay un pequeño costo técnico. Este costo puede ser pagado por usted o puede ser totalmente bonificado (GRATIS) simplemente recomendando nuestro trabajo a otra familia calificada.",
     q5: "¿Conozco sistemas más baratos o en Home Depot por mitad de precio?",
@@ -595,28 +601,28 @@ const esTranslations: TranslationStructure = {
     a6: "No. Los filtros comunes solo reducen el cloro. Nuestro sistema de 2 tanques + Ósmosis Inversa es una barrera física de purificación molecular que entrega agua alcalina y elimina metales pesados, virus y bactérias que los filtros comunes no pueden tocar."
   },
   urgency: {
-    expires: "Navidad llega en:",
+    expires: "Oferta expira en:",
     expiredTitle: "OFERTA EXPIRADA",
-    commission: "Regalo de Navidad exclusivo de Aquafeel Solutions PA.",
+    commission: "Beneficio exclusivo de Aquafeel Solutions PA.",
     limit: "PLAZO FINAL:",
-    footer: "Después del 25, el beneficio de $1.000 cashback será eliminado.",
-    expiredText: "El beneficio de $1.000 cashback de Navidad terminó el 25/12.",
-    expiredButton: "Verificar si hay bonos restantes"
+    footer: "Después del plazo, el beneficio de 3 meses gratis será eliminado.",
+    expiredText: "El beneficio de activación ha terminado.",
+    expiredButton: "Verificar disponibilidad"
   },
   footer: {
     slogan: "Elevando el nivel de vida a través de la purificación del agua.",
     talkTo: "Hablar directamente con su Consultor",
     button: "Hablar con Henrique",
-    rights: "© 2024 Aquafeel Solutions • Propuesta Especial de Navidad"
+    rights: "© 2024 Aquafeel Solutions • Propuesta Especial de Activación"
   },
   package: {
-    title: "Campanha de Natal",
+    title: "Campaña de Activación",
     desc: "El mayor beneficio jamás ofrecido en la historia de Aquafeel PA.",
     soapYears: "Años de Jabón",
     guarantee: "Garantía Total",
-    cost: "CASHBACK",
+    cost: "3 MESES FREE",
     payment: "Pago",
-    firstQuota: "Solo 2026"
+    firstQuota: "Solo 4º mes"
   }
 };
 

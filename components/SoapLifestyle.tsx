@@ -37,7 +37,7 @@ export const SoapLifestyle: React.FC<SoapLifestyleProps> = ({ onTotalChange, lan
             <span className="font-bold text-emerald-700"> {t.features}</span>
           </p>
           <div className="mt-4 text-sm font-semibold text-slate-500">
-            Saiba mais em: <a href="https://pureselects.com/" target="_blank" rel="noopener noreferrer" className="text-emerald-600 hover:underline">pureselects.com</a>
+            {t.learnMore} <a href="https://pureselects.com/" target="_blank" rel="noopener noreferrer" className="text-emerald-600 hover:underline">pureselects.com</a>
           </div>
         </div>
 

@@ -44,7 +44,7 @@ export const ComparisonCalculator: React.FC<ComparisonCalculatorProps> = ({
     { id: '120x', label: `120 ${t.months}`, sub: '', amount: 150, icon: Calendar, isFull: false }, 
     { id: '60x', label: `60 ${t.months}`, sub: '', amount: 185, icon: Calendar, isFull: false }, 
     { id: '4x', label: `4 ${t.months}`, sub: '', amount: 2197, icon: Calendar, isFull: false }, 
-    { id: 'cash', label: t.cash, sub: isExpired ? '' : '$1.000 CASHBACK', amount: cashPrice, icon: DollarSign, isFull: true },
+    { id: 'cash', label: t.cash, sub: isExpired ? '' : t.benefits.discount, amount: cashPrice, icon: DollarSign, isFull: true },
   ];
 
   const currentPlan = plans.find(p => p.id === selectedPlan) || plans[0];
@@ -147,7 +147,7 @@ export const ComparisonCalculator: React.FC<ComparisonCalculatorProps> = ({
         <div className={`text-white p-6 md:p-10 flex flex-col relative overflow-hidden transition-all duration-700 ${isExpired ? 'bg-slate-900' : 'bg-[#020d1a]'}`}>
            
            <div className="absolute top-0 right-0 bg-red-600 text-white text-[10px] font-bold px-4 py-2 rounded-bl-xl uppercase tracking-widest z-10 shadow-lg shimmer">
-             {isExpired ? t.offerExpired : 'CHRISTMAS EXCLUSIVE'}
+             {isExpired ? t.offerExpired : 'VIP EXCLUSIVE'}
            </div>
 
           <div className="relative z-10 h-full flex flex-col">
@@ -162,10 +162,10 @@ export const ComparisonCalculator: React.FC<ComparisonCalculatorProps> = ({
                         <span className="text-3xl mt-2">$</span>
                         {currentPlan.amount}
                     </div>
-                    {/* Cashback só aparece em destaque para o plano CASH */}
-                    {!isExpired && selectedPlan === 'cash' && (
+                    {/* Oferta especial em destaque */}
+                    {!isExpired && (
                         <div className="mt-4 bg-red-600 text-white px-6 py-2 rounded-full font-black text-lg animate-float shadow-[0_0_30px_rgba(220,38,38,0.5)] border-2 border-white/20 flex items-center gap-2">
-                           <Gift size={20} className="animate-pulse" /> $1.000 CASHBACK
+                           <Sparkles size={20} className="animate-pulse" /> {t.benefits.discount}
                         </div>
                     )}
                 </div>
@@ -227,7 +227,7 @@ export const ComparisonCalculator: React.FC<ComparisonCalculatorProps> = ({
                             <div className="flex justify-between items-center">
                               <span className="flex items-center gap-2 text-red-400 font-black"><Sparkles size={16} className="animate-pulse" /> {t.benefits.discount}</span>
                               <span className="font-black text-red-400 text-lg">
-                                {selectedPlan === 'cash' ? '+$1.000,00' : t.benefits.included}
+                                {t.benefits.included}
                               </span>
                             </div>
                             <span className="text-[10px] text-slate-500 mt-1 italic leading-none">{t.disclaimer}</span>
