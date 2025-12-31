@@ -5,23 +5,26 @@ import { InfoSection } from './components/InfoSection';
 import { UrgencyBanner } from './components/UrgencyBanner';
 import { ContaminantTruths } from './components/ContaminantTruths';
 import { WaterMalefices } from './components/WaterMalefices';
+import { WaterConsumptionLogic } from './components/WaterConsumptionLogic';
 import { Testimonials } from './components/Testimonials';
 import { FAQ } from './components/FAQ';
 import { WhiteGloveService } from './components/WhiteGloveService';
 import { SoapLifestyle } from './components/SoapLifestyle';
 import { WelcomeScreen } from './components/WelcomeScreen';
 import { AnalystModal } from './components/AnalystModal';
+import { Component as UrgencyGraph } from './components/ui/real-time-analytics';
 import { Phone, Lock, ChevronRight, LogOut, Globe, Droplets } from 'lucide-react';
 import { Language, translations } from './utils/i18n';
 
 function App() {
   const [expirationDate, setExpirationDate] = useState<Date | null>(null);
   const [cleaningTotal, setCleaningTotal] = useState<number>(0);
+  const [waterTotal, setWaterTotal] = useState<number>(0);
   const [isExpired, setIsExpired] = useState(false);
   const [clientData, setClientData] = useState<{name: string, spouse: string, lang: Language} | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [isAnalystModalOpen, setIsAnalystModalOpen] = useState(false);
-
+  
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const debugMode = params.get('mode');
@@ -152,6 +155,7 @@ function App() {
       <InfoSection lang={lang} />
       <ContaminantTruths lang={lang} />
       <WaterMalefices lang={lang} />
+      <WaterConsumptionLogic lang={lang} onWaterTotalChange={setWaterTotal} />
       <SoapLifestyle onTotalChange={setCleaningTotal} lang={lang} />
       <WhiteGloveService clientName={name} spouseName={spouse} lang={lang} />
 
@@ -175,13 +179,22 @@ function App() {
              <p className="text-sm md:text-base text-slate-500 mt-2 px-4">{lang === 'pt' ? 'Valores aplicados com desconto de comissão ($1.000 OFF).' : 'Values with commission discount ($1,000 OFF).'}</p>
         </div>
         <ComparisonCalculator 
-          onSelectPlan={()=>{}} 
+          onSelectPlan={() => {}} 
           expirationDate={expirationDate} 
           cleaningTotal={cleaningTotal} 
+          waterTotal={waterTotal}
           lang={lang} 
           onOpenAnalyst={handleOpenAnalystModal} 
           isExpired={isExpired} 
         />
+        
+        <div className="mt-12 px-4">
+          <UrgencyGraph 
+            initialMonthly={cleaningTotal + waterTotal} 
+            fixedMonthly={185} 
+            lang={lang} 
+          />
+        </div>
       </div>
 
       <Testimonials lang={lang} />
@@ -191,7 +204,7 @@ function App() {
         lang={lang} 
         isExpired={isExpired} 
         whatsappMessage={whatsappMessage} 
-        onOpenAnalyst={handleOpenAnalystModal}
+        onOpenAnalyst={handleOpenAnalystModal} 
       />
 
       <footer className="bg-slate-950 text-white py-12 md:py-16 border-t border-slate-900 relative overflow-hidden">

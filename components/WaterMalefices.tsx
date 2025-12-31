@@ -7,7 +7,14 @@ import {
   AlertTriangle, 
   Droplets,
   HeartCrack,
-  ShieldAlert
+  ShieldAlert,
+  Skull,
+  Trash2,
+  ZapOff,
+  Stethoscope,
+  XCircle,
+  Construction,
+  Waves
 } from 'lucide-react';
 import { Language, translations } from '../utils/i18n';
 
@@ -17,6 +24,7 @@ interface WaterMaleficesProps {
 
 export const WaterMalefices: React.FC<WaterMaleficesProps> = ({ lang }) => {
   const t = translations[lang].malefices;
+  const ts = translations[lang].sins;
 
   const categories = [
     {
@@ -49,6 +57,16 @@ export const WaterMalefices: React.FC<WaterMaleficesProps> = ({ lang }) => {
     }
   ];
 
+  const sins = [
+    { icon: <Skull size={20} className="text-red-500" />, text: ts.s1 },
+    { icon: <Waves size={20} className="text-red-500" />, text: ts.s2 },
+    { icon: <Stethoscope size={20} className="text-red-500" />, text: ts.s3 },
+    { icon: <Construction size={20} className="text-red-500" />, text: ts.s4 },
+    { icon: <ZapOff size={20} className="text-red-500" />, text: ts.s5 },
+    { icon: <XCircle size={20} className="text-red-500" />, text: ts.s6 },
+    { icon: <Trash2 size={20} className="text-red-500" />, text: ts.s7 },
+  ];
+
   return (
     <section className="py-16 md:py-20 bg-slate-50 px-4 overflow-hidden relative">
       <div className="absolute top-0 right-0 p-20 opacity-5 pointer-events-none hidden md:block">
@@ -69,7 +87,7 @@ export const WaterMalefices: React.FC<WaterMaleficesProps> = ({ lang }) => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 mb-20">
           {categories.map((cat, idx) => (
             <div key={idx} className={`${cat.bgColor} ${cat.borderColor} border-2 rounded-2xl md:rounded-3xl p-6 md:p-8 shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1`}>
               <div className="flex items-center gap-4 mb-4 md:mb-6">
@@ -90,6 +108,27 @@ export const WaterMalefices: React.FC<WaterMaleficesProps> = ({ lang }) => {
               </ul>
             </div>
           ))}
+        </div>
+
+        {/* 7 Capital Sins Section */}
+        <div className="bg-white rounded-[3rem] p-8 md:p-12 shadow-2xl border border-red-100 relative overflow-hidden">
+          <div className="absolute top-0 right-0 p-8 opacity-[0.03]">
+             <Skull size={300} />
+          </div>
+          <div className="text-center mb-10 relative z-10">
+             <h3 className="text-2xl md:text-4xl font-serif font-bold text-red-600 mb-2">{ts.title}</h3>
+             <p className="text-slate-500 font-medium tracking-wide">{ts.subtitle}</p>
+          </div>
+          <div className="grid md:grid-cols-1 gap-4 relative z-10">
+             {sins.map((sin, idx) => (
+               <div key={idx} className="flex items-start gap-4 p-4 bg-red-50 rounded-2xl border border-red-100/50 hover:bg-red-100 transition-colors group">
+                  <div className="bg-white p-2 rounded-lg shadow-sm group-hover:scale-110 transition-transform">
+                    {sin.icon}
+                  </div>
+                  <p className="text-slate-800 font-bold text-sm md:text-base">{sin.text}</p>
+               </div>
+             ))}
+          </div>
         </div>
 
         <div className="mt-12 md:mt-16 bg-slate-900 rounded-2xl md:rounded-3xl p-6 md:p-10 text-center text-white relative overflow-hidden group">
