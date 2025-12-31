@@ -7,13 +7,15 @@ interface UrgencyBannerProps {
   lang: Language;
   isExpired?: boolean;
   whatsappMessage?: string;
+  onOpenAnalyst?: () => void;
 }
 
 export const UrgencyBanner: React.FC<UrgencyBannerProps> = ({ 
     expirationDate, 
     lang, 
     isExpired = false,
-    whatsappMessage 
+    whatsappMessage,
+    onOpenAnalyst
 }) => {
   const t = translations[lang].urgency;
   
@@ -72,14 +74,12 @@ export const UrgencyBanner: React.FC<UrgencyBannerProps> = ({
                     </div>
                 </div>
                 
-                <a 
-                    href={`https://wa.me/12407806473?text=${whatsappMessage}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                <button 
+                    onClick={onOpenAnalyst}
                     className="bg-white text-red-700 hover:bg-red-50 px-8 py-3 rounded-full font-black uppercase tracking-wide text-sm shadow-xl transform transition-all hover:scale-105 active:scale-95"
                 >
                     {t.expiredButton}
-                </a>
+                </button>
             </div>
         </div>
     );

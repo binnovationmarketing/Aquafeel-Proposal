@@ -10,7 +10,8 @@ import {
   ArrowRight,
   Utensils,
   Ban,
-  Sparkles
+  Sparkles,
+  MapPin
 } from 'lucide-react';
 import { Language, translations } from '../utils/i18n';
 
@@ -19,25 +20,33 @@ interface ComparisonCalculatorProps {
   expirationDate: Date;
   cleaningTotal: number;
   lang: Language;
-  whatsappMessage: string;
+  onOpenAnalyst: () => void;
   isExpired?: boolean;
 }
+
+type RegionId = 'NE' | 'DMV_CAROLINAS';
 
 export const ComparisonCalculator: React.FC<ComparisonCalculatorProps> = ({ 
     onSelectPlan, 
     expirationDate, 
     cleaningTotal, 
     lang, 
-    whatsappMessage,
+    onOpenAnalyst,
     isExpired = false 
 }) => {
   const [selectedPlan, setSelectedPlan] = useState<string>('180x');
+  const [selectedRegion, setSelectedRegion] = useState<RegionId>('NE');
   const [waterDrinking, setWaterDrinking] = useState<number>(0);
   const [waterCooking, setWaterCooking] = useState<number>(0);
   const t = translations[lang].calculator;
 
-  // Preços
-  const cashPrice = 7790;
+  // Preços Regionais
+  const regionPrices: Record<RegionId, number> = {
+    NE: 8990,
+    DMV_CAROLINAS: 7990
+  };
+
+  const cashPrice = regionPrices[selectedRegion];
   
   const plans = [
     { id: '180x', label: `180 ${t.months}`, sub: '', amount: 111, icon: Calendar, isFull: false },
@@ -156,11 +165,43 @@ export const ComparisonCalculator: React.FC<ComparisonCalculatorProps> = ({
               <p className={`text-xs font-bold tracking-widest uppercase mt-1 animate-in fade-in slide-in-from-top-2 duration-700 delay-200 ${isExpired ? 'text-red-400' : 'text-amber-400'}`}>{t.solutionSub}</p>
             </div>
 
+            {/* Region Selector Tabs */}
+            <div className="mb-8 space-y-3">
+              <p className="text-center text-[10px] font-black uppercase tracking-widest text-slate-500">{t.selectRegion}</p>
+              <div className="grid grid-cols-2 gap-2">
+                <button
+                  onClick={() => setSelectedRegion('NE')}
+                  className={`p-3 rounded-2xl border transition-all duration-300 flex flex-col items-center text-center ${
+                    selectedRegion === 'NE'
+                      ? 'bg-white text-slate-950 border-white shadow-xl'
+                      : 'bg-white/5 border-white/10 text-slate-400 hover:bg-white/10'
+                  }`}
+                >
+                  <MapPin size={16} className="mb-1" />
+                  <span className="text-xs font-black leading-tight">PA, NJ, DE</span>
+                </button>
+                <button
+                  onClick={() => setSelectedRegion('DMV_CAROLINAS')}
+                  className={`p-3 rounded-2xl border transition-all duration-500 flex flex-col items-center text-center relative overflow-hidden ${
+                    selectedRegion === 'DMV_CAROLINAS'
+                      ? 'bg-red-600 text-white border-red-500 shadow-[0_0_20px_rgba(220,38,38,0.5)] animate-soft-pulse'
+                      : 'bg-white/5 border-white/10 text-slate-400 hover:bg-white/10'
+                  }`}
+                >
+                  <MapPin size={16} className="mb-1" />
+                  <span className="text-[10px] font-black leading-tight uppercase">MD, VA, DC, NC, SC</span>
+                  {selectedRegion === 'DMV_CAROLINAS' && (
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer"></div>
+                  )}
+                </button>
+              </div>
+            </div>
+
             <div className="text-center mb-8 relative">
                 <div className="flex flex-col items-center">
                     <div className={`text-7xl font-black text-white tracking-tighter flex items-start gap-1 transition-all duration-500 ${isExpired ? 'text-slate-600' : 'text-white'}`}>
                         <span className="text-3xl mt-2">$</span>
-                        {currentPlan.amount}
+                        {currentPlan.id === 'cash' ? cashPrice : currentPlan.amount}
                     </div>
                     {/* Oferta especial em destaque */}
                     {!isExpired && (
@@ -247,10 +288,8 @@ export const ComparisonCalculator: React.FC<ComparisonCalculatorProps> = ({
 
             {/* Action Buttons */}
             <div className="mt-auto space-y-4">
-              <a 
-                href={`https://wa.me/12407806473?text=${whatsappMessage}`}
-                target="_blank"
-                rel="noopener noreferrer"
+              <button 
+                onClick={onOpenAnalyst}
                 className={`w-full font-black text-xl py-5 rounded-2xl shadow-2xl transform transition-all hover:-translate-y-1 active:scale-95 flex items-center justify-center gap-3 cursor-pointer group ${
                     isExpired 
                     ? 'bg-red-600 hover:bg-red-700 text-white' 
@@ -259,7 +298,7 @@ export const ComparisonCalculator: React.FC<ComparisonCalculatorProps> = ({
               >
                 <span>{isExpired ? t.negotiate : t.accept}</span>
                 <ArrowRight className="group-hover:translate-x-2 transition-transform duration-300" size={24} />
-              </a>
+              </button>
               <p className={`text-center text-xs font-bold uppercase tracking-widest animate-pulse ${isExpired ? 'text-red-400' : 'text-amber-400'}`}>
                 {isExpired ? t.offerExpired : t.offerValid}
               </p>

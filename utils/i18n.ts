@@ -63,7 +63,7 @@ const ptTranslations = {
     adults: {
       title: "Para os Adultos",
       m1: "Danos à Pele e Cabelo: O cloro remove a oleosidade natural, causando envelhecimento precoce.",
-      m2: "Desreguladores Endócrinos: PFAS e químicos afetam o equilíbrio hormonal e metabolismo.",
+      m2: "Desreguladores Endócrinos: PFAS and químicos afetam o equilíbrio hormonal e metabolismo.",
       m3: "Acúmulo de Metais: Chumbo e mercúrio se acumulam no organismo ao longo de décadas."
     },
     children: {
@@ -138,6 +138,7 @@ const ptTranslations = {
     warning: "\"Você já paga pelo sistema, mas está recebendo produtos químicos e plástico em troca.\"",
     solutionTitle: "Oferta de Ativação",
     solutionSub: "Benefício direto para sua família",
+    selectRegion: "Selecione sua Localização:",
     difference: "Economia de",
     months: "Meses",
     cash: "À Vista",
@@ -151,7 +152,7 @@ const ptTranslations = {
       ro: "Osmose Reversa Inclusa (Água Alcalina)",
       downpayment: "0 Downpayment",
       taxes: "0 Taxes",
-      installation: "0 Instalação",
+      installation: "0 Instalacão",
       discount: "3 MESES GRÁTIS",
       discountExpired: "Promoção encerrada",
       payment: "Primeiro Pagamento:",
@@ -159,6 +160,14 @@ const ptTranslations = {
       included: "Incluso",
       standardPrice: "Preço Regular"
     }
+  },
+  modal: {
+    title: "Selecione seu Analista de Água",
+    subtitle: "Com quem você gostaria de falar para ativar seu benefício?",
+    confirmTitle: "Confirmar Seleção",
+    confirmMessage: "Você deseja se conectar com {name}?",
+    yes: "Sim, conectar agora",
+    no: "Não, escolher outro"
   },
   testimonials: {
     title: "Famílias Que Escolheram o Melhor",
@@ -249,9 +258,9 @@ const enTranslations: TranslationStructure = {
   info: {
     label: "Real Facts, Public Data",
     title: "What's Really in Your Water?",
-    subtitle: "Municipal water meets basic regulations, but \"legal\" doesn't mean \"healthy\". Your new home deserves protection.",
+    subtitle: "Municipal water meets basic regulations, but \"legal\" doesn't mean \"healthy\". Your new home deserves protection against modern contaminants.",
     alertTitle: "Regional Alert",
-    alertBody: "Recent studies indicate high levels of PFAS (Forever Chemicals), Lead, and Chlorine in local supplies.",
+    alertBody: "Recent studies indicate high levels of PFAS (Forever Chemicals), Lead, and Chlorine in local supplies. These compounds accumulate in the body and pipes.",
     analysisTitle: "Aquafeel Analysis",
     analysisBody: "Our Double Tank + Reverse Osmosis system is the only real physical barrier between your family and these contaminants.",
     virus: "Eliminates 99.9% of Virus & Bacteria",
@@ -346,6 +355,7 @@ const enTranslations: TranslationStructure = {
     warning: "\"You are already paying for the system, but receiving chemicals and plastic in exchange.\"",
     solutionTitle: "Activation Offer",
     solutionSub: "Direct benefit for your family",
+    selectRegion: "Select your Location:",
     difference: "Savings of",
     months: "Months",
     cash: "Cash",
@@ -367,6 +377,14 @@ const enTranslations: TranslationStructure = {
       included: "Included",
       standardPrice: "Standard Price"
     }
+  },
+  modal: {
+    title: "Select your Water Analyst",
+    subtitle: "Who would you like to speak with to activate your benefit?",
+    confirmTitle: "Confirm Selection",
+    confirmMessage: "Do you want to connect with {name}?",
+    yes: "Yes, connect now",
+    no: "No, choose another"
   },
   testimonials: {
     title: "Families Who Chose the Best",
@@ -448,16 +466,16 @@ const esTranslations: TranslationStructure = {
     soapTitle: "2 Años de Jabón",
     soapSub: "Para toda la casa",
     paymentTitle: "Primer Pago",
-    paymentSub: "En el 4º mes (90 días)",
+    paymentSub: "En el 4º mes (90 dias)",
     penaltyTitle: "Sin Penalidad",
     penaltySub: "Anticipe sus pagos",
     analysisTitle: "Análisis de Agua",
     analysisSub: "1x al año (Anual)"
   },
   info: {
-    label: "Hechos Reales, Datos Públicos",
+    label: "Hechos Reales, Dados Públicos",
     title: "¿Qué hay realmente en su agua?",
-    subtitle: "El agua municipal cumple regulaciones básicas, pero \"legal\" no significa \"saludable\". Su casa merece protección.",
+    subtitle: "El agua municipal cumple regulaciones básicas, mas \"legal\" no significa \"saludable\". Su casa merece protección.",
     alertTitle: "Alerta Regional",
     alertBody: "Estudios recientes indican altos niveles de PFAS (Químicos Eternos), Plomo y Cloro en las redes locales.",
     analysisTitle: "Análisis Aquafeel",
@@ -484,13 +502,13 @@ const esTranslations: TranslationStructure = {
     },
     children: {
       title: "En Niños",
-      m1: "Riesgos en el Desarrollo: El plomo en el agua está ligado a retrasos cognitivos y de crecimiento.",
-      m2: "Inmunidad Fragilizada: Exposición constante a bacterias y virus que sobreviven al tratamiento común.",
+      m1: "En Niños",
+      m2: "Inmunidad Fragilizada: Exposición constante a bacterias y virus que sobrevivem al tratamiento común.",
       m3: "Problemas Respiratorios: Los vapores de cloro durante la ducha pueden agravar el asma y la bronquitis."
     },
     pets: {
       title: "En Mascotas",
-      m1: "Sobrecarga Renal: Perros y gatos son 10 veces más sensibles a las toxinas y al exceso de sodio en el agua.",
+      m1: "En Mascotas",
       m2: "Cálculos Urinarios: El exceso de minerales en el agua \"dura\" es el principal causante de piedras en la vejiga y riñones en mascotas.",
       m3: "Dermatitis y Caída de Pelo: El cloro y el sarro eliminan la protección natural de la piel, causando irritación y pelaje quebradizo."
     }
@@ -507,8 +525,8 @@ const esTranslations: TranslationStructure = {
   },
   soap: {
     partner: "Alianza Exclusiva",
-    title: "Vida Orgánica",
-    subtitle: "Elimine químicos agressivos. Suministramos todo el jabón, champú y productos de limpieza que su casa necesita.",
+    title: "Vida Orgânica",
+    subtitle: "Elimine químicos agressivos. Suministramos todo el jabón, champú y productos de limpeza que su casa necesita.",
     features: "100% Orgánico, Hipoalergênico y Seguro para Mascotas/Niños.",
     currentSpend: "Sus Gastos Actuales",
     spendSub: "¿Cuánto deja en el mercado mensualmente?",
@@ -537,7 +555,7 @@ const esTranslations: TranslationStructure = {
     priority: "Prioridad de Agenda",
     prioritySub: "Acceso preferencial a la agenda técnica, incluyendo fines de semana.",
     aesthetic: "Garantia Estética",
-    aestheticSub: "Instalación discreta y profesional, preservando el diseño de los gabinetes.",
+    aestheticSub: "Instalación discreta e profesional, preservando el diseño de los gabinetes.",
     support: "Soporte VIP Dedicado",
     supportSub: "Olvide los call centers. Tendrán línea directa con el consultor senior.",
     included: "Incluido en el Paquete"
@@ -554,6 +572,7 @@ const esTranslations: TranslationStructure = {
     warning: "\"Ya están pagando por el sistema, pero recibiendo químicos y plástico a cambio.\"",
     solutionTitle: "Oferta de Activación",
     solutionSub: "Beneficio directo para su familia",
+    selectRegion: "Seleccione su Ubicación:",
     difference: "Ahorro de",
     months: "Meses",
     cash: "Al Contado",
@@ -576,6 +595,14 @@ const esTranslations: TranslationStructure = {
       standardPrice: "Precio Regular"
     }
   },
+  modal: {
+    title: "Seleccione su Analista de Agua",
+    subtitle: "¿Con quién le gustaría hablar para activar su beneficio?",
+    confirmTitle: "Confirmar Selección",
+    confirmMessage: "¿Desea conectarse con {name}?",
+    yes: "Sí, conectar ahora",
+    no: "No, elegir otro"
+  },
   testimonials: {
     title: "Familias que Eligieron lo Mejor",
     subtitle: "Vea lo que otros clientes exigentes dicen sobre el cambio de vida.",
@@ -594,7 +621,7 @@ const esTranslations: TranslationStructure = {
     q3: "no quiere otra cuenta mensual ahora.",
     a3: "Entendemos. Por eso tiene 3 meses de descanso total. ¡Empiece a pagar solo cuando ya esté sintiendo el ahorro en su bolsillo!",
     q4: "¿Si me mudo puedo llevar el sistema? ¿Cuánto costará?",
-    a4: "¡Sí, puedes llevar el sistema a tu nueva casa! Sin embargo, para desmontar y transportar el sistema de forma segura, hay un pequeño costo técnico. Este costo puede ser pagado por usted o puede ser totalmente bonificado (GRATIS) simplemente recomendando nuestro trabajo a otra familia calificada.",
+    a4: "¡Sí, puedes llevar el sistema a tu nueva casa! Sin embargo, para desmontar y transportar el sistema de forma segura, hay un pequeño costo técnico. Este costo puede ser pagado por usted o puede ser totalmente bonificado (GRÁTIS) simplemente recomendando nuestro trabajo a otra familia calificada.",
     q5: "¿Conozco sistemas más baratos o en Home Depot por mitad de precio?",
     a5: "Los filtros de las tiendas son solo filtros de carbón. Quitan el sabor pero no los contaminantes pesados. Aquafeel es un sistema de purificación molecular con 25 años de garantia. Comparar un filtro de tienda con Aquafeel es como comparar un ventilador de mesa con un aire acondicionado central.",
     q6: "¿Es esto un filtro común?",
@@ -612,7 +639,7 @@ const esTranslations: TranslationStructure = {
   footer: {
     slogan: "Elevando el nivel de vida a través de la purificación del agua.",
     talkTo: "Hablar directamente con su Consultor",
-    button: "Hablar con Henrique",
+    button: "Hablar com Henrique",
     rights: "© 2024 Aquafeel Solutions • Propuesta Especial de Activación"
   },
   package: {

@@ -10,6 +10,7 @@ import { FAQ } from './components/FAQ';
 import { WhiteGloveService } from './components/WhiteGloveService';
 import { SoapLifestyle } from './components/SoapLifestyle';
 import { WelcomeScreen } from './components/WelcomeScreen';
+import { AnalystModal } from './components/AnalystModal';
 import { Phone, Lock, ChevronRight, LogOut, Globe, Droplets } from 'lucide-react';
 import { Language, translations } from './utils/i18n';
 
@@ -19,6 +20,7 @@ function App() {
   const [isExpired, setIsExpired] = useState(false);
   const [clientData, setClientData] = useState<{name: string, spouse: string, lang: Language} | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [isAnalystModalOpen, setIsAnalystModalOpen] = useState(false);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -88,6 +90,10 @@ function App() {
     window.history.pushState({}, document.title, window.location.pathname);
   };
 
+  const handleOpenAnalystModal = () => {
+    setIsAnalystModalOpen(true);
+  };
+
   useEffect(() => {
     if (!expirationDate) return;
     const interval = setInterval(() => {
@@ -106,7 +112,7 @@ function App() {
   const whatsappMessage = encodeURIComponent(
     isExpired 
       ? `Olá Henrique, *${name}* aqui. Perdi o prazo de 48h mas tenho interesse.` 
-      : `Olá Henrique, *${name}* aqui. Vi a proposta VIP e quero garantir minha condição.`
+      : `Olá Henrique, *${name}* aqui. Vi a proposta VIP e quero garantir meus 3 meses grátis.`
   );
 
   return (
@@ -168,12 +174,25 @@ function App() {
              <h2 className="text-2xl md:text-4xl font-serif font-bold text-slate-900 leading-tight">{lang === 'pt' ? 'Sua Proposta Exclusiva' : 'Your Exclusive Proposal'}</h2>
              <p className="text-sm md:text-base text-slate-500 mt-2 px-4">{lang === 'pt' ? 'Valores aplicados com desconto de comissão ($1.000 OFF).' : 'Values with commission discount ($1,000 OFF).'}</p>
         </div>
-        <ComparisonCalculator onSelectPlan={()=>{}} expirationDate={expirationDate} cleaningTotal={cleaningTotal} lang={lang} whatsappMessage={whatsappMessage} isExpired={isExpired} />
+        <ComparisonCalculator 
+          onSelectPlan={()=>{}} 
+          expirationDate={expirationDate} 
+          cleaningTotal={cleaningTotal} 
+          lang={lang} 
+          onOpenAnalyst={handleOpenAnalystModal} 
+          isExpired={isExpired} 
+        />
       </div>
 
       <Testimonials lang={lang} />
       <FAQ spouseName={spouse || name} lang={lang} />
-      <UrgencyBanner expirationDate={expirationDate} lang={lang} isExpired={isExpired} whatsappMessage={whatsappMessage} />
+      <UrgencyBanner 
+        expirationDate={expirationDate} 
+        lang={lang} 
+        isExpired={isExpired} 
+        whatsappMessage={whatsappMessage} 
+        onOpenAnalyst={handleOpenAnalystModal}
+      />
 
       <footer className="bg-slate-950 text-white py-12 md:py-16 border-t border-slate-900 relative overflow-hidden">
         <div className="max-w-6xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-8 md:gap-10 relative z-10 text-center md:text-left">
@@ -187,15 +206,22 @@ function App() {
             </div>
           </div>
           <div className="flex flex-col items-center md:items-end">
-             <a href={`https://wa.me/12407806473?text=${whatsappMessage}`} target="_blank" className="bg-white text-slate-950 px-5 md:px-6 py-2.5 md:py-3 rounded-full font-black flex items-center gap-3 md:gap-4 hover:bg-aqua-50 transition-all shadow-xl group text-sm md:text-base">
+             <button onClick={handleOpenAnalystModal} className="bg-white text-slate-950 px-5 md:px-6 py-2.5 md:py-3 rounded-full font-black flex items-center gap-3 md:gap-4 hover:bg-aqua-50 transition-all shadow-xl group text-sm md:text-base">
                <Phone size={18} className="text-aqua-600 w-4 h-4 md:w-5 md:h-5" />
                <span className="uppercase tracking-wide">{t.footer.button}</span>
                <ChevronRight size={16} className="group-hover:translate-x-1 transition-transform w-4 h-4" />
-             </a>
+             </button>
           </div>
         </div>
         <div className="text-center mt-12 md:mt-16 text-slate-600 text-[10px] md:text-xs uppercase tracking-widest font-semibold border-t border-white/5 pt-8 px-4 leading-relaxed">{t.footer.rights}</div>
       </footer>
+
+      <AnalystModal 
+        isOpen={isAnalystModalOpen} 
+        onClose={() => setIsAnalystModalOpen(false)} 
+        lang={lang} 
+        clientName={name} 
+      />
     </div>
   );
 }
