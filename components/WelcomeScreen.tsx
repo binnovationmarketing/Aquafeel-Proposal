@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Lock, ChevronRight, ShieldCheck, ArrowLeft, Droplets } from 'lucide-react';
+import { Lock, ChevronRight, ShieldCheck, ArrowLeft } from 'lucide-react';
+import AquaFeelLogo from './AquaFeelLogo';
 import { Language, translations } from '../utils/i18n';
 
 interface WelcomeScreenProps {
@@ -43,11 +44,9 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
         {step === 'lang' ? (
           <div className="text-center animate-in fade-in slide-in-from-bottom-4 duration-700">
             <div className="mb-10 flex flex-col items-center">
-              <div className="bg-aqua-600/20 p-5 rounded-3xl mb-4 border border-aqua-500/30 shadow-2xl transition-transform hover:scale-110 duration-500">
-                <Droplets size={64} className="text-aqua-400 animate-float" fill="currentColor" />
+              <div className="p-2 mb-4 hover:scale-110 transition-transform duration-500">
+                <AquaFeelLogo width="280px" variant="white" className="opacity-90 drop-shadow-[0_0_15px_rgba(0,174,239,0.3)]" />
               </div>
-              <h2 className="text-4xl font-black text-white tracking-tighter uppercase leading-none">AQUAFEEL</h2>
-              <p className="text-sm font-bold text-aqua-400 tracking-[0.4em] uppercase mt-1">Solutions PA</p>
             </div>
             
             <p className="text-slate-400 text-sm mb-8 font-medium tracking-wide">
@@ -87,11 +86,7 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
 
             <div className="text-center mb-8 pt-6">
                <div className="mb-6 flex flex-col items-center">
-                <div className="bg-aqua-600/20 p-3 rounded-2xl mb-2 border border-aqua-500/30 shadow-xl transition-transform hover:rotate-6 duration-300">
-                    <Droplets size={32} className="text-aqua-400" fill="currentColor" />
-                </div>
-                <h2 className="text-2xl font-black text-white tracking-tighter uppercase leading-none">AQUAFEEL</h2>
-                <p className="text-[10px] font-bold text-aqua-400 tracking-[0.4em] uppercase mt-1">Solutions PA</p>
+                <AquaFeelLogo width="220px" variant="white" className="opacity-80 drop-shadow-xl" />
               </div>
               <div className="flex items-center justify-center gap-2 mb-2">
                  <Lock size={16} className="text-emerald-500 animate-pulse" />

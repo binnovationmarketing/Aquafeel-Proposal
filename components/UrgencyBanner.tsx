@@ -56,7 +56,7 @@ export const UrgencyBanner: React.FC<UrgencyBannerProps> = ({
   // RENDERIZAÇÃO QUANDO EXPIRADO (ZONA DE GLOW VERMELHO PULSANTE)
   if (isExpired) {
     return (
-        <div className="bg-red-600 py-6 px-4 sticky bottom-0 z-50 md:relative shadow-[0_-10px_60px_rgba(220,38,38,0.8)] animate-pulse border-t border-white/20">
+        <div className="bg-red-600 py-12 px-4 relative z-40 shadow-2xl animate-pulse border-y border-white/20">
             <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
                 <div className="flex flex-col md:flex-row items-center gap-5">
                     <div className="bg-white text-red-600 p-3 rounded-full shadow-2xl shrink-0">
@@ -84,9 +84,9 @@ export const UrgencyBanner: React.FC<UrgencyBannerProps> = ({
     );
   }
 
-  // RENDERIZAÇÃO NORMAL (CONTAGEM REGRESSIVA)
+  // RENDERIZAÇÃO NORMAL (CONTAGEM REGRESSIVA ESTÁTICA)
   return (
-    <div className="bg-slate-900 border-y-4 border-amber-500 py-6 px-4 sticky bottom-0 z-50 md:relative shadow-[0_-10px_40px_rgba(0,0,0,0.5)]">
+    <div className="bg-slate-900 border-y-4 border-amber-500 py-12 px-4 relative z-40 shadow-xl">
       <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
         
         <div className="flex items-center gap-5">

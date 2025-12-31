@@ -3,13 +3,11 @@ import {
   ShieldCheck, 
   Gift, 
   Sparkles, 
-  Droplets, 
   Calendar, 
   CreditCard, 
   Microscope, 
-  CheckCircle2,
   Gem,
-  Zap
+  Award
 } from 'lucide-react';
 import { Language, translations } from '../utils/i18n';
 
@@ -28,37 +26,51 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ clientName, spouseName
       icon: <Gift className="text-red-500" size={24} />,
       title: t.cashbackTitle,
       sub: t.cashbackValue,
-      highlight: true
+      highlight: true,
+      glowColor: 'group-hover:shadow-[0_0_30px_rgba(239,68,68,0.4)] group-hover:border-red-500/50'
     },
     {
       icon: <ShieldCheck className="text-gold-500" size={24} />,
       title: t.warrantyTitle,
-      sub: t.warrantySub
+      sub: t.warrantySub,
+      glowColor: 'group-hover:shadow-[0_0_30px_rgba(234,179,8,0.3)] group-hover:border-yellow-500/50'
     },
     {
       icon: <Gem className="text-aqua-400" size={24} />,
       title: t.installTitle,
-      sub: t.installSub
+      sub: t.installSub,
+      glowColor: 'group-hover:shadow-[0_0_30px_rgba(14,165,233,0.3)] group-hover:border-aqua-400/50'
     },
     {
       icon: <Sparkles className="text-emerald-400" size={24} />,
       title: t.soapTitle,
-      sub: t.soapSub
+      sub: t.soapSub,
+      glowColor: 'group-hover:shadow-[0_0_30px_rgba(16,185,129,0.3)] group-hover:border-emerald-400/50'
     },
     {
       icon: <Calendar className="text-blue-400" size={24} />,
       title: t.paymentTitle,
-      sub: t.paymentSub
+      sub: t.paymentSub,
+      glowColor: 'group-hover:shadow-[0_0_30px_rgba(59,130,246,0.3)] group-hover:border-blue-400/50'
     },
     {
       icon: <CreditCard className="text-purple-400" size={24} />,
       title: t.penaltyTitle,
-      sub: t.penaltySub
+      sub: t.penaltySub,
+      glowColor: 'group-hover:shadow-[0_0_30px_rgba(168,85,247,0.3)] group-hover:border-purple-400/50'
     },
     {
       icon: <Microscope className="text-teal-400" size={24} />,
       title: t.analysisTitle,
-      sub: t.analysisSub
+      sub: t.analysisSub,
+      glowColor: 'group-hover:shadow-[0_0_30px_rgba(20,184,166,0.3)] group-hover:border-teal-400/50'
+    },
+    {
+      icon: <Award className="text-amber-400" size={24} />,
+      title: "Premium",
+      sub: t.systemCard,
+      highlight: false,
+      glowColor: 'group-hover:shadow-[0_0_30px_rgba(245,158,11,0.3)] group-hover:border-amber-400/50'
     }
   ];
 
@@ -92,35 +104,29 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ clientName, spouseName
           </p>
         </div>
 
-        {/* Grid de Benefícios de Luxo */}
+        {/* Grid de Benefícios de Luxo (Perfeito 4x2) */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
           {benefits.map((benefit, index) => (
             <div 
               key={index}
               style={{ animationDelay: `${index * 100}ms` }}
-              className={`glass-card p-4 md:p-6 rounded-2xl md:rounded-3xl flex flex-col items-center text-center group animate-in fade-in slide-in-from-bottom-4 duration-700 fill-mode-both ${benefit.highlight ? 'ring-2 ring-red-500/50 bg-red-500/10' : ''}`}
+              className={`group animate-in fade-in slide-in-from-bottom-4 duration-700 fill-mode-both`}
             >
-              <div className="mb-3 md:mb-4 bg-white/5 p-3 md:p-4 rounded-xl md:rounded-2xl group-hover:scale-110 group-hover:bg-white/10 transition-all duration-500">
-                {benefit.icon}
-              </div>
-              <div className="space-y-1">
-                <h4 className="text-[9px] md:text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] md:tracking-[0.25em] mb-1 group-hover:text-slate-300 transition-colors">
-                  {benefit.title}
-                </h4>
-                <p className={`text-sm md:text-xl font-bold tracking-tight transition-all duration-300 ${benefit.highlight ? 'text-red-400 group-hover:text-red-300' : 'text-white'}`}>
-                  {benefit.sub}
-                </p>
+              <div className={`glass-card p-4 md:p-6 rounded-2xl md:rounded-3xl flex flex-col items-center text-center transition-all duration-500 h-full ${benefit.glowColor} ${benefit.highlight ? 'ring-2 ring-red-500/50 bg-red-500/10' : ''}`}>
+                <div className="mb-3 md:mb-4 bg-white/5 p-3 md:p-4 rounded-xl md:rounded-2xl group-hover:scale-110 group-hover:bg-white/10 transition-all duration-500">
+                  {benefit.icon}
+                </div>
+                <div className="space-y-1">
+                  <h4 className="text-[9px] md:text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] md:tracking-[0.25em] mb-1 group-hover:text-slate-300 transition-colors">
+                    {benefit.title}
+                  </h4>
+                  <p className={`text-xs md:text-lg font-bold tracking-tight transition-all duration-300 leading-tight ${benefit.highlight ? 'text-red-400 group-hover:text-red-300' : 'text-white'}`}>
+                    {benefit.sub}
+                  </p>
+                </div>
               </div>
             </div>
           ))}
-          
-          {/* Card Final de Convite Visual */}
-          <div className="hidden lg:flex flex-col items-center justify-center p-6 rounded-3xl bg-gradient-to-br from-aqua-600/20 to-aqua-900/40 border border-aqua-400/20 hover:from-aqua-600/30 hover:to-aqua-900/50 transition-all duration-500 cursor-default group">
-             <Zap size={48} className="text-aqua-400 mb-4 animate-pulse group-hover:scale-125 transition-transform" fill="currentColor" />
-             <p className="text-xs font-bold text-aqua-200 uppercase tracking-widest text-center group-hover:text-white transition-colors">
-                Aquafeel Intelligence System
-             </p>
-          </div>
         </div>
       </div>
     </div>

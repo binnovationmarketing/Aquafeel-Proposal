@@ -13,7 +13,8 @@ import { SoapLifestyle } from './components/SoapLifestyle';
 import { WelcomeScreen } from './components/WelcomeScreen';
 import { AnalystModal } from './components/AnalystModal';
 import { Component as UrgencyGraph } from './components/ui/real-time-analytics';
-import { Phone, Lock, ChevronRight, LogOut, Globe, Droplets } from 'lucide-react';
+import AquaFeelLogo from './components/AquaFeelLogo';
+import { Phone, Lock, ChevronRight, LogOut, Globe } from 'lucide-react';
 import { Language, translations } from './utils/i18n';
 
 function App() {
@@ -25,6 +26,9 @@ function App() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isAnalystModalOpen, setIsAnalystModalOpen] = useState(false);
   
+  // Constante de Expiração: 120 horas (5 dias) para maior flexibilidade
+  const EXPIRATION_HOURS = 120;
+
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const debugMode = params.get('mode');
@@ -37,20 +41,32 @@ function App() {
     }
     
     if (debugMode === 'expired') {
-       const threeDaysAgo = new Date();
-       threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
-       localStorage.setItem('proposalFirstAccess', threeDaysAgo.getTime().toString());
+       const fiveDaysAgo = new Date();
+       fiveDaysAgo.setDate(fiveDaysAgo.getDate() - 6);
+       localStorage.setItem('proposalFirstAccess', fiveDaysAgo.getTime().toString());
     }
 
     const storedStartDate = localStorage.getItem('proposalFirstAccess');
     let startDate: Date;
+
     if (storedStartDate) {
-      startDate = new Date(parseInt(storedStartDate));
+      const parsedDate = new Date(parseInt(storedStartDate));
+      const now = new Date();
+      
+      // Se a data gravada for absurdamente antiga (mais de 15 dias), resetamos para o cliente não ficar "preso" no erro
+      const diffInDays = (now.getTime() - parsedDate.getTime()) / (1000 * 60 * 60 * 24);
+      if (diffInDays > 15) {
+        startDate = new Date();
+        localStorage.setItem('proposalFirstAccess', startDate.getTime().toString());
+      } else {
+        startDate = parsedDate;
+      }
     } else {
       startDate = new Date();
       localStorage.setItem('proposalFirstAccess', startDate.getTime().toString());
     }
-    const expDate = new Date(startDate.getTime() + (48 * 60 * 60 * 1000));
+
+    const expDate = new Date(startDate.getTime() + (EXPIRATION_HOURS * 60 * 60 * 1000));
     setExpirationDate(expDate);
 
     const now = new Date();
@@ -101,7 +117,8 @@ function App() {
     if (!expirationDate) return;
     const interval = setInterval(() => {
         if (new Date() > expirationDate) setIsExpired(true);
-    }, 1000);
+        else setIsExpired(false);
+    }, 5000); // Checagem menos agressiva
     return () => clearInterval(interval);
   }, [expirationDate]);
 
@@ -114,7 +131,7 @@ function App() {
   
   const whatsappMessage = encodeURIComponent(
     isExpired 
-      ? `Olá Consultor, *${name}* aqui. Perdi o prazo de 48h mas tenho interesse.` 
+      ? `Olá Consultor, *${name}* aqui. Perdi o prazo de ${EXPIRATION_HOURS}h mas tenho interesse.` 
       : `Olá Consultor, *${name}* aqui. Vi a proposta VIP e quero garantir meus 3 meses grátis.`
   );
 
@@ -122,13 +139,7 @@ function App() {
     <div className="min-h-screen bg-slate-50 font-sans selection:bg-aqua-200 selection:text-aqua-900">
       <nav className="bg-white px-4 md:px-8 shadow-sm flex justify-between items-center sticky top-0 z-50 border-b border-slate-100 h-16 md:h-24">
         <div className="flex items-center gap-2 md:gap-3">
-          <div className="bg-aqua-600 p-1.5 md:p-2 rounded-lg md:rounded-xl text-white shadow-lg shadow-aqua-500/20">
-            <Droplets size={20} className="md:w-7 md:h-7" fill="currentColor" />
-          </div>
-          <div className="flex flex-col leading-none">
-            <span className="text-lg md:text-2xl font-black text-aqua-950 tracking-tighter uppercase">AQUAFEEL</span>
-            <span className="text-[8px] md:text-xs font-bold text-aqua-600 tracking-[0.3em] md:tracking-[0.4em] uppercase ml-0.5">Solutions PA</span>
-          </div>
+          <AquaFeelLogo width="160px" className="md:w-[220px]" />
         </div>
         
         <div className="flex items-center gap-2 md:gap-4">
@@ -144,7 +155,7 @@ function App() {
             <button onClick={handleLogout} className="flex items-center gap-1.5 md:gap-2 text-slate-500 hover:text-slate-800 hover:bg-slate-100 px-2 md:px-3 py-1.5 md:py-2 rounded-lg transition-colors">
                 <Globe size={18} className="text-aqua-600 w-4 h-4 md:w-5 md:h-5"/>
                 <span className="text-[10px] md:text-xs font-bold uppercase hidden sm:inline">
-                    {lang === 'pt' ? 'Voltar' : 'Back'}
+                    {lang === 'pt' ? 'Sair' : 'Exit'}
                 </span>
                 <LogOut size={16} className="sm:hidden w-4 h-4" />
             </button>
@@ -201,6 +212,14 @@ function App() {
 
       <Testimonials lang={lang} />
       <FAQ spouseName={spouse || name} lang={lang} />
+      
+      {/* Disclaimer de Notas Legais */}
+      <div className="bg-slate-50 py-8 px-4 text-center">
+        <p className="text-[9px] md:text-[10px] text-slate-500 font-medium max-w-4xl mx-auto leading-relaxed">
+          {t.footer.soapDisclaimer}
+        </p>
+      </div>
+
       <UrgencyBanner 
         expirationDate={expirationDate} 
         lang={lang} 
@@ -212,13 +231,7 @@ function App() {
       <footer className="bg-slate-950 text-white py-12 md:py-16 border-t border-slate-900 relative overflow-hidden">
         <div className="max-w-6xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-8 md:gap-10 relative z-10 text-center md:text-left">
           <div className="flex flex-col md:flex-row items-center gap-4">
-            <div className="bg-white/10 p-2.5 md:p-3 rounded-xl md:rounded-2xl border border-white/10 shadow-xl">
-              <Droplets size={32} className="text-aqua-400 md:w-9 md:h-9" fill="currentColor" />
-            </div>
-            <div className="flex flex-col">
-              <span className="text-2xl md:text-3xl font-black tracking-tighter text-white uppercase leading-none">AQUAFEEL</span>
-              <span className="text-xs md:text-sm font-bold text-aqua-400 tracking-[0.3em] md:tracking-[0.4em] uppercase mt-1">Solutions PA</span>
-            </div>
+            <AquaFeelLogo width="240px" variant="white" className="opacity-80 hover:opacity-100 transition-opacity" />
           </div>
           <div className="flex flex-col items-center md:items-end">
              <button onClick={handleOpenAnalystModal} className="bg-white text-slate-950 px-5 md:px-6 py-2.5 md:py-3 rounded-full font-black flex items-center gap-3 md:gap-4 hover:bg-aqua-50 transition-all shadow-xl group text-sm md:text-base">

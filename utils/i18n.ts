@@ -23,6 +23,7 @@ const ptTranslations = {
     welcomeHome: "A Aquafeel vai te dar",
     subtitle: "Qualifique-se para o programa de água limpa e receba um benefício único:",
     systemName: "3 MESES LIVRES DE PAGAMENTO.",
+    systemCard: "Sabão orgânico por 25 anos*",
     cashbackTitle: "CARÊNCIA TOTAL",
     cashbackValue: "3 MESES GRÁTIS",
     warrantyTitle: "Garantia Vitalícia",
@@ -52,32 +53,45 @@ const ptTranslations = {
   },
   malefices: {
     title: "Top 10 Malefícios da Água Contaminada",
-    subtitle: "O que você não vê está destruindo seu patrimônio e a saúde de quem você ama.",
+    subtitle: "Toque nos cartões para revelar a verdade oculta.",
     quote: "A qualidade da água que entra em sua casa define a longevidade da sua família e do seu investimento imobiliário.",
     home: {
-      title: "Para a Saúde do Lar",
-      m1: "Corrosão das Tubulações: Metais pesados e cloro destroem o cobre e PVC por dentro.",
-      m2: "Morte de Eletrodomésticos: Calcário e minerais reduzem a vida de máquinas e aquecedores em 50%.",
-      m3: "Manchas Irreversíveis: Depósitos minerais que destroem o brilho de vidros, mármores e metais."
+      title: "Saúde do Lar",
+      m1: "Corrosão das Tubulações: Metais pesados e cloro oxidam o cobre e ressecam o PVC, causando vazamentos invisíveis.",
+      m2: "Morte de Eletrodomésticos: O calcário (pedra) entope válvulas e queima resistências de máquinas e aquecedores, reduzindo a vida útil em até 50%.",
+      m3: "Manchas Irreversíveis: Depósitos minerais permanentes que destroem o brilho de vidros, porcelanatos, mármores e metais de luxo.",
+      backTitle: "A OMISSÃO CUSTA CARO",
+      fearTrigger: "Enquanto você dorme, a corrosão interna 'enfarta' suas tubulações como artérias humanas. Um vazamento sob o piso pode custar mais que o próprio sistema, destruindo sua estrutura e valor de mercado.",
+      impactLabel: "O Dano é Irreversível"
     },
     adults: {
       title: "Para os Adultos",
-      m1: "Danos à Pele e Cabelo: O cloro remove a oleosidade natural, causando envelhecimento precoce.",
-      m2: "Desreguladores Endócrinos: PFAS e químicos afetam o equilíbrio hormonal e metabolismo.",
-      m3: "Acúmulo de Metais: Chumbo e mercúrio se acumulam no organismo ao longo de décadas."
+      m1: "Danos à Pele e Cabelo: O cloro remove a proteção lipídica natural, causando dermatites, queda capilar e envelhecimento precoce dos tecidos.",
+      m2: "Desreguladores Endócrinos: Químicos como PFAS e Trihalometanos mimetizam hormônios, afetando o metabolismo e a tireoide.",
+      m3: "Acúmulo Crônico: Metais como chumbo e mercúrio são bioacumulativos; o corpo não os elimina, sobrecarregando o fígado e rins ao longo de décadas.",
+      backTitle: "SEU CORPO, SUA SENTENÇA",
+      fearTrigger: "Seus poros são esponjas famintas. 10 minutos de banho quente permitem que você absorva 6x mais cloro e toxinas que bebendo a mesma água. Você está se 'autocloroformando' diariamente, destruindo sua saúde hormonal.",
+      impactLabel: "Você é o que você absorve"
     },
     children: {
       title: "Para as Crianças",
-      m1: "Riscos no Desenvolvimento: O chumbo na água é ligado a atrasos cognitivos e de crescimento.",
-      m2: "Imunidade Fragilizada: Exposição constante a bactérias e vírus que sobrevivem ao tratamento comum.",
-      m3: "Problemas Respiratórios: Vapores de cloro no banho podem agravar asma e bronquite."
+      m1: "Riscos no Desenvolvimento: O chumbo é neurotóxico e está ligado diretamente a atrasos cognitivos e dificuldades de aprendizagem na infância.",
+      m2: "Imunidade Fragilizada: Exposição contínua a resíduos bacterianos e vírus que escapam do tratamento municipal básico.",
+      m3: "Vapores Tóxicos: Durante o banho quente, a inalação de vapores de cloro pode agravar severamente quadros de asma e rinites.",
+      backTitle: "A CULPA É DO ADULTO",
+      fearTrigger: "Eles não podem escolher a água que bebem. O que é 'legal' para você é 'tóxico' para o cérebro em formação de um bebê. Cada copo sem tratamento molecular é um risco desnecessário ao futuro de quem você ama.",
+      impactLabel: "Eles confiam na sua proteção"
     },
     pets: {
       title: "Para os Pets",
-      m1: "Sobrecarga Renal: Cães e gatos são 10x mais sensíveis a toxinas e excesso de sódio na água.",
-      m2: "Cálculos Urinários: O excesso de minerais na água \"dura\" é o principal causador de pedras na bexiga e rins em pets.",
-      m3: "Dermatites e Queda de Pelos: O cloro e calcário removem a proteção natural da pele, causando irritação e pelagem quebradiça."
-    }
+      m1: "Insuficiência Renal: Cães e gatos filtram toxinas muito mais rápido; o excesso de sódio e minerais causa falência renal precoce.",
+      m2: "Cálculos Urinários: A água \"dura\" é a principal responsável pela formação de cristais e pedras na bexiga, causando dor e cirurgias caras.",
+      m3: "Dermatites e Coceira: Sem a barreira de gordura na pele, pets desenvolvem alergias constantes e perda de brilho na pelagem.",
+      backTitle: "ELES SOFREM EM SILÊNCIO",
+      fearTrigger: "Beber água com calcário é como obrigar seu pet a ingerir areia líquida que vira pedras cortantes nos rins. Eles não podem dizer onde dói, mas você pode evitar que a dor comece.",
+      impactLabel: "Lealdade Traída pela Negligência"
+    },
+    flipAction: "Toque para ver a realidade"
   },
   sins: {
     title: "Os 7 Pecados Capitais da Água da Torneira",
@@ -114,7 +128,7 @@ const ptTranslations = {
     cookingManual: "Valor adicional para Cozinhar/Lavar ($/mês)",
     drinking: "Água somente para BEBER",
     cooking: "Água para COZINHAR e LAVAR alimentos",
-    totalMonthly: "Gasto Mensal Total em Água",
+    totalMonthly: "Gasto Mensual Total em Água",
     ridiculousTitle: "Onde gastamos esse valor hoje?",
     ridiculousBody: "Gastamos em pequenas coisas que não trazem saúde. Compare os valores:",
     expenses: {
@@ -160,7 +174,7 @@ const ptTranslations = {
     months: "Meses",
     accept: "GARANTIR 3 MESES GRÁTIS",
     negotiate: "FALAR COM O CONSULTOR",
-    offerExpired: "OFERTA EXPIRADA",
+    offerExpired: "OFERTA ENCERRADA",
     offerValid: "Válido por tempo limitado!",
     disclaimer: "*consulte seu consultor para maiores informações.",
     proposalSub: "Valores com 3 meses livres de pagamento e 2 anos de sabão para toda a casa (lavanderia + cozinha + banheiro)."
@@ -195,8 +209,8 @@ const ptTranslations = {
     subtitle: "Respondemos as dúvidas que ninguém tem coragem de perguntar.",
     q1: "Como funcionam os 3 meses grátis?",
     a1: "Ao qualificar seu sistema hoje, você recebe uma carência total. Sua primeira parcela será apenas no 4º mês após a instalação.",
-    q2: "Posso pagar à vista com desconto?",
-    a2: "Sim! Para pagamentos à vista, oferecemos uma condição diferenciada que equivale ao benefício das parcelas livres.",
+    q2: "Can I pay in cash with a discount?",
+    a2: "Yes! For cash payments, we offer a special condition equivalent to the free monthly payments benefit.",
     q3: "não quer mais uma conta mensal agora.",
     a3: "Entendemos. Por isso você tem 3 meses de folga total. Comece a pagar apenas quando já estiver sentindo a economia no bolso!",
     q4: "Se eu me mudar posso levar o sistema? Quanto vai custar?",
@@ -208,7 +222,7 @@ const ptTranslations = {
   },
   urgency: {
     expires: "Oferta expira em:",
-    expiredTitle: "OFERTA EXPIRADA",
+    expiredTitle: "OFERTA ENCERRADA",
     commission: "Benefício exclusivo da Aquafeel Solutions PA.",
     limit: "PRAZO FINAL:",
     footer: "Após o prazo, o benefício de 3 meses grátis será removido.",
@@ -217,7 +231,8 @@ const ptTranslations = {
   },
   footer: {
     rights: "© 2024 Aquafeel Solutions • Proposta Especial de Ativação",
-    button: "Falar com Consultor"
+    button: "Falar com Consultor",
+    soapDisclaimer: "(*) 25 anos de garantia de recebimento de sabão desde que cubra o custo de envio ou que recomende uma família para o programa de saúde para que possa ser trocado pelo benefício de receber mais 2 anos de sabão grátis."
   },
   package: {
     title: "Promoção de Ativação",
@@ -225,7 +240,7 @@ const ptTranslations = {
     soapYears: "Anos de Sabão",
     guarantee: "Garantia Total",
     cost: "3 MESES FREE",
-    payment: "Pagamento"
+    payment: "Payment"
   },
   soap: {
     partner: "Parceria Exclusiva",
@@ -287,6 +302,7 @@ const enTranslations: TranslationStructure = {
     welcomeHome: "Aquafeel will give you",
     subtitle: "Qualify for the clean water program and receive a unique benefit:",
     systemName: "3 MONTHS PAYMENT FREE.",
+    systemCard: "Organic soap for 25 years*",
     cashbackTitle: "TOTAL GRACE PERIOD",
     cashbackValue: "3 MONTHS FREE",
     warrantyTitle: "Lifetime Warranty",
@@ -315,33 +331,46 @@ const enTranslations: TranslationStructure = {
     chlorine: "Neutralizes Chlorine & Chloramines"
   },
   malefices: {
-    title: "Top 10 Harmful Effects of Contaminated Water",
-    subtitle: "What you don't see is destroying your property and your loved ones' health.",
+    title: "The Top 10 Harmful Effects",
+    subtitle: "Tap the cards to reveal the hidden truth.",
     quote: "The quality of the water that enters your home defines the longevity of your family and your real estate investment.",
     home: {
-      title: "For the Home",
-      m1: "Pipe Corrosion: Heavy metals and chlorine destroy copper and PVC from the inside.",
-      m2: "Appliance Death: Limescale and minerals reduce the life of washers and heaters by 50%.",
-      m3: "Irreversible Stains: Mineral deposits that destroy the shine of glass, marble, and metals."
+      title: "Home Health",
+      m1: "Pipe Corrosion: Heavy metals and chlorine oxidize copper and dry out PVC, causing silent leaks.",
+      m2: "Appliance Death: Limescale (stone) clogs valves and burns out elements in washers and heaters, cutting lifespan by up to 50%.",
+      m3: "Irreversible Stains: Permanent mineral deposits that destroy the shine of glass, tiles, marble, and luxury fixtures.",
+      backTitle: "OMISSION COSTS DEARLY",
+      fearTrigger: "While you sleep, internal corrosion 'heart-attacks' your pipes like human arteries. A leak under the floor can cost more than the system itself.",
+      impactLabel: "Damage is Irreversible"
     },
     adults: {
       title: "For Adults",
-      m1: "Skin and Hair Damage: Chlorine removes natural oils, causing premature aging.",
-      m2: "Endocrine Disruptors: PFAS and chemicals affect hormonal balance and metabolism.",
-      m3: "Metal Accumulation: Lead and mercury accumulate in the body over decades."
+      m1: "Skin and Hair Damage: Chlorine strips natural lipid protection, causing dermatitis, hair loss, and premature tissue aging.",
+      m2: "Endocrine Disruptors: Chemicals like PFAS and Trihalomethanes mimic hormones, affecting metabolism and the thyroid.",
+      m3: "Chronic Accumulation: Metals like lead and mercury are bioaccumulative; the body cannot flush them, taxing your liver and kidneys over decades.",
+      backTitle: "YOUR BODY, YOUR SENTENCE",
+      fearTrigger: "Your pores are hungry sponges. 10 minutes in a hot shower allows you to absorb 6x more chlorine and toxins than drinking the same water. You are 'chloroforming' yourself daily.",
+      impactLabel: "You are what you absorb"
     },
     children: {
       title: "For Children",
-      m1: "Developmental Risks: Lead in water is linked to cognitive and growth delays.",
-      m2: "Fragile Immunity: Constant exposure to bacteria and viruses that survive common treatment.",
-      m3: "Respiratory Issues: Chlorine vapors during showers can aggravate asthma and bronchitis."
+      m1: "Developmental Risks: Lead is neurotoxic and directly linked to cognitive delays and learning difficulties in childhood.",
+      m2: "Fragile Immunity: Continuous exposure to bacterial residues and viruses that escape basic municipal treatment.",
+      m3: "Toxic Vapors: During hot showers, inhaling chlorine vapors can severely aggravate asthma and allergy conditions.",
+      backTitle: "IT'S THE ADULT'S FAULT",
+      fearTrigger: "They can't choose the water they drink. What is 'legal' for you is 'toxic' for a baby's developing brain. Every glass without molecular treatment is an unnecessary risk.",
+      impactLabel: "They trust your protection"
     },
     pets: {
       title: "For Pets",
-      m1: "Renal Overload: Dogs and cats are 10x more sensitive to toxins and excess sodium in water.",
-      m2: "Urinary Stones: Excess minerals in \"hard\" water is the primary cause of bladder and kidney stones in pets.",
-      m3: "Dermatitis & Hair Loss: Chlorine and limescale remove natural skin protection, causing irritation and brittle coats."
-    }
+      m1: "Renal Failure: Dogs and cats filter toxins much faster; excess sodium and minerals cause early kidney failure.",
+      m2: "Urinary Stones: \"Hard\" water is the primary culprit for crystal and stone formation in the bladder, leading to pain and expensive surgeries.",
+      m3: "Dermatitis & Itching: Without skin oils, pets develop constant allergies and lose coat luster.",
+      backTitle: "THEY SUFFER IN SILENCE",
+      fearTrigger: "Drinking limescale water is like forcing your pet to ingest liquid sand that turns into razor-sharp stones. They can't tell you where it hurts, but you can prevent it.",
+      impactLabel: "Loyalty Betrayed by Negligence"
+    },
+    flipAction: "Tap to see reality"
   },
   sins: {
     title: "The 7 Capital Sins of Tap Water",
@@ -481,7 +510,8 @@ const enTranslations: TranslationStructure = {
   },
   footer: {
     rights: "© 2024 Aquafeel Solutions • Special Activation Proposal",
-    button: "Talk to Consultant"
+    button: "Talk to Consultant",
+    soapDisclaimer: "(*) 25-year soap delivery guarantee provided you cover the shipping cost or refer a family to the health program so it can be exchanged for the benefit of receiving 2 more years of free soap."
   },
   package: {
     title: "Activation Campaign",
@@ -541,7 +571,7 @@ const esTranslations: TranslationStructure = {
     spouseName: "NOMBRE DEL CÓNYUGE (OPCIONAL)",
     placeholderName: "Ej: Juan Pérez",
     placeholderSpouse: "Ej: María Pérez",
-    accessButton: "LIBERAR ACCESO VIP",
+    accessButton: "LIBERAR ACESSO VIP",
     backButton: "Volver",
     secure: "Protocolo de Seguridad Cifrado",
     error: "Identificación necesaria para continuar."
@@ -551,6 +581,7 @@ const esTranslations: TranslationStructure = {
     welcomeHome: "Aquafeel te dará",
     subtitle: "Califica para el programa de agua limpia y recibe un beneficio único:",
     systemName: "3 MESES LIBRES DE PAGO.",
+    systemCard: "Jabón orgánico por 25 años*",
     cashbackTitle: "PERÍODO DE GRACIA",
     cashbackValue: "3 MESES GRATIS",
     warrantyTitle: "Garantía Vitalicia",
@@ -560,10 +591,10 @@ const esTranslations: TranslationStructure = {
     soapTitle: "2 Años de Jabón",
     soapSub: "Para toda la casa",
     paymentTitle: "Primer Pago",
-    paymentSub: "En el 4º mes (90 días)",
+    paymentSub: "En el 4º mes (90 dias)",
     penaltyTitle: "Sin Penalidad",
     penaltySub: "Anticipe sus pagos",
-    analysisTitle: "Análisis de Agua",
+    analysisTitle: "Análisis de Água",
     analysisSub: "1x al año (Anual)"
   },
   info: {
@@ -580,35 +611,48 @@ const esTranslations: TranslationStructure = {
   },
   malefices: {
     title: "Top 10 Efectos Nocivos",
-    subtitle: "Lo que no ves está destruyendo tu patrimonio.",
+    subtitle: "Toque las tarjetas para revelar la verdad oculta.",
     quote: "La calidad do agua define la longevidad de su familia.",
     home: {
-      title: "Hogar",
-      m1: "Corrosión de Tuberías.",
-      m2: "Muerte de Electrodomésticos.",
-      m3: "Manchas Irreversibles."
+      title: "Salud del Hogar",
+      m1: "Corrosión de Tuberías: Los metales pesados y el cloro oxidan el cobre y resecan el PVC, causando fugas invisibles.",
+      m2: "Muerte de Electrodomésticos: La cal (piedra) obstruye válvulas y quema resistencias de máquinas y calentadores, reduciendo la vida útil hasta un 50%.",
+      m3: "Manchas Irreversíveis: Depósitos minerales permanentes que destruyen el brillo de vidrios, porcelanatos, mármoles y metales de lujo.",
+      backTitle: "LA OMISIÓN CUESTA CARA",
+      fearTrigger: "Mientras duerme, la corrosión interna 'infarta' sus tuberías como arterias humanas. Una fuga puede destruir su estructura y valor.",
+      impactLabel: "El daño es irreversible"
     },
     adults: {
-      title: "Adultos",
-      m1: "Daño en Piel y Cabello.",
-      m2: "Disruptores Endocrinos.",
-      m3: "Acumulación de Metales."
+      title: "Para los Adultos",
+      m1: "Daño en Piel y Cabello: El cloro elimina la protección lipídica natural, causando dermatitis, caída capilar y envejecimiento prematuro.",
+      m2: "Disruptores Endocrinos: Químicos como PFAS y Trihalometanos imitan hormonas, afectando el metabolismo y la tiroides.",
+      m3: "Acumulación Crónica: Los metales como el plomo y el mercurio son bioacumulativos; el cuerpo no los elimina, sobrecargando el hígado y los riñones.",
+      backTitle: "SU CUERPO, SU SENTENCIA",
+      fearTrigger: "Sus poros son esponjas hambrientas. 10 minutos de ducha caliente permiten absorber 6 veces más cloro que bebiendo la misma agua.",
+      impactLabel: "Usted es lo que absorbe"
     },
     children: {
-      title: "Niños",
-      m1: "Riesgos en el Desarrollo.",
-      m2: "Inmunidad Fragilizada.",
-      m3: "Problemas Respiratorios."
+      title: "Para los Niños",
+      m1: "Riesgos en el Desarrollo: El plomo es neurotóxico y está ligado directamente a retrasos cognitivos y dificultades de aprendizaje.",
+      m2: "Inmunidade Fragilizada: Exposição continua a residuos bacterianos y virus que escapan del tratamiento municipal básico.",
+      m3: "Vapores Tóxicos: Durante el baño caliente, la inhalación de vapores de cloro puede agravar cuadros de asma y rinitis.",
+      backTitle: "LA CULPA ES DEL ADULTO",
+      fearTrigger: "Ellos no pueden elegir el agua que beben. Lo que es 'legal' para un adulto es 'tóxico' para un bebé. Cada vaso es un riesgo innecesario.",
+      impactLabel: "Ellos confían en su protección"
     },
     pets: {
-      title: "Mascotas",
-      m1: "Sobrecarga Renal.",
-      m2: "Cálculos Urinarios.",
-      m3: "Dermatitis."
-    }
+      title: "Para as Mascotas",
+      m1: "Insuficiência Renal: Los perros y gatos filtran toxinas más rápido; el exceso de sodio y minerales causa insuficiencia renal temprana.",
+      m2: "Cálculos Urinarios: El agua \"dura\" es la principal responsable de la formación de cristales y piedras en la vejiga.",
+      m3: "Dermatitis y Picazón: Sin la grasa natural en la piel, las mascotas desarrollan alergias constantes y pérdida de brillo en el pelaje.",
+      backTitle: "ELLOS SUFREN EN SILENCIO",
+      fearTrigger: "Beber agua con cal es como obligar a su mascota a ingerir arena líquida que se convierte en piedras cortantes en sus riñones.",
+      impactLabel: "Lealtad Traicionada por Negligencia"
+    },
+    flipAction: "Toque para ver a realidade"
   },
   sins: {
-    title: "Los 7 Pecados Capitales",
+    title: "Los 7 Pecados Capitais",
     subtitle: "¿Por qué seguir consumiendo veneno?",
     s1: "Microplásticos.",
     s2: "Absorción de Cloro.",
@@ -644,7 +688,7 @@ const esTranslations: TranslationStructure = {
     cooking: "Para COCINAR",
     totalMonthly: "Gasto Mensual Total Agua",
     ridiculousTitle: "¿En qué gastamos hoy?",
-    ridiculousBody: "Gastamos en cosas que no dan salud:",
+    ridiculousBody: "Gastamos en cosas que no dan saúde:",
     expenses: {
       gas: "Gasolina",
       donuts: "Donas/Dulces",
@@ -689,7 +733,7 @@ const esTranslations: TranslationStructure = {
     accept: "GARANTIZAR 3 MESES GRATIS",
     negotiate: "HABLAR CON CONSULTOR",
     offerExpired: "OFERTA EXPIRADA",
-    offerValid: "¡Válido por tiempo limitado!",
+    offerValid: "¡Válido por tempo limitado!",
     disclaimer: "*Consulte a su consultor.",
     proposalSub: "Valores con 3 meses de pago libre y 2 años de jabón para toda la casa (lavandería + cocina + baño)."
   },
@@ -703,7 +747,7 @@ const esTranslations: TranslationStructure = {
     insight: "Hace 10 años, el agua costaba $2.50. Hoy $5.00."
   },
   modal: {
-    title: "Seleccione Consultor",
+    title: "Selecione Consultor",
     subtitle: "¿Con quién desea hablar?",
     confirmTitle: "Confirmar",
     confirmMessage: "¿Desea hablar con {name}?",
@@ -719,7 +763,7 @@ const esTranslations: TranslationStructure = {
   },
   faq: {
     transparency: "Transparencia",
-    title: "¿Por qué NO ahora?",
+    title: "¿Por qué NOT ahora?",
     subtitle: "Respondemos sus dudas.",
     q1: "¿Cómo funcionan los 3 meses gratis?",
     a1: "Período de gracia total. Pague a partir del 4º mes.",
@@ -727,7 +771,7 @@ const esTranslations: TranslationStructure = {
     a2: "Sí, con descuento especial.",
     q3: "no quiere otra cuenta ahora.",
     a3: "Entendemos, por eso tiene 3 meses de descanso.",
-    q4: "¿Puedo llevar el sistema si me mudo?",
+    q4: "¿Puedo llevar o sistema si me mudo?",
     a4: "Sí, con un pequeño costo técnico.",
     q5: "¿Filtros de Home Depot?",
     a5: "Son solo carbón. Aquafeel es purificación molecular.",
@@ -745,7 +789,8 @@ const esTranslations: TranslationStructure = {
   },
   footer: {
     rights: "© 2024 Aquafeel Solutions",
-    button: "Hablar con Consultor"
+    button: "Hablar con Consultor",
+    soapDisclaimer: "(*) Garantía de entrega de jabón por 25 años siempre que cubra el costo de envío o recomiende una familia al programa de salud para que pueda canjearse por el beneficio de recibir 2 años más de jabón gratis."
   },
   package: {
     title: "Campaña Activación",
@@ -767,10 +812,10 @@ const esTranslations: TranslationStructure = {
     kitchen: "Cozinha",
     bathroom: "Baño",
     total: "Total",
-    reality: "Realidad Aquafeel",
+    reality: "Realidade Aquafeel",
     market: "Mercado",
     freight: "Envío",
-    referral: "Recomendación",
+    referral: "Recomendação",
     free: "Gratis",
     note: "*Envío compartido.",
     howTo: "¿Cómo funciona?",
@@ -784,7 +829,7 @@ const esTranslations: TranslationStructure = {
     subtitle: "Protocolo técnico rigoroso.",
     clean: "Ambiente Limpio",
     cleanSub: "Limpieza absoluta.",
-    priority: "Prioridad",
+    priority: "Prioridade",
     prioritySub: "Agenda VIP.",
     aesthetic: "Estética",
     aestheticSub: "Diseño preservado.",
