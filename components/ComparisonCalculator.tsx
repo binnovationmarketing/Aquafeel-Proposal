@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { 
   ShoppingCart, 
@@ -228,7 +229,7 @@ export const ComparisonCalculator: React.FC<ComparisonCalculatorProps> = ({
       <UrgencyChart 
         waterMonthly={waterTotal} 
         soapMonthly={cleaningTotal} 
-        fixedMonthly={currentPlan.amount} 
+        fixedMonthly={currentPlan.id === 'cash' ? (cashPrice / 12) : currentPlan.amount} 
         cashPrice={cashPrice} 
         lang={lang}
         financingMonths={currentPlan.months || 0}
