@@ -3,24 +3,14 @@ import {
   ShoppingCart, 
   Droplets, 
   AlertTriangle, 
-  CheckCircle2, 
-  Gift, 
-  Calendar, 
-  DollarSign,
   ArrowRight,
   Sparkles,
   MapPin,
-  ChevronDown,
-  LayoutList,
-  ShieldCheck,
-  Gem,
-  CreditCard,
-  Microscope,
-  Skull,
   Award
 } from 'lucide-react';
 import { Language, translations } from '../utils/i18n';
 import { FluidDropdown } from './ui/fluid-dropdown';
+import { Component as UrgencyChart } from './ui/real-time-analytics';
 
 interface ComparisonCalculatorProps {
   onSelectPlan: (planId: string) => void;
@@ -49,19 +39,18 @@ export const ComparisonCalculator: React.FC<ComparisonCalculatorProps> = ({
   const [selectedCredit, setSelectedCredit] = useState<CreditRangeId>('RANGE1');
   
   const t = translations[lang].calculator;
-  const th = translations[lang].hero;
 
   const regionPrices: Record<RegionId, number> = {
     NE: 8990,
     DMV_CAROLINAS: 7990
   };
 
-  const factors: Record<CreditRangeId, { '180x': number; '120x': number; '60x': number; '144x'?: number }> = {
+  const factors: Record<CreditRangeId, { '180x': number; '120x': number; '60x': number }> = {
     RANGE1: { '180x': 1.14, '120x': 1.38, '60x': 2.17 },
     RANGE2: { '180x': 1.24, '120x': 1.47, '60x': 2.25 },
-    RANGE3: { '180x': 1.37, '120x': 1.59, '60x': 2.39, '144x': 1.47 },
-    RANGE4: { '180x': 1.55, '120x': 1.74, '60x': 2.61, '144x': 1.64 },
-    RANGE5: { '180x': 1.62, '120x': 1.80, '60x': 2.70, '144x': 1.70 }
+    RANGE3: { '180x': 1.37, '120x': 1.59, '60x': 2.39 },
+    RANGE4: { '180x': 1.55, '120x': 1.74, '60x': 2.61 },
+    RANGE5: { '180x': 1.62, '120x': 1.80, '60x': 2.70 }
   };
 
   const cashPrice = regionPrices[selectedRegion];
@@ -70,10 +59,10 @@ export const ComparisonCalculator: React.FC<ComparisonCalculatorProps> = ({
   const calculateMonthly = (factor: number) => Math.round((cashPrice * factor) / 100);
 
   const plans = [
-    { id: '180x', label: `180 ${t.months}`, amount: calculateMonthly(creditFactors['180x']) },
-    { id: '120x', label: `120 ${t.months}`, amount: calculateMonthly(creditFactors['120x']) }, 
-    { id: '60x', label: `60 ${t.months}`, amount: calculateMonthly(creditFactors['60x']) }, 
-    { id: 'cash', label: t.cash, amount: cashPrice, isFull: true },
+    { id: '180x', label: `180 ${t.months}`, amount: calculateMonthly(creditFactors['180x']), months: 180 },
+    { id: '120x', label: `120 ${t.months}`, amount: calculateMonthly(creditFactors['120x']), months: 120 }, 
+    { id: '60x', label: `60 ${t.months}`, amount: calculateMonthly(creditFactors['60x']), months: 60 }, 
+    { id: 'cash', label: t.cash, amount: cashPrice, isFull: true, months: 0 },
   ];
 
   const currentPlan = plans.find(p => p.id === selectedPlan) || plans[0];
@@ -85,92 +74,79 @@ export const ComparisonCalculator: React.FC<ComparisonCalculatorProps> = ({
   ];
 
   const creditOptions = [
-    { id: 'RANGE1', label: t.creditRanges.excellent, icon: Award },
-    { id: 'RANGE2', label: t.creditRanges.great, icon: Award },
-    { id: 'RANGE3', label: t.creditRanges.good, icon: Award },
-    { id: 'RANGE4', label: t.creditRanges.fair, icon: Award },
-    { id: 'RANGE5', label: t.creditRanges.challenged, icon: Award }
-  ];
-
-  const aquaBenefits = [
-    { icon: <Gift size={12} />, text: th.cashbackValue },
-    { icon: <ShieldCheck size={12} />, text: th.warrantyTitle },
-    { icon: <Gem size={12} />, text: th.installSub },
-    { icon: <Sparkles size={12} />, text: th.soapSub },
-    { icon: <Calendar size={12} />, text: th.paymentSub },
-    { icon: <CreditCard size={12} />, text: th.penaltySub },
-    { icon: <Microscope size={12} />, text: th.analysisSub }
+    { id: 'RANGE1', label: t.creditRanges.excellent.split(' ')[1], score: "740+" },
+    { id: 'RANGE2', label: t.creditRanges.great.split(' ')[1], score: "700-739" },
+    { id: 'RANGE3', label: t.creditRanges.good.split(' ')[1], score: "660-699" },
+    { id: 'RANGE4', label: t.creditRanges.fair.split(' ')[1], score: "620-659" },
+    { id: 'RANGE5', label: t.creditRanges.challenged.split(' ')[1], score: "619-" }
   ];
 
   return (
     <div className="max-w-7xl mx-auto px-2 md:px-4 relative z-20">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-0 shadow-2xl rounded-2xl md:rounded-3xl overflow-hidden ring-4 ring-slate-100 transition-all duration-500 hover:ring-aqua-100">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 shadow-2xl rounded-[2.5rem] md:rounded-[4rem] overflow-hidden border border-slate-100 bg-white">
         
-        <div className="bg-white p-4 md:p-8 border-b md:border-b-0 md:border-r border-gray-100 flex flex-col justify-between relative overflow-hidden">
+        {/* LADO ESQUERDO: DINHEIRO INVISÍVEL */}
+        <div className="p-6 md:p-10 border-b lg:border-b-0 lg:border-r border-gray-100 flex flex-col justify-between">
           <div>
-            <div className="text-center mb-6">
-              <h2 className="text-xl md:text-2xl font-black text-slate-800 uppercase tracking-tight font-sans">{t.problemTitle}</h2>
-              <p className="text-[10px] font-bold text-slate-400 tracking-widest uppercase mt-1">{t.problemSub}</p>
+            <div className="mb-6 text-center md:text-left">
+              <h2 className="text-xl font-black text-slate-900 uppercase tracking-tighter leading-none">{t.problemTitle}</h2>
+              <p className="text-[8px] font-black text-slate-400 tracking-[0.3em] uppercase mt-2">{t.problemSub}</p>
             </div>
 
             <div className="space-y-3">
-              <div className="flex justify-between items-center py-4 border-b border-slate-100 px-4 rounded-xl bg-blue-50/20">
-                <div className="flex items-center gap-3">
-                  <div className="bg-blue-600 p-2 rounded-lg text-white">
-                    <Droplets size={18} />
+              <div className="flex justify-between items-center py-4 px-6 rounded-2xl bg-slate-50 border border-slate-100 group transition-all">
+                <div className="flex items-center gap-4">
+                  <div className="bg-blue-600 p-3 rounded-xl text-white shadow-xl shadow-blue-600/10">
+                    <Droplets size={16} />
                   </div>
                   <div>
-                    <span className="font-black text-slate-800 block text-base leading-none">{t.waterDrink}</span>
-                    <span className="text-[8px] text-slate-400 font-bold uppercase tracking-widest">Gasto Mensual</span>
+                    <span className="font-bold text-slate-900 block text-sm leading-none">{t.waterDrink}</span>
+                    <span className="text-[7px] text-slate-400 font-black uppercase tracking-widest mt-1 block">Consumo Mensal</span>
                   </div>
                 </div>
-                <span className="text-xl md:text-2xl font-black text-slate-900">${waterTotal.toFixed(2)}</span>
+                <span className="text-lg md:text-xl font-black text-slate-900 tracking-tighter">${waterTotal.toFixed(2)}</span>
               </div>
 
-              <div className="flex justify-between items-center py-4 border-b border-slate-100 px-4 rounded-xl bg-emerald-50/20">
-                <div className="flex items-center gap-3">
-                   <div className="bg-emerald-600 p-2 rounded-lg text-white">
-                    <ShoppingCart size={18} />
+              <div className="flex justify-between items-center py-4 px-6 rounded-2xl bg-slate-50 border border-slate-100 group transition-all">
+                <div className="flex items-center gap-4">
+                   <div className="bg-emerald-600 p-3 rounded-xl text-white shadow-xl shadow-emerald-600/10">
+                    <ShoppingCart size={16} />
                   </div>
                   <div>
-                    <span className="font-black text-slate-800 block text-base leading-none">{t.cleaning}</span>
-                    <span className="text-[8px] text-slate-400 font-bold uppercase tracking-widest">Gasto Mensual</span>
+                    <span className="font-bold text-slate-900 block text-sm leading-none">{t.cleaning}</span>
+                    <span className="text-[7px] text-slate-400 font-black uppercase tracking-widest mt-1 block">Produtos Casa</span>
                   </div>
                 </div>
-                <span className="text-xl md:text-2xl font-black text-slate-900">${cleaningTotal.toFixed(2)}</span>
+                <span className="text-lg md:text-xl font-black text-slate-900 tracking-tighter">${cleaningTotal.toFixed(2)}</span>
               </div>
             </div>
+          </div>
 
-            <div className="bg-slate-900 rounded-2xl p-6 mt-8 text-center relative shadow-xl overflow-hidden group">
-              <div className="absolute inset-0 bg-gradient-to-br from-red-600/10 to-transparent opacity-50"></div>
-              <p className="text-[9px] text-slate-400 font-black mb-1 uppercase tracking-[0.3em] relative z-10">{t.currentMonthly}</p>
-              <div className="text-4xl md:text-5xl font-black text-white tracking-tighter relative z-10">
-                ${monthlyTotalSpending.toFixed(2)}<span className="text-lg text-slate-500 font-medium ml-1">/mês</span>
+          <div className="bg-slate-950 rounded-[2rem] p-6 mt-8 text-center relative shadow-xl overflow-hidden group">
+            <div className="absolute inset-0 bg-gradient-to-br from-red-600/5 to-transparent"></div>
+            <div className="relative z-10">
+              <p className="text-[8px] text-slate-500 font-black mb-1 uppercase tracking-[0.4em]">{t.currentMonthly}</p>
+              <div className="text-3xl md:text-5xl font-black text-white tracking-tighter">
+                ${monthlyTotalSpending.toFixed(2)}<span className="text-sm text-slate-600 font-medium ml-1">/mo</span>
               </div>
-              <div className="mt-3 inline-flex items-center gap-2 bg-red-600 text-white px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest relative z-10 animate-pulse">
+              <div className="mt-4 inline-flex items-center gap-2 bg-red-600 text-white px-5 py-1.5 rounded-full text-[8px] font-black uppercase tracking-[0.3em] shadow-lg animate-pulse">
                 <AlertTriangle size={10} />
                 {t.waste}
               </div>
             </div>
-            
-            <div className="mt-8 text-center">
-              <p className="text-[10px] text-slate-400 font-bold leading-relaxed px-4">
-                {t.warning}
-              </p>
-            </div>
           </div>
         </div>
 
-        <div className={`text-white p-6 md:p-8 flex flex-col relative overflow-hidden transition-all duration-700 ${isExpired ? 'bg-slate-900' : 'bg-[#020d1a]'}`}>
-           
-           <div className="absolute top-0 right-0 bg-red-600 text-white text-[9px] font-bold px-3 py-1.5 rounded-bl-xl uppercase tracking-widest z-10 shadow-lg">
-             {isExpired ? t.offerExpired : 'VIP ACCESS'}
-           </div>
+        {/* LADO DIREITO: SIMULADOR AQUAFEEL */}
+        <div className={`p-6 md:p-10 flex flex-col relative overflow-hidden transition-all duration-700 ${isExpired ? 'bg-slate-900' : 'bg-slate-950 text-white'}`}>
+          <div className="absolute top-0 right-0 bg-red-600 text-white text-[8px] font-black px-6 py-2 rounded-bl-xl uppercase tracking-widest z-10 shadow-xl">
+             {isExpired ? t.offerExpired : 'VIP PROPOSAL'}
+          </div>
 
           <div className="relative z-10 h-full flex flex-col">
-            <div className="text-center mb-6">
-              <h2 className="text-xl md:text-2xl font-black text-white uppercase tracking-tight font-sans">{t.solutionTitle}</h2>
-              <p className={`text-[9px] font-black tracking-[0.2em] uppercase mt-1 ${isExpired ? 'text-red-400' : 'text-aqua-400'}`}>{t.solutionSub}</p>
+            <div className="mb-6 text-center md:text-left">
+              <h2 className="text-xl font-black text-white uppercase tracking-tighter leading-none">{t.solutionTitle}</h2>
+              <p className={`text-[8px] font-black tracking-[0.3em] uppercase mt-2 ${isExpired ? 'text-red-400' : 'text-aqua-400'}`}>{t.solutionSub}</p>
             </div>
 
             <div className="mb-4">
@@ -179,74 +155,90 @@ export const ComparisonCalculator: React.FC<ComparisonCalculatorProps> = ({
                 options={regionOptions}
                 selectedId={selectedRegion}
                 onSelect={(id) => setSelectedRegion(id as RegionId)}
+                className="text-xs"
               />
             </div>
 
-            <div className="text-center mb-6">
-                <div className="flex flex-col items-center">
-                    <div className="text-5xl md:text-6xl font-black text-white tracking-tighter flex items-start gap-1">
-                        <span className="text-2xl mt-2">$</span>
-                        {currentPlan.amount}
-                        {currentPlan.id !== 'cash' && <span className="text-xl text-slate-500 mt-auto mb-2">/mês</span>}
-                    </div>
-                    {!isExpired && (
-                        <div className="mt-3 bg-red-600 text-white px-5 py-1.5 rounded-full font-black text-sm md:text-base shadow-xl border border-white/20 flex items-center gap-2 animate-pulse">
-                           <Sparkles size={14} /> {t.benefits.discount}
-                        </div>
-                    )}
+            <div className="flex flex-col items-center mb-6">
+                <div className="text-5xl md:text-6xl font-black text-white tracking-tighter flex items-start gap-1">
+                    <span className="text-xl mt-3 opacity-30 font-light">$</span>
+                    {currentPlan.amount}
+                    {currentPlan.id !== 'cash' && <span className="text-lg text-slate-600 mt-auto mb-4 font-medium tracking-normal">/mo</span>}
                 </div>
+                {!isExpired && (
+                    <div className="mt-4 bg-white/5 text-white px-5 py-1.5 rounded-full font-black text-[10px] shadow-xl border border-white/10 flex items-center gap-2">
+                       <Sparkles size={12} className="text-aqua-400" /> {t.benefits.discount}
+                    </div>
+                )}
             </div>
 
-            <div className="grid grid-cols-2 gap-2 mb-6">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-6">
               {plans.map((plan) => (
                 <button
                   key={plan.id}
                   onClick={() => setSelectedPlan(plan.id)}
-                  className={`flex items-center justify-center py-3 px-2 rounded-xl border transition-all duration-300 ${
+                  className={`flex flex-col items-center justify-center py-2 px-1 rounded-xl border transition-all duration-300 ${
                     selectedPlan === plan.id 
-                      ? 'bg-white text-slate-900 border-white shadow-lg scale-[1.02]'
+                      ? 'bg-white text-slate-950 border-white shadow-lg scale-[1.03] z-10'
                       : 'bg-white/5 border-white/10 text-slate-500 hover:bg-white/10'
                   }`}
                 >
-                  <span className="text-[9px] font-black uppercase tracking-widest">{plan.label}</span>
+                  <span className="text-[9px] font-black uppercase tracking-[0.1em]">{plan.label.split(' ')[0]}</span>
+                  <span className="text-[6px] font-bold uppercase tracking-widest opacity-60 mt-0.5">{plan.label.split(' ')[1]}</span>
                 </button>
               ))}
             </div>
 
-            <div className="mb-6 grid grid-cols-1 gap-1.5 bg-white/5 p-3 rounded-xl border border-white/10">
-               {aquaBenefits.map((b, idx) => (
-                 <div key={idx} className="flex items-center gap-2 text-[9px] font-bold text-slate-300 uppercase tracking-tight">
-                    <div className="bg-aqua-500/20 p-1 rounded text-aqua-400">
-                      {b.icon}
-                    </div>
-                    {b.text}
-                 </div>
-               ))}
+            <div className="mb-6">
+              <label className="block text-[7px] font-black text-slate-500 uppercase tracking-[0.4em] mb-2 ml-1">{t.selectCredit}</label>
+              <div className="flex gap-2 overflow-x-auto pb-2 no-scrollbar snap-x">
+                {creditOptions.map((opt) => (
+                  <button
+                    key={opt.id}
+                    onClick={() => setSelectedCredit(opt.id as CreditRangeId)}
+                    className={`snap-center flex flex-col min-w-[85px] md:min-w-[95px] p-2 rounded-xl border transition-all duration-300 ${
+                      selectedCredit === opt.id 
+                        ? 'bg-aqua-500 border-aqua-400 text-white shadow-md' 
+                        : 'bg-white/5 border-white/10 text-slate-500 hover:bg-white/10'
+                    }`}
+                  >
+                    <Award size={12} className={`mb-1 ${selectedCredit === opt.id ? 'text-white' : 'text-slate-700'}`} />
+                    <span className="text-[7px] font-black uppercase tracking-tighter leading-none mb-0.5 opacity-70">{opt.label}</span>
+                    <span className={`text-[10px] font-black ${selectedCredit === opt.id ? 'text-white' : 'text-slate-300'}`}>{opt.score}</span>
+                  </button>
+                ))}
+              </div>
             </div>
 
-            <div className="mt-auto space-y-4">
-              <FluidDropdown 
-                label={t.selectCredit}
-                options={creditOptions}
-                selectedId={selectedCredit}
-                onSelect={(id) => setSelectedCredit(id as CreditRangeId)}
-              />
-
+            <div className="mt-auto pt-6 border-t border-white/10">
               <button 
                 onClick={onOpenAnalyst}
-                className={`w-full font-black text-lg md:text-xl py-4 md:py-5 rounded-2xl shadow-xl transform transition-all hover:-translate-y-1 active:scale-95 flex items-center justify-center gap-3 group ${
-                    isExpired ? 'bg-slate-700 text-white shadow-none' : 'bg-gradient-to-r from-red-600 to-red-500 text-white border-b-4 border-red-800 shimmer'
+                className={`w-full font-black text-sm md:text-base py-3.5 md:py-4 rounded-xl transform transition-all hover:-translate-y-1 active:scale-95 flex items-center justify-center gap-3 group ${
+                    isExpired ? 'bg-slate-700 text-white shadow-none' : 'bg-red-600 text-white border-b-4 border-red-800 shadow-xl'
                 }`}
               >
-                <span className="tracking-wide">{t.negotiate}</span>
-                <ArrowRight className="group-hover:translate-x-1.5 transition-transform duration-300" size={24} />
+                <span className="tracking-tight uppercase">{t.negotiate}</span>
+                <ArrowRight className="group-hover:translate-x-1 transition-transform" size={18} />
               </button>
-              <p className="text-center text-[8px] text-slate-500 font-bold uppercase tracking-[0.2em] italic">{t.disclaimer}</p>
             </div>
           </div>
         </div>
-
       </div>
+
+      {/* NOVO GRÁFICO DE COMPARAÇÃO ESPACIAL */}
+      <UrgencyChart 
+        waterMonthly={waterTotal} 
+        soapMonthly={cleaningTotal} 
+        fixedMonthly={currentPlan.id === 'cash' ? 0 : currentPlan.amount} 
+        cashPrice={cashPrice} 
+        lang={lang}
+        financingMonths={currentPlan.months}
+      />
+
+      <style>{`
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      `}</style>
     </div>
   );
 };

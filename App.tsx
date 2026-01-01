@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { HeroSection } from './components/HeroSection';
 import { ComparisonCalculator } from './components/ComparisonCalculator';
 import { InfoSection } from './components/InfoSection';
-import { UrgencyBanner } from './components/UrgencyBanner';
 import { ContaminantTruths } from './components/ContaminantTruths';
 import { WaterMalefices } from './components/WaterMalefices';
 import { WaterConsumptionLogic } from './components/WaterConsumptionLogic';
@@ -12,9 +11,8 @@ import { WhiteGloveService } from './components/WhiteGloveService';
 import { SoapLifestyle } from './components/SoapLifestyle';
 import { WelcomeScreen } from './components/WelcomeScreen';
 import { AnalystModal } from './components/AnalystModal';
-import { Component as UrgencyGraph } from './components/ui/real-time-analytics';
 import AquaFeelLogo from './components/AquaFeelLogo';
-import { Phone, Lock, ChevronRight, LogOut, Globe } from 'lucide-react';
+import { Phone, Lock, ChevronRight, LogOut, Globe, Clock, AlertTriangle } from 'lucide-react';
 import { Language, translations } from './utils/i18n';
 
 function App() {
@@ -25,52 +23,27 @@ function App() {
   const [clientData, setClientData] = useState<{name: string, spouse: string, lang: Language} | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [isAnalystModalOpen, setIsAnalystModalOpen] = useState(false);
+  const [timeLeft, setTimeLeft] = useState({ hours: 0, minutes: 0, seconds: 0 });
   
-  // Constante de Expiração: 120 horas (5 dias) para maior flexibilidade
   const EXPIRATION_HOURS = 120;
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    const debugMode = params.get('mode');
-
-    if (debugMode === 'reset') {
-      localStorage.removeItem('proposalFirstAccess');
-      localStorage.removeItem('proposalClientData');
-      const newUrl = window.location.href.replace('&mode=reset', '').replace('?mode=reset', '');
-      window.history.replaceState({}, document.title, newUrl);
-    }
-    
-    if (debugMode === 'expired') {
-       const fiveDaysAgo = new Date();
-       fiveDaysAgo.setDate(fiveDaysAgo.getDate() - 6);
-       localStorage.setItem('proposalFirstAccess', fiveDaysAgo.getTime().toString());
-    }
-
     const storedStartDate = localStorage.getItem('proposalFirstAccess');
     let startDate: Date;
 
     if (storedStartDate) {
       const parsedDate = new Date(parseInt(storedStartDate));
       const now = new Date();
-      
-      // Se a data gravada for absurdamente antiga (mais de 15 dias), resetamos para o cliente não ficar "preso" no erro
       const diffInDays = (now.getTime() - parsedDate.getTime()) / (1000 * 60 * 60 * 24);
-      if (diffInDays > 15) {
-        startDate = new Date();
-        localStorage.setItem('proposalFirstAccess', startDate.getTime().toString());
-      } else {
-        startDate = parsedDate;
-      }
+      startDate = diffInDays > 15 ? new Date() : parsedDate;
     } else {
       startDate = new Date();
-      localStorage.setItem('proposalFirstAccess', startDate.getTime().toString());
     }
-
+    
+    localStorage.setItem('proposalFirstAccess', startDate.getTime().toString());
     const expDate = new Date(startDate.getTime() + (EXPIRATION_HOURS * 60 * 60 * 1000));
     setExpirationDate(expDate);
-
-    const now = new Date();
-    if (now > expDate) setIsExpired(true);
 
     const urlName = params.get('n') || params.get('name');
     const urlSpouse = params.get('s') || params.get('spouse');
@@ -81,67 +54,53 @@ function App() {
       const data = { name: urlName, spouse: urlSpouse || '', lang: selectedLang };
       setClientData(data);
       localStorage.setItem('proposalClientData', JSON.stringify(data));
-      setIsLoaded(true);
-      return;
-    }
-
-    const storedClient = localStorage.getItem('proposalClientData');
-    if (storedClient) {
-      try {
-        const parsed = JSON.parse(storedClient);
-        if (parsed && parsed.name) setClientData(parsed);
-      } catch (e) {
-        localStorage.removeItem('proposalClientData');
+    } else {
+      const storedClient = localStorage.getItem('proposalClientData');
+      if (storedClient) {
+        try {
+          const parsed = JSON.parse(storedClient);
+          if (parsed && parsed.name) setClientData(parsed);
+        } catch (e) {
+          localStorage.removeItem('proposalClientData');
+        }
       }
     }
     setIsLoaded(true);
   }, []);
 
-  const handleClientEntry = (name: string, spouse: string, lang: Language) => {
-    const data = { name, spouse, lang };
-    setClientData(data);
-    localStorage.setItem('proposalClientData', JSON.stringify(data));
-  };
-
-  const handleLogout = () => {
-    setClientData(null);
-    localStorage.removeItem('proposalClientData');
-    window.history.pushState({}, document.title, window.location.pathname);
-  };
-
-  const handleOpenAnalystModal = () => {
-    setIsAnalystModalOpen(true);
-  };
-
   useEffect(() => {
     if (!expirationDate) return;
-    const interval = setInterval(() => {
-        if (new Date() > expirationDate) setIsExpired(true);
-        else setIsExpired(false);
-    }, 5000); // Checagem menos agressiva
+    const updateTimer = () => {
+      const now = new Date();
+      const difference = expirationDate.getTime() - now.getTime();
+      if (difference <= 0) {
+        setIsExpired(true);
+        setTimeLeft({ hours: 0, minutes: 0, seconds: 0 });
+      } else {
+        setIsExpired(false);
+        setTimeLeft({
+          hours: Math.floor((difference / (1000 * 60 * 60))),
+          minutes: Math.floor((difference / 1000 / 60) % 60),
+          seconds: Math.floor((difference / 1000) % 60),
+        });
+      }
+    };
+    updateTimer();
+    const interval = setInterval(updateTimer, 1000);
     return () => clearInterval(interval);
   }, [expirationDate]);
 
   if (!isLoaded || !expirationDate) return null;
-  if (!clientData) return <WelcomeScreen onComplete={handleClientEntry} />;
+  if (!clientData) return <WelcomeScreen onComplete={(n, s, l) => setClientData({name: n, spouse: s, lang: l})} />;
 
   const { lang, name, spouse } = clientData;
   const t = translations[lang || 'pt'];
   const displayName = spouse ? `${name} & ${spouse}` : name;
-  
-  const whatsappMessage = encodeURIComponent(
-    isExpired 
-      ? `Olá Consultor, *${name}* aqui. Perdi o prazo de ${EXPIRATION_HOURS}h mas tenho interesse.` 
-      : `Olá Consultor, *${name}* aqui. Vi a proposta VIP e quero garantir meus 3 meses grátis.`
-  );
 
   return (
-    <div className="min-h-screen bg-slate-50 font-sans selection:bg-aqua-200 selection:text-aqua-900">
+    <div className="min-h-screen bg-slate-50 font-sans selection:bg-aqua-200 selection:text-aqua-900 pb-20 md:pb-0">
       <nav className="bg-white px-4 md:px-8 shadow-sm flex justify-between items-center sticky top-0 z-50 border-b border-slate-100 h-16 md:h-24">
-        <div className="flex items-center gap-2 md:gap-3">
-          <AquaFeelLogo width="160px" className="md:w-[220px]" />
-        </div>
-        
+        <AquaFeelLogo width="160px" className="md:w-[220px]" />
         <div className="flex items-center gap-2 md:gap-4">
             <div className="hidden md:flex items-center gap-4 text-xs md:text-sm font-bold text-slate-600">
                 <div className="flex items-center gap-1 text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-100">
@@ -151,12 +110,9 @@ function App() {
                     VIP #{name.substring(0,1).toUpperCase()}-992
                 </div>
             </div>
-
-            <button onClick={handleLogout} className="flex items-center gap-1.5 md:gap-2 text-slate-500 hover:text-slate-800 hover:bg-slate-100 px-2 md:px-3 py-1.5 md:py-2 rounded-lg transition-colors">
+            <button onClick={() => { setClientData(null); localStorage.removeItem('proposalClientData'); }} className="flex items-center gap-1.5 md:gap-2 text-slate-500 hover:text-slate-800 hover:bg-slate-100 px-2 md:px-3 py-1.5 md:py-2 rounded-lg transition-colors">
                 <Globe size={18} className="text-aqua-600 w-4 h-4 md:w-5 md:h-5"/>
-                <span className="text-[10px] md:text-xs font-bold uppercase hidden sm:inline">
-                    {lang === 'pt' ? 'Sair' : 'Exit'}
-                </span>
+                <span className="text-[10px] md:text-xs font-bold uppercase hidden sm:inline">{lang === 'pt' ? 'Sair' : 'Exit'}</span>
                 <LogOut size={16} className="sm:hidden w-4 h-4" />
             </button>
         </div>
@@ -170,6 +126,7 @@ function App() {
       <SoapLifestyle onTotalChange={setCleaningTotal} lang={lang} />
       <WhiteGloveService clientName={name} spouseName={spouse} lang={lang} />
 
+      {/* Seção de Oferta VIP */}
       <div className="max-w-5xl mx-auto px-4 py-12 md:py-16">
          <div className="bg-gradient-to-br from-white to-slate-50 rounded-2xl p-6 md:p-12 shadow-xl border border-white text-center relative overflow-hidden">
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-aqua-500 to-transparent opacity-50"></div>
@@ -195,61 +152,65 @@ function App() {
           cleaningTotal={cleaningTotal} 
           waterTotal={waterTotal}
           lang={lang} 
-          onOpenAnalyst={handleOpenAnalystModal} 
+          onOpenAnalyst={() => setIsAnalystModalOpen(true)} 
           isExpired={isExpired} 
         />
-        
-        <div className="mt-12 px-4">
-          <UrgencyGraph 
-            waterMonthly={waterTotal} 
-            soapMonthly={cleaningTotal}
-            fixedMonthly={185}
-            cashPrice={8990}
-            lang={lang} 
-          />
-        </div>
       </div>
 
       <Testimonials lang={lang} />
       <FAQ spouseName={spouse || name} lang={lang} />
       
-      {/* Disclaimer de Notas Legais */}
-      <div className="bg-slate-50 py-8 px-4 text-center">
-        <p className="text-[9px] md:text-[10px] text-slate-500 font-medium max-w-4xl mx-auto leading-relaxed">
-          {t.footer.soapDisclaimer}
-        </p>
+      <div className="bg-slate-50 py-8 px-4 text-center mb-32 md:mb-0">
+        <p className="text-[9px] md:text-[10px] text-slate-500 font-medium max-w-4xl mx-auto leading-relaxed">{t.footer.soapDisclaimer}</p>
       </div>
 
-      <UrgencyBanner 
-        expirationDate={expirationDate} 
-        lang={lang} 
-        isExpired={isExpired} 
-        whatsappMessage={whatsappMessage} 
-        onOpenAnalyst={handleOpenAnalystModal} 
-      />
-
-      <footer className="bg-slate-950 text-white py-12 md:py-16 border-t border-slate-900 relative overflow-hidden">
-        <div className="max-w-6xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-8 md:gap-10 relative z-10 text-center md:text-left">
-          <div className="flex flex-col md:flex-row items-center gap-4">
-            <AquaFeelLogo width="240px" variant="white" className="opacity-80 hover:opacity-100 transition-opacity" />
-          </div>
-          <div className="flex flex-col items-center md:items-end">
-             <button onClick={handleOpenAnalystModal} className="bg-white text-slate-950 px-5 md:px-6 py-2.5 md:py-3 rounded-full font-black flex items-center gap-3 md:gap-4 hover:bg-aqua-50 transition-all shadow-xl group text-sm md:text-base">
-               <Phone size={18} className="text-aqua-600 w-4 h-4 md:w-5 md:h-5" />
-               <span className="uppercase tracking-wide">{t.footer.button}</span>
-               <ChevronRight size={16} className="group-hover:translate-x-1 transition-transform w-4 h-4" />
-             </button>
+      <footer className="bg-slate-950 text-white relative overflow-hidden border-t border-white/10">
+        <div className={`py-4 px-4 md:px-8 border-b border-white/5 transition-colors duration-500 ${isExpired ? 'bg-red-950/80 animate-pulse' : 'bg-aqua-950/40'}`}>
+          <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <div className={`${isExpired ? 'text-red-500' : 'text-amber-400'} animate-float`}>
+                <Clock size={20} />
+              </div>
+              <div className="text-center md:text-left">
+                <span className="text-[10px] md:text-xs font-black uppercase tracking-widest text-slate-400 block mb-0.5">
+                  {isExpired ? t.urgency.expiredTitle : t.urgency.expires}
+                </span>
+                {!isExpired && (
+                  <span className="text-sm md:text-base font-black font-mono text-white">
+                    {String(timeLeft.hours).padStart(2, '0')}h {String(timeLeft.minutes).padStart(2, '0')}m {String(timeLeft.seconds).padStart(2, '0')}s
+                  </span>
+                )}
+              </div>
+            </div>
+            
+            <div className="flex items-center gap-4 w-full md:w-auto">
+               <button 
+                 onClick={() => setIsAnalystModalOpen(true)}
+                 className={`flex-1 md:flex-none px-6 py-3 rounded-xl font-black text-xs md:text-sm uppercase tracking-widest flex items-center justify-center gap-3 transition-all transform hover:-translate-y-1 active:scale-95 shadow-xl ${isExpired ? 'bg-white text-red-600' : 'bg-red-600 text-white hover:bg-red-500'}`}
+               >
+                 <Phone size={16} />
+                 {isExpired ? t.urgency.expiredButton : t.footer.button}
+                 <ChevronRight size={14} className="hidden md:block" />
+               </button>
+            </div>
           </div>
         </div>
-        <div className="text-center mt-12 md:mt-16 text-slate-600 text-[10px] md:text-xs uppercase tracking-widest font-semibold border-t border-white/5 pt-8 px-4 leading-relaxed">{t.footer.rights}</div>
+
+        <div className="max-w-6xl mx-auto px-4 py-8 md:py-12 flex flex-col md:flex-row justify-between items-center gap-8 text-center md:text-left">
+          <div className="flex flex-col items-center md:items-start gap-4">
+            <AquaFeelLogo width="220px" variant="white" className="opacity-80" />
+            <div className="flex items-center gap-2 text-[10px] font-black text-slate-500 uppercase tracking-[0.3em]">
+               <Lock size={12} className="text-emerald-500" />
+               {lang === 'pt' ? 'Conexão Segura 256-bit' : 'Secure 256-bit Connection'}
+            </div>
+          </div>
+          <div className="text-slate-600 text-[10px] md:text-xs uppercase tracking-widest font-semibold leading-relaxed">
+            {t.footer.rights}
+          </div>
+        </div>
       </footer>
 
-      <AnalystModal 
-        isOpen={isAnalystModalOpen} 
-        onClose={() => setIsAnalystModalOpen(false)} 
-        lang={lang} 
-        clientName={name} 
-      />
+      <AnalystModal isOpen={isAnalystModalOpen} onClose={() => setIsAnalystModalOpen(false)} lang={lang} clientName={name} />
     </div>
   );
 }

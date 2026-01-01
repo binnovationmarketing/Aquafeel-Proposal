@@ -60,36 +60,36 @@ const ptTranslations = {
       m1: "Corrosão das Tubulações: Metais pesados e cloro oxidam o cobre e ressecam o PVC, causando vazamentos invisíveis.",
       m2: "Morte de Eletrodomésticos: O calcário (pedra) entope válvulas e queima resistências de máquinas e aquecedores, reduzindo a vida útil em até 50%.",
       m3: "Manchas Irreversíveis: Depósitos minerais permanentes que destroem o brilho de vidros, porcelanatos, mármores e metais de luxo.",
-      backTitle: "A OMISSÃO CUSTA CARO",
-      fearTrigger: "Enquanto você dorme, a corrosão interna 'enfarta' suas tubulações como artérias humanas. Um vazamento sob o piso pode custar mais que o próprio sistema, destruindo sua estrutura e valor de mercado.",
-      impactLabel: "O Dano é Irreversível"
+      backTitle: "PRESERVE SEU PATRIMÔNIO",
+      fearTrigger: "Enquanto você dorme, contaminantes corroem o sistema hidráulico da sua casa. Um vazamento estrutural pode custar 5x mais que a prevenção, destruindo o valor de mercado do seu maior investimento.",
+      impactLabel: "Degradação Estrutural Real"
     },
     adults: {
       title: "Para os Adultos",
       m1: "Danos à Pele e Cabelo: O cloro remove a proteção lipídica natural, causando dermatites, queda capilar e envelhecimento precoce dos tecidos.",
       m2: "Desreguladores Endócrinos: Químicos como PFAS e Trihalometanos mimetizam hormônios, afetando o metabolismo e a tireoide.",
       m3: "Acúmulo Crônico: Metais como chumbo e mercúrio são bioacumulativos; o corpo não os elimina, sobrecarregando o fígado e rins ao longo de décadas.",
-      backTitle: "SEU CORPO, SUA SENTENÇA",
-      fearTrigger: "Seus poros são esponjas famintas. 10 minutos de banho quente permitem que você absorva 6x mais cloro e toxinas que bebendo a mesma água. Você está se 'autocloroformando' diariamente, destruindo sua saúde hormonal.",
-      impactLabel: "Você é o que você absorve"
+      backTitle: "SEU CORPO É SEU TEMPLO",
+      fearTrigger: "Seus poros são a maior porta de entrada para toxinas. 10 minutos de banho com cloro equivalem a beber 1 litro de água contaminada. Autocuidado começa com a pureza do que toca sua pele diariamente.",
+      impactLabel: "Consciência Biológica"
     },
     children: {
       title: "Para as Crianças",
       m1: "Riscos no Desenvolvimento: O chumbo é neurotóxico e está ligado diretamente a atrasos cognitivos e dificuldades de aprendizagem na infância.",
       m2: "Imunidade Fragilizada: Exposição contínua a resíduos bacterianos e vírus que escapam do tratamento municipal básico.",
       m3: "Vapores Tóxicos: Durante o banho quente, a inalação de vapores de cloro pode agravar severamente quadros de asma e rinites.",
-      backTitle: "A CULPA É DO ADULTO",
-      fearTrigger: "Eles não podem escolher a água que bebem. O que é 'legal' para você é 'tóxico' para o cérebro em formação de um bebê. Cada copo sem tratamento molecular é um risco desnecessário ao futuro de quem você ama.",
-      impactLabel: "Eles confiam na sua proteção"
+      backTitle: "O FUTURO DELES EM SUAS MÃOS",
+      fearTrigger: "Eles não têm escolha sobre o que consomem, mas você tem. Proteger a pele e o desenvolvimento cognitivo de uma criança é o ato mais nobre de cuidado. Não permita que o 'legal' substitua o 'saudável'.",
+      impactLabel: "Fator de Risco Cutâneo"
     },
     pets: {
       title: "Para os Pets",
       m1: "Insuficiência Renal: Cães e gatos filtram toxinas muito mais rápido; o excesso de sódio e minerais causa falência renal precoce.",
       m2: "Cálculos Urinários: A água \"dura\" é a principal responsável pela formação de cristais e pedras na bexiga, causando dor e cirurgias caras.",
       m3: "Dermatites e Coceira: Sem a barreira de gordura na pele, pets desenvolvem alergias constantes e perda de brilho na pelagem.",
-      backTitle: "ELES SOFREM EM SILÊNCIO",
-      fearTrigger: "Beber água com calcário é como obrigar seu pet a ingerir areia líquida que vira pedras cortantes nos rins. Eles não podem dizer onde dói, mas você pode evitar que a dor comece.",
-      impactLabel: "Lealdade Traída pela Negligência"
+      backTitle: "A SAÚDE QUE ELES NÃO SABEM PEDIR",
+      fearTrigger: "Seus pets confiam totalmente em você. O calcário na água é a principal causa de pedras nos rins em animais domésticos. Prevenir o sofrimento deles é uma questão de amor e responsabilidade.",
+      impactLabel: "Cuidado e Lealdade"
     },
     flipAction: "Toque para ver a realidade"
   },
@@ -271,7 +271,7 @@ const ptTranslations = {
     subtitle: "Protocolo técnico rigoroso.",
     clean: "Ambiente Imaculado",
     cleanSub: "Limpeza absoluta.",
-    priority: "Prioridade",
+    priority: "Priority",
     prioritySub: "Agenda VIP.",
     aesthetic: "Estética",
     aestheticSub: "Design preservado.",
@@ -339,36 +339,36 @@ const enTranslations: TranslationStructure = {
       m1: "Pipe Corrosion: Heavy metals and chlorine oxidize copper and dry out PVC, causing silent leaks.",
       m2: "Appliance Death: Limescale (stone) clogs valves and burns out elements in washers and heaters, cutting lifespan by up to 50%.",
       m3: "Irreversible Stains: Permanent mineral deposits that destroy the shine of glass, tiles, marble, and luxury fixtures.",
-      backTitle: "OMISSION COSTS DEARLY",
-      fearTrigger: "While you sleep, internal corrosion 'heart-attacks' your pipes like human arteries. A leak under the floor can cost more than the system itself.",
-      impactLabel: "Damage is Irreversible"
+      backTitle: "PRESERVE YOUR ASSETS",
+      fearTrigger: "While you sleep, contaminants corrode your home's plumbing. A leak can cost 5x more than prevention, destroying the market value of your biggest investment.",
+      impactLabel: "Real Structural Decay"
     },
     adults: {
       title: "For Adults",
       m1: "Skin and Hair Damage: Chlorine strips natural lipid protection, causing dermatitis, hair loss, and premature tissue aging.",
       m2: "Endocrine Disruptors: Chemicals like PFAS and Trihalomethanes mimic hormones, affecting metabolism and the thyroid.",
       m3: "Chronic Accumulation: Metals like lead and mercury are bioaccumulative; the body cannot flush them, taxing your liver and kidneys over decades.",
-      backTitle: "YOUR BODY, YOUR SENTENCE",
-      fearTrigger: "Your pores are hungry sponges. 10 minutes in a hot shower allows you to absorb 6x more chlorine and toxins than drinking the same water. You are 'chloroforming' yourself daily.",
-      impactLabel: "You are what you absorb"
+      backTitle: "YOUR BODY IS YOUR TEMPLE",
+      fearTrigger: "Your pores are the largest gateway for toxins. A 10-minute shower with chlorine is equivalent to drinking 1 liter of contaminated water. Self-care starts with purity.",
+      impactLabel: "Biological Awareness"
     },
     children: {
       title: "For Children",
       m1: "Developmental Risks: Lead is neurotoxic and directly linked to cognitive delays and learning difficulties in childhood.",
       m2: "Fragile Immunity: Continuous exposure to bacterial residues and viruses that escape basic municipal treatment.",
       m3: "Toxic Vapors: During hot showers, inhaling chlorine vapors can severely aggravate asthma and allergy conditions.",
-      backTitle: "IT'S THE ADULT'S FAULT",
-      fearTrigger: "They can't choose the water they drink. What is 'legal' for you is 'toxic' for a baby's developing brain. Every glass without molecular treatment is an unnecessary risk.",
-      impactLabel: "They trust your protection"
+      backTitle: "THEIR FUTURE IN YOUR HANDS",
+      fearTrigger: "They have no choice in what they consume, but you do. Protecting a child's skin and development is the noblest act of care. Don't let 'legal' replace 'healthy'.",
+      impactLabel: "Skin Risk Factor"
     },
     pets: {
       title: "For Pets",
       m1: "Renal Failure: Dogs and cats filter toxins much faster; excess sodium and minerals cause early kidney failure.",
       m2: "Urinary Stones: \"Hard\" water is the primary culprit for crystal and stone formation in the bladder, leading to pain and expensive surgeries.",
       m3: "Dermatitis & Itching: Without skin oils, pets develop constant allergies and lose coat luster.",
-      backTitle: "THEY SUFFER IN SILENCE",
-      fearTrigger: "Drinking limescale water is like forcing your pet to ingest liquid sand that turns into razor-sharp stones. They can't tell you where it hurts, but you can prevent it.",
-      impactLabel: "Loyalty Betrayed by Negligence"
+      backTitle: "THE HEALTH THEY CAN'T ASK FOR",
+      fearTrigger: "Your pets trust you completely. Limescale in water is the leading cause of kidney stones in domestic animals. Preventing their suffering is an act of love.",
+      impactLabel: "Care and Loyalty"
     },
     flipAction: "Tap to see reality"
   },
@@ -617,37 +617,37 @@ const esTranslations: TranslationStructure = {
       title: "Salud del Hogar",
       m1: "Corrosión de Tuberías: Los metales pesados y el cloro oxidan el cobre y resecan el PVC, causando fugas invisibles.",
       m2: "Muerte de Electrodomésticos: La cal (piedra) obstruye válvulas y quema resistencias de máquinas y calentadores, reduciendo la vida útil hasta un 50%.",
-      m3: "Manchas Irreversíveis: Depósitos minerales permanentes que destruyen el brillo de vidrios, porcelanatos, mármoles y metales de lujo.",
-      backTitle: "LA OMISIÓN CUESTA CARA",
-      fearTrigger: "Mientras duerme, la corrosión interna 'infarta' sus tuberías como arterias humanas. Una fuga puede destruir su estructura y valor.",
-      impactLabel: "El daño es irreversible"
+      m3: "Manchas Irreversíveis: Depósitos minerales permanentes que destruyen el brillo de vidrios, porcelanatos, mármores y metales de lujo.",
+      backTitle: "PRESERVE SU PATRIMONIO",
+      fearTrigger: "Mientras duerme, contaminantes corroen la plomería de su casa. Una fuga estructural puede costar 5 veces más que la prevención.",
+      impactLabel: "Degradación Estructural"
     },
     adults: {
       title: "Para los Adultos",
       m1: "Daño en Piel y Cabello: El cloro elimina la protección lipídica natural, causando dermatitis, caída capilar y envejecimiento prematuro.",
-      m2: "Disruptores Endocrinos: Químicos como PFAS y Trihalometanos imitan hormonas, afectando el metabolismo y la tiroides.",
+      m2: "Disruptores Endocrinos: Químicos como PFAS e Trihalometanos imitan hormonas, afectando el metabolismo y la tiroides.",
       m3: "Acumulación Crónica: Los metales como el plomo y el mercurio son bioacumulativos; el cuerpo no los elimina, sobrecargando el hígado y los riñones.",
-      backTitle: "SU CUERPO, SU SENTENCIA",
-      fearTrigger: "Sus poros son esponjas hambrientas. 10 minutos de ducha caliente permiten absorber 6 veces más cloro que bebiendo la misma agua.",
-      impactLabel: "Usted es lo que absorbe"
+      backTitle: "SU CUERPO ES SU TEMPLO",
+      fearTrigger: "Sus poros son la puerta de entrada más grande para las toxinas. Una ducha de 10 minutos con cloro equivale a beber 1 litro de agua contaminada.",
+      impactLabel: "Conciencia Biológica"
     },
     children: {
       title: "Para los Niños",
       m1: "Riesgos en el Desarrollo: El plomo es neurotóxico y está ligado directamente a retrasos cognitivos y dificultades de aprendizaje.",
-      m2: "Inmunidade Fragilizada: Exposição continua a residuos bacterianos y virus que escapan del tratamiento municipal básico.",
+      m2: "Inmunidade Fragilizada: Exposição continua a residuos bacterianos y virus que escapan del tratamento municipal básico.",
       m3: "Vapores Tóxicos: Durante el baño caliente, la inhalación de vapores de cloro puede agravar cuadros de asma y rinitis.",
-      backTitle: "LA CULPA ES DEL ADULTO",
-      fearTrigger: "Ellos no pueden elegir el agua que beben. Lo que es 'legal' para un adulto es 'tóxico' para un bebé. Cada vaso es un riesgo innecesario.",
-      impactLabel: "Ellos confían en su protección"
+      backTitle: "EL FUTURO DE ELLOS EN SUS MANOS",
+      fearTrigger: "Ellos no pueden elegir lo que consumen, pero usted sí. Proteger el desarrollo de un niño es el acto de cuidado más noble.",
+      impactLabel: "Factor de Riesgo Cutáneo"
     },
     pets: {
       title: "Para as Mascotas",
       m1: "Insuficiência Renal: Los perros y gatos filtran toxinas más rápido; el exceso de sodio y minerales causa insuficiencia renal temprana.",
       m2: "Cálculos Urinarios: El agua \"dura\" es la principal responsable de la formación de cristales y piedras en la vejiga.",
       m3: "Dermatitis y Picazón: Sin la grasa natural en la piel, las mascotas desarrollan alergias constantes y pérdida de brillo en el pelaje.",
-      backTitle: "ELLOS SUFREN EN SILENCIO",
-      fearTrigger: "Beber agua con cal es como obligar a su mascota a ingerir arena líquida que se convierte en piedras cortantes en sus riñones.",
-      impactLabel: "Lealtad Traicionada por Negligencia"
+      backTitle: "LA SALUD QUE NO SABEN PEDIR",
+      fearTrigger: "Sus mascotas confían en usted. La cal en el agua es la causa principal de cálculos renales en animales domésticos.",
+      impactLabel: "Cuidado y Lealtad"
     },
     flipAction: "Toque para ver a realidade"
   },
