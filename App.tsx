@@ -98,7 +98,7 @@ function App() {
   const displayName = spouse ? `${name} & ${spouse}` : name;
 
   return (
-    <div className="min-h-screen bg-slate-50 font-sans selection:bg-aqua-200 selection:text-aqua-900 pb-20 md:pb-0">
+    <div className="min-h-screen bg-slate-50 font-sans selection:bg-aqua-200 selection:text-aqua-900 pb-0">
       <nav className="bg-white px-4 md:px-8 shadow-sm flex justify-between items-center sticky top-0 z-50 border-b border-slate-100 h-16 md:h-24">
         <AquaFeelLogo width="160px" className="md:w-[220px]" />
         <div className="flex items-center gap-2 md:gap-4">
@@ -160,38 +160,41 @@ function App() {
       <Testimonials lang={lang} />
       <FAQ spouseName={spouse || name} lang={lang} />
       
-      <div className="bg-slate-50 py-8 px-4 text-center mb-32 md:mb-0">
+      <div className="bg-slate-50 py-8 px-4 text-center">
         <p className="text-[9px] md:text-[10px] text-slate-500 font-medium max-w-4xl mx-auto leading-relaxed">{t.footer.soapDisclaimer}</p>
       </div>
 
+      {/* FOOTER: Único local onde o timer aparece agora */}
       <footer className="bg-slate-950 text-white relative overflow-hidden border-t border-white/10">
-        <div className={`py-4 px-4 md:px-8 border-b border-white/5 transition-colors duration-500 ${isExpired ? 'bg-red-950/80 animate-pulse' : 'bg-aqua-950/40'}`}>
-          <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <div className={`${isExpired ? 'text-red-500' : 'text-amber-400'} animate-float`}>
-                <Clock size={20} />
+        <div className={`py-8 px-4 md:px-8 transition-colors duration-500 ${isExpired ? 'bg-red-950/80' : 'bg-aqua-950/40'}`}>
+          <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
+            <div className="flex items-center gap-5">
+              <div className={`${isExpired ? 'text-red-500' : 'text-amber-400'} animate-bounce`}>
+                <Clock size={32} />
               </div>
               <div className="text-center md:text-left">
-                <span className="text-[10px] md:text-xs font-black uppercase tracking-widest text-slate-400 block mb-0.5">
+                <span className="text-xs md:text-sm font-black uppercase tracking-[0.3em] text-slate-400 block mb-1">
                   {isExpired ? t.urgency.expiredTitle : t.urgency.expires}
                 </span>
                 {!isExpired && (
-                  <span className="text-sm md:text-base font-black font-mono text-white">
+                  <span className="text-xl md:text-3xl font-black font-mono text-white">
                     {String(timeLeft.hours).padStart(2, '0')}h {String(timeLeft.minutes).padStart(2, '0')}m {String(timeLeft.seconds).padStart(2, '0')}s
                   </span>
                 )}
+                <p className="text-[10px] md:text-xs text-slate-500 font-black uppercase tracking-widest mt-2">{t.urgency.limit} {expirationDate.toLocaleDateString()}</p>
               </div>
             </div>
             
-            <div className="flex items-center gap-4 w-full md:w-auto">
+            <div className="flex flex-col items-center md:items-end gap-4 w-full md:w-auto">
                <button 
                  onClick={() => setIsAnalystModalOpen(true)}
-                 className={`flex-1 md:flex-none px-6 py-3 rounded-xl font-black text-xs md:text-sm uppercase tracking-widest flex items-center justify-center gap-3 transition-all transform hover:-translate-y-1 active:scale-95 shadow-xl ${isExpired ? 'bg-white text-red-600' : 'bg-red-600 text-white hover:bg-red-500'}`}
+                 className={`w-full md:w-auto px-10 py-5 rounded-2xl font-black text-sm uppercase tracking-widest flex items-center justify-center gap-3 transition-all transform hover:-translate-y-1 active:scale-95 shadow-2xl ${isExpired ? 'bg-white text-red-600' : 'bg-red-600 text-white hover:bg-red-500'}`}
                >
-                 <Phone size={16} />
+                 <Phone size={20} />
                  {isExpired ? t.urgency.expiredButton : t.footer.button}
-                 <ChevronRight size={14} className="hidden md:block" />
+                 <ChevronRight size={16} />
                </button>
+               <p className="text-[9px] text-slate-600 font-black uppercase tracking-widest">{t.urgency.commission}</p>
             </div>
           </div>
         </div>

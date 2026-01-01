@@ -22,7 +22,7 @@ interface ComparisonCalculatorProps {
   isExpired?: boolean;
 }
 
-type RegionId = 'NE' | 'DMV_CAROLINAS';
+type RegionId = 'NE' | 'SOUTH';
 type CreditRangeId = 'RANGE1' | 'RANGE2' | 'RANGE3' | 'RANGE4' | 'RANGE5';
 
 export const ComparisonCalculator: React.FC<ComparisonCalculatorProps> = ({ 
@@ -40,9 +40,12 @@ export const ComparisonCalculator: React.FC<ComparisonCalculatorProps> = ({
   
   const t = translations[lang].calculator;
 
+  // Preços atualizados conforme solicitação:
+  // NJ, PA, DE -> $8,990
+  // MD, VA, DC, NC -> $7,990
   const regionPrices: Record<RegionId, number> = {
     NE: 8990,
-    DMV_CAROLINAS: 7990
+    SOUTH: 7990
   };
 
   const factors: Record<CreditRangeId, { '180x': number; '120x': number; '60x': number }> = {
@@ -69,8 +72,8 @@ export const ComparisonCalculator: React.FC<ComparisonCalculatorProps> = ({
   const monthlyTotalSpending = waterTotal + cleaningTotal;
 
   const regionOptions = [
-    { id: 'NE', label: 'PA, NJ, DE', icon: MapPin },
-    { id: 'DMV_CAROLINAS', label: 'MD, VA, DC', icon: MapPin }
+    { id: 'NE', label: 'NJ, PA, DE ($8.9k)', icon: MapPin },
+    { id: 'SOUTH', label: 'MD, VA, DC, NC ($7.9k)', icon: MapPin }
   ];
 
   const creditOptions = [
@@ -225,14 +228,14 @@ export const ComparisonCalculator: React.FC<ComparisonCalculatorProps> = ({
         </div>
       </div>
 
-      {/* NOVO GRÁFICO DE COMPARAÇÃO ESPACIAL */}
+      {/* GRÁFICO DE PROJEÇÃO DE 10 ANOS COM SIMULADOR DE JUROS */}
       <UrgencyChart 
         waterMonthly={waterTotal} 
         soapMonthly={cleaningTotal} 
-        fixedMonthly={currentPlan.id === 'cash' ? 0 : currentPlan.amount} 
+        fixedMonthly={currentPlan.id === 'cash' ? (cashPrice / 12) : currentPlan.amount} 
         cashPrice={cashPrice} 
         lang={lang}
-        financingMonths={currentPlan.months}
+        financingMonths={currentPlan.months || 0}
       />
 
       <style>{`

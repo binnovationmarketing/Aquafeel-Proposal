@@ -1,52 +1,15 @@
-'use client';
 
-import React, { useState, useMemo } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import {
-  ShieldCheck,
-  ChevronRight,
-  TrendingDown,
-  Droplets,
-  ShoppingCart,
-  History,
-  Target,
-  Zap,
-  Clock,
-  DollarSign,
-  Award,
-  ArrowRight,
-  Sparkles,
-  BarChart3,
-  Cpu,
-  Layers
-} from 'lucide-react';
+import React, { useState, useMemo, useRef } from 'react';
+import { motion, useInView, AnimatePresence } from 'framer-motion';
+// Added DollarSign to the imports from lucide-react
+import { Activity, Calendar, Zap, TrendingUp, Info, MousePointer2, DollarSign } from 'lucide-react';
 
-// =========================================
-// 1. CONFIGURATION & DATA TYPES
-// =========================================
-
-export type TabId = 'durability' | 'costs' | 'projection';
-
-interface ComparisonMetric {
-  label: string;
-  aquaValue: number; // 0-100 for bar scale
-  compValue: number; // 0-100 for bar scale
-  aquaLabel: string; // Display text
-  compLabel: string; // Display text
-}
-
-interface TabContent {
-  id: TabId;
-  label: string;
-  title: string;
-  description: string;
-  cta: string;
-  colors: {
-    gradient: string;
-    glow: string;
-    ring: string;
-  };
-  metrics: ComparisonMetric[];
+interface ProjectionData {
+  month: number;
+  year: number;
+  realityAcc: number;
+  aquafeelAcc: number;
+  isPaidOff: boolean;
 }
 
 interface SpatialAnchorProps {
@@ -58,59 +21,6 @@ interface SpatialAnchorProps {
   financingMonths: number;
 }
 
-// =========================================
-// 2. ANIMATION VARIANTS
-// =========================================
-
-const ANIMATIONS = {
-  container: {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.1, delayChildren: 0.1 },
-    },
-    exit: {
-      opacity: 0,
-      transition: { duration: 0.2 },
-    },
-  },
-  item: {
-    hidden: { opacity: 0, y: 20, filter: 'blur(10px)' },
-    visible: {
-      opacity: 1,
-      y: 0,
-      filter: 'blur(0px)',
-      transition: { type: 'spring', stiffness: 100, damping: 20 },
-    },
-    exit: { opacity: 0, y: -10, filter: 'blur(5px)' },
-  },
-  image: {
-    initial: {
-      opacity: 0,
-      scale: 1.1,
-      filter: 'blur(20px)',
-      y: 20,
-    },
-    animate: {
-      opacity: 1,
-      scale: 1,
-      filter: 'blur(0px)',
-      y: 0,
-      transition: { type: 'spring', stiffness: 120, damping: 25 },
-    },
-    exit: {
-      opacity: 0,
-      scale: 0.9,
-      filter: 'blur(20px)',
-      transition: { duration: 0.3 },
-    },
-  },
-};
-
-// =========================================
-// 3. MAIN COMPONENT
-// =========================================
-
 export function Component({
   waterMonthly,
   soapMonthly,
@@ -119,360 +29,366 @@ export function Component({
   lang,
   financingMonths
 }: SpatialAnchorProps) {
-  const [activeTab, setActiveTab] = useState<TabId>('durability');
-  const [hoveredYear, setHoveredYear] = useState<number | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(containerRef, { amount: 0.2 });
+  const [simMonths, setSimMonths] = useState<number>(financingMonths || 60);
+  const [hoveredPoint, setHoveredPoint] = useState<ProjectionData | null>(null);
 
-  const t = {
+  const t: any = {
     pt: {
-      title: "Comparativo Aquafeel x Realidade",
-      durability: "Durabilidade",
-      costs: "Custos",
-      projection: "Projeção 10 Anos",
-      cta: "ASSUMIR CONTROLE AGORA",
-      market: "Concorrência",
-      aqua: "Aquafeel",
-      year: "Ano",
-      savings: "Economia Real",
-      waste: "Gasto Acumulado"
+      title: "PROJEÇÃO DE PATRIMÔNIO (10 ANOS)",
+      subtitle: "Estilo Mercado de Capitais: Compare o desperdício acumulado vs seu novo ativo",
+      reality: "Desperdício Acumulado (Realidade)",
+      aquafeel: "Investimento Aquafeel",
+      savings: "Zona de Lucro / Patrimônio",
+      cutoff: "Data de Quitação",
+      totalWaste: "Total Perdido em 10 Anos",
+      totalInvest: "Investimento Total",
+      netProfit: "Patrimônio Gerado",
+      yAxis: "Capital ($)",
+      xAxis: "Tempo (Anos)",
+      simLabel: "Simular Quitação em:",
+      months: "meses"
     },
     en: {
-      title: "Aquafeel vs Reality Comparison",
-      durability: "Durability",
-      costs: "Costs",
-      projection: "10-Year Projection",
-      cta: "TAKE CONTROL NOW",
-      market: "Competitors",
-      aqua: "Aquafeel",
-      year: "Year",
-      savings: "Real Savings",
-      waste: "Accumulated Waste"
+      title: "ASSET PROJECTION (10 YEARS)",
+      subtitle: "Stock Market Style: Compare accumulated waste vs your new asset",
+      reality: "Accumulated Waste (Reality)",
+      aquafeel: "Aquafeel Investment",
+      savings: "Profit / Asset Zone",
+      cutoff: "Payoff Date",
+      totalWaste: "Total Lost in 10 Years",
+      totalInvest: "Total Investment",
+      netProfit: "Net Equity Generated",
+      yAxis: "Capital ($)",
+      xAxis: "Time (Years)",
+      simLabel: "Simulate Payoff in:",
+      months: "months"
     }
-  }[lang === 'pt' ? 'pt' : 'en'];
+  }[lang === "pt" ? "pt" : "en"];
 
-  const DATA: Record<TabId, TabContent> = {
-    durability: {
-      id: 'durability',
-      label: t.durability,
-      title: 'Resiliência Espacial',
-      description: lang === 'pt' 
-        ? 'O sistema Aquafeel é o âncora que estabiliza sua casa. Enquanto o mercado entrega produtos descartáveis, nossa engenharia molecular garante décadas de pureza inabalável.'
-        : 'The Aquafeel system is the anchor that stabilizes your home. While the market delivers disposable products, our molecular engineering ensures decades of unwavering purity.',
-      cta: 'PROTEJA SEU PATRIMÔNIO POR 25 ANOS',
-      colors: {
-        gradient: 'from-blue-600 to-indigo-950',
-        glow: 'bg-blue-500',
-        ring: 'border-blue-500/20',
-      },
-      metrics: [
-        { label: lang === 'pt' ? 'Vida Útil' : 'Total Lifespan', aquaValue: 100, compValue: 28, aquaLabel: '25 Anos', compLabel: '3-7 Anos' },
-        { label: lang === 'pt' ? 'Remineralização' : 'Remineralization', aquaValue: 100, compValue: 40, aquaLabel: '10 Anos', compLabel: '3-6 Anos' },
-        { label: lang === 'pt' ? 'Filtros RO' : 'RO Filters', aquaValue: 100, compValue: 10, aquaLabel: '5 Anos', compLabel: '6-12 Meses' },
-      ]
-    },
-    costs: {
-      id: 'costs',
-      label: t.costs,
-      title: 'Eficiência Financeira',
-      description: lang === 'pt'
-        ? 'Eliminamos a obsolescência programada. A manutenção do Aquafeel é pensada para ser invisível no seu orçamento, destruindo os custos abusivos das empresas tradicionais.'
-        : 'We eliminate planned obsolescence. Aquafeel maintenance is designed to be invisible in your budget, destroying the abusive costs of traditional companies.',
-      cta: 'REDUZA CUSTOS OPERACIONAIS EM 70%',
-      colors: {
-        gradient: 'from-aqua-600 to-blue-900',
-        glow: 'bg-aqua-400',
-        ring: 'border-aqua-400/20',
-      },
-      metrics: [
-        { label: lang === 'pt' ? 'Manutenção (Custo)' : 'Maintenance Cost', aquaValue: 100, compValue: 65, aquaLabel: '$790', compLabel: '$1.2k' },
-        { label: lang === 'pt' ? 'Taxa Relocação' : 'Relocation Fee', aquaValue: 100, compValue: 49, aquaLabel: '$390', compLabel: '$790' },
-        { label: lang === 'pt' ? 'Kit Filtros (Set)' : 'Filter Kit (Set)', aquaValue: 100, compValue: 20, aquaLabel: '$200', compLabel: '$600+' },
-      ]
-    },
-    projection: {
-      id: 'projection',
-      label: t.projection,
-      title: 'Visão Futurista',
-      description: lang === 'pt'
-        ? 'Sua liberdade financeira começa com a sincronização do seu consumo. Veja como o investimento Aquafeel se transforma em lucro puro após apenas 60 meses.'
-        : 'Your financial freedom starts with synchronized consumption. See how the Aquafeel investment transforms into pure profit after just 60 months.',
-      cta: 'ATIVAR LUCRO PATRIMONIAL AGORA',
-      colors: {
-        gradient: 'from-emerald-600 to-teal-950',
-        glow: 'bg-emerald-500',
-        ring: 'border-emerald-500/20',
-      },
-      metrics: [] // Handled by specialized chart component below
-    }
-  };
-
-  const current = DATA[activeTab];
-
-  // Logic for the 10-year chart
-  const projectionData = useMemo(() => {
-    const years = Array.from({ length: 10 }, (_, i) => i + 1);
-    const inflation = 0.07;
-    let waterAcc = 0;
-    let soapAcc = 0;
+  // Lógica de projeção 120 meses
+  const projection = useMemo(() => {
+    const data: ProjectionData[] = [];
+    const inflation = 0.07 / 12; // Inflação mensal
+    let realityAcc = 0;
     let aquafeelAcc = 0;
 
-    return years.map(y => {
-      const yearInf = Math.pow(1 + inflation, y - 1);
-      const currentYearWater = (waterMonthly * 12) * yearInf;
-      const currentYearSoap = (soapMonthly * 12) * yearInf;
-      waterAcc += currentYearWater;
-      soapAcc += currentYearSoap;
+    // Se financiamento simulado for zero (à vista), o investimento acontece no mês 1
+    const monthlyPayment = simMonths > 0 ? (fixedMonthly * financingMonths) / simMonths : 0;
 
-      // Aquafeel finishes in 60 months (5 years)
-      if (y <= 5) {
-        aquafeelAcc += (fixedMonthly * 12);
+    for (let m = 1; m <= 120; m++) {
+      const year = Math.ceil(m / 12);
+      // Gasto de realidade com inflação composta
+      const currentRealityMonthly = (waterMonthly + soapMonthly) * Math.pow(1 + inflation, m);
+      realityAcc += currentRealityMonthly;
+
+      // Investimento Aquafeel
+      if (simMonths === 0 && m === 1) {
+        aquafeelAcc = cashPrice;
+      } else if (m <= simMonths) {
+        aquafeelAcc += monthlyPayment;
       }
 
-      return {
-        year: y,
-        water: waterAcc,
-        soap: soapAcc,
-        aquafeel: aquafeelAcc,
-        totalReality: waterAcc + soapAcc
-      };
-    });
-  }, [waterMonthly, soapMonthly, fixedMonthly]);
+      data.push({
+        month: m,
+        year,
+        realityAcc,
+        aquafeelAcc,
+        isPaidOff: m > simMonths
+      });
+    }
+    return data;
+  }, [waterMonthly, soapMonthly, fixedMonthly, financingMonths, cashPrice, simMonths]);
+
+  const maxVal = projection[119].realityAcc;
+  const chartWidth = 1000;
+  const chartHeight = 500;
+
+  // Gerador de pontos para SVG Path
+  const getPath = (key: 'realityAcc' | 'aquafeelAcc') => {
+    return projection.map((d, i) => {
+      const x = (i / 119) * chartWidth;
+      const y = chartHeight - (d[key] / maxVal) * chartHeight;
+      return `${i === 0 ? 'M' : 'L'} ${x} ${y}`;
+    }).join(' ');
+  };
 
   return (
-    <div className="relative w-full min-h-[900px] bg-[#020d1a] text-zinc-100 overflow-hidden rounded-[4rem] md:rounded-[6rem] flex flex-col items-center justify-center border border-white/5 py-16 md:py-32">
+    <div ref={containerRef} className="relative w-full bg-[#010810] text-zinc-100 overflow-hidden rounded-[2.5rem] md:rounded-[4rem] flex flex-col items-center border border-white/5 py-10 md:py-20 mt-10 shadow-2xl">
       
       {/* Background FX */}
-      <div className="absolute inset-0 pointer-events-none">
-        <motion.div
-          animate={{
-            background: `radial-gradient(circle at 50% 50%, ${activeTab === 'durability' ? 'rgba(59, 130, 246, 0.08)' : activeTab === 'costs' ? 'rgba(14, 165, 233, 0.08)' : 'rgba(16, 185, 129, 0.08)'}, transparent 65%)`,
-          }}
-          className="absolute inset-0"
-        />
-        <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-[0.03]"></div>
+      <div className="absolute inset-0 pointer-events-none opacity-20">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(59,130,246,0.15),transparent_70%)]" />
+        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]" />
       </div>
 
-      <main className="relative z-10 w-full px-6 flex flex-col md:flex-row items-center justify-center gap-16 md:gap-24 max-w-7xl mx-auto">
-        
-        {/* LADO VISUAL: AQUAFEEL SYSTEM IMAGE */}
-        <div className="relative shrink-0 order-2 md:order-1">
-          {/* Tech Rings */}
-          <motion.div
-            animate={{ rotate: 360 }}
-            transition={{ duration: 40, repeat: Infinity, ease: 'linear' }}
-            className={`absolute inset-[-20%] rounded-full border border-dashed border-white/10 ${current.colors.ring}`}
-          />
-          <motion.div
-            animate={{ scale: [1, 1.08, 1], rotate: -360 }}
-            transition={{ duration: 60, repeat: Infinity, ease: 'linear' }}
-            className="absolute inset-[-10%] rounded-full border border-white/5"
-          />
+      <header className="relative z-10 text-center mb-12 px-6">
+        <div className="inline-flex items-center gap-2 bg-blue-500/10 text-blue-400 px-4 py-2 rounded-full text-[10px] md:text-xs font-black uppercase tracking-[0.3em] mb-4 border border-blue-500/20 shadow-lg">
+          <Activity size={14} className="animate-pulse" /> {lang === 'pt' ? 'MERCADO FINANCEIRO' : 'MARKET ANALYTICS'}
+        </div>
+        <h1 className="text-3xl md:text-6xl font-black tracking-tighter mb-4 text-white uppercase leading-none drop-shadow-2xl">
+          {t.title}
+        </h1>
+        <p className="text-zinc-500 text-sm md:text-lg font-medium opacity-80 max-w-3xl mx-auto">
+          {t.subtitle}
+        </p>
+      </header>
 
-          <div className="relative h-72 w-72 md:h-[550px] md:w-[550px] rounded-full border border-white/10 shadow-[0_0_80px_rgba(0,0,0,0.6)] flex items-center justify-center bg-black/40 backdrop-blur-2xl overflow-hidden group">
-            {/* Pulsing Glow Background */}
-            <div className={`absolute inset-0 bg-gradient-to-br ${current.colors.gradient} opacity-20 blur-3xl animate-pulse`}></div>
+      {/* CONTROLADOR INTERATIVO */}
+      <div className="relative z-20 w-full max-w-4xl px-6 mb-12">
+        <div className="bg-white/5 backdrop-blur-2xl p-6 md:p-10 rounded-[2rem] border border-white/10 shadow-2xl ring-1 ring-white/10">
+          <div className="flex flex-col md:flex-row items-center gap-10">
+            <div className="flex-1 w-full">
+              <div className="flex justify-between items-center mb-6">
+                <span className="text-[10px] font-black uppercase tracking-[0.3em] text-blue-400">
+                  {t.simLabel}
+                </span>
+                <span className="text-3xl font-black text-white bg-blue-600 px-4 py-1 rounded-xl shadow-lg">
+                  {simMonths} {t.months}
+                </span>
+              </div>
+              <input 
+                type="range" min="12" max="180" step="12"
+                value={simMonths} 
+                onChange={(e) => setSimMonths(Number(e.target.value))}
+                className="w-full h-3 bg-white/10 rounded-full appearance-none cursor-pointer accent-blue-500 ring-4 ring-blue-500/10"
+              />
+              <div className="flex justify-between mt-4 text-[9px] font-black text-zinc-600 uppercase tracking-widest">
+                <span>1 ANO</span>
+                <span>5 ANOS</span>
+                <span>10 ANOS</span>
+                <span>15 ANOS</span>
+              </div>
+            </div>
             
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={current.id}
-                variants={ANIMATIONS.image}
-                initial="initial"
-                animate="animate"
-                exit="exit"
-                className="relative z-10 w-full h-full flex items-center justify-center p-12 md:p-16"
-              >
-                <img
-                  src="https://raw.githubusercontent.com/ai-studio-assets/aquafeel/main/system.png"
-                  alt="Aquafeel System"
-                  className="w-full h-full object-contain drop-shadow-[0_40px_80px_rgba(0,0,0,1)]"
-                  draggable={false}
-                />
-              </motion.div>
-            </AnimatePresence>
-
-            {/* Float HUD Labels */}
-            <div className="absolute top-1/4 right-10 bg-black/60 backdrop-blur-md border border-white/10 p-3 rounded-xl animate-float">
-                <div className="flex items-center gap-2 text-blue-400 font-black text-[8px] tracking-widest uppercase">
-                    <Cpu size={12} /> Sync Active
-                </div>
+            <div className="hidden lg:flex flex-col gap-4">
+               <div className="flex items-center gap-3">
+                  <div className="w-12 h-0.5 bg-red-600 shadow-[0_0_10px_rgba(220,38,38,0.8)]"></div>
+                  <span className="text-[10px] font-black uppercase tracking-widest text-zinc-400">{t.reality}</span>
+               </div>
+               <div className="flex items-center gap-3">
+                  <div className="w-12 h-3 bg-blue-500/40 border-l-2 border-blue-500"></div>
+                  <span className="text-[10px] font-black uppercase tracking-widest text-zinc-400">{t.aquafeel}</span>
+               </div>
+               <div className="flex items-center gap-3">
+                  <div className="w-12 h-3 bg-emerald-500/20 border-l-2 border-emerald-500"></div>
+                  <span className="text-[10px] font-black uppercase tracking-widest text-emerald-500">{t.savings}</span>
+               </div>
             </div>
           </div>
         </div>
-
-        {/* LADO CONTEÚDO: INFO + DASHBOARD */}
-        <motion.div
-          key={activeTab}
-          variants={ANIMATIONS.container}
-          initial="hidden"
-          animate="visible"
-          className="w-full max-w-xl flex flex-col order-1 md:order-2"
-        >
-          <div className="mb-8">
-            <motion.h2 variants={ANIMATIONS.item} className="text-[10px] md:text-xs font-black uppercase tracking-[0.4em] text-blue-500 mb-3 flex items-center gap-2">
-              <Sparkles size={14} /> {lang === 'pt' ? 'PROTOCOL DE ELITE' : 'ELITE PROTOCOL'}
-            </motion.h2>
-            <motion.h1 variants={ANIMATIONS.item} className="text-4xl md:text-7xl font-black tracking-tighter mb-4 text-white leading-[0.9] uppercase">
-              {t.title}
-            </motion.h1>
-            <motion.p variants={ANIMATIONS.item} className="text-zinc-500 text-sm md:text-lg leading-relaxed font-medium">
-              {current.description}
-            </motion.p>
-          </div>
-
-          {/* DASHBOARD / METRICS AREA */}
-          <motion.div variants={ANIMATIONS.item} className="w-full bg-white/5 p-8 rounded-[2.5rem] border border-white/10 backdrop-blur-3xl shadow-2xl relative overflow-hidden group">
-            <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_0%_0%,rgba(59,130,246,0.1),transparent_50%)]"></div>
-            
-            {activeTab === 'projection' ? (
-              /* GRÁFICO DE 10 ANOS */
-              <div className="space-y-8 relative z-10">
-                <div className="flex items-end justify-between h-48 md:h-64 gap-2 px-1">
-                  {projectionData.map((d) => (
-                    <div 
-                      key={d.year}
-                      onMouseEnter={() => setHoveredYear(d.year)}
-                      onMouseLeave={() => setHoveredYear(null)}
-                      className="flex-1 flex flex-col justify-end gap-1 group/bar cursor-pointer"
-                    >
-                      {/* Bar Content */}
-                      <div className="relative w-full h-full flex flex-col justify-end items-center">
-                         {/* Reality Bar (Waste) */}
-                         <div 
-                           className="w-full bg-red-600/20 rounded-t-sm transition-all duration-500 group-hover/bar:bg-red-600/40"
-                           style={{ height: `${(d.totalReality / projectionData[9].totalReality) * 100}%` }}
-                         ></div>
-                         {/* Aquafeel Bar (Fixed) */}
-                         <div 
-                           className={`absolute bottom-0 w-1/2 rounded-t-sm transition-all duration-500 ${d.year <= 5 ? 'bg-blue-500' : 'bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]'}`}
-                           style={{ height: `${(d.aquafeel / projectionData[9].totalReality) * 100}%` }}
-                         ></div>
-                      </div>
-                      <span className={`text-[8px] font-black text-center transition-colors ${hoveredYear === d.year ? 'text-white' : 'text-zinc-600'}`}>
-                        {d.year}y
-                      </span>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Legend & Hover Info */}
-                <div className="pt-6 border-t border-white/10 flex flex-col md:flex-row justify-between gap-4">
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-2 text-[9px] font-black text-zinc-400 uppercase tracking-widest">
-                       <div className="w-2 h-2 bg-blue-500 rounded-full"></div> Aquafeel Payoff (60m)
-                    </div>
-                    <div className="flex items-center gap-2 text-[9px] font-black text-zinc-400 uppercase tracking-widest">
-                       <div className="w-2 h-2 bg-red-600 rounded-full"></div> {t.waste}
-                    </div>
-                    <div className="flex items-center gap-2 text-[9px] font-black text-zinc-400 uppercase tracking-widest">
-                       <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div> Lifetime Profit
-                    </div>
-                  </div>
-                  {hoveredYear && (
-                    <div className="text-right animate-in fade-in slide-in-from-right-4">
-                       <div className="text-[10px] text-zinc-500 font-bold uppercase tracking-widest">Ano {hoveredYear}</div>
-                       <div className="text-sm font-black text-white">$ {Math.round(projectionData[hoveredYear-1].totalReality).toLocaleString()} Perda</div>
-                       <div className="text-xs font-black text-emerald-400 uppercase tracking-tighter">Savings Active</div>
-                    </div>
-                  )}
-                </div>
-              </div>
-            ) : (
-              /* MÉTRICAS DE DURABILIDADE E CUSTOS */
-              <div className="space-y-10 relative z-10">
-                {current.metrics.map((metric, idx) => (
-                  <div key={idx} className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <div className={`p-2 rounded-lg bg-white/5 border border-white/5 text-blue-500`}>
-                           {idx === 0 ? <History size={16}/> : idx === 1 ? <Layers size={16}/> : <Target size={16}/>}
-                        </div>
-                        <span className="text-[11px] md:text-xs font-black uppercase tracking-widest text-zinc-300">{metric.label}</span>
-                      </div>
-                      <div className="flex gap-4">
-                         <span className="text-[11px] font-black text-blue-400 uppercase">{t.aqua}: {metric.aquaLabel}</span>
-                         <span className="text-[11px] font-black text-red-500 uppercase">{t.market}: {metric.compLabel}</span>
-                      </div>
-                    </div>
-                    <div className="space-y-2">
-                      <div className="relative h-2 w-full bg-black/40 rounded-full overflow-hidden border border-white/5">
-                        <motion.div
-                          initial={{ width: 0 }}
-                          animate={{ width: `${metric.aquaValue}%` }}
-                          transition={{ duration: 1.5, delay: 0.4 + idx * 0.1 }}
-                          className="absolute inset-0 bg-blue-500 shadow-[0_0_15px_rgba(59,130,246,0.6)]"
-                        />
-                      </div>
-                      <div className="relative h-1 w-full bg-black/40 rounded-full overflow-hidden opacity-30">
-                         <motion.div
-                          initial={{ width: 0 }}
-                          animate={{ width: `${metric.compValue}%` }}
-                          transition={{ duration: 1.5, delay: 0.6 + idx * 0.1 }}
-                          className="absolute inset-0 bg-red-600"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-
-            {/* CTA SECTION INSIDE SHOWCASE */}
-            <div className="mt-12 pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-6">
-               <div className="text-center md:text-left">
-                  <div className="text-emerald-400 font-black text-[10px] uppercase tracking-[0.2em] mb-1">Status de Rede:</div>
-                  <div className="text-white font-black text-lg tracking-tight uppercase">Sincronia Total (AF-99)</div>
-               </div>
-               <button className="w-full md:w-auto bg-white text-black hover:bg-zinc-200 font-black px-10 py-5 rounded-2xl flex items-center justify-center gap-3 transition-all transform hover:-translate-y-1 active:scale-95 shadow-[0_20px_40px_rgba(255,255,255,0.1)] group">
-                  <span className="text-xs uppercase tracking-widest leading-none">{current.cta}</span>
-                  <ArrowRight size={18} className="group-hover:translate-x-1.5 transition-transform" />
-               </button>
-            </div>
-          </motion.div>
-        </motion.div>
-      </main>
-
-      {/* FOOTER TABS SWITCHER */}
-      <div className="fixed bottom-10 inset-x-0 flex justify-center z-[100] pointer-events-none px-4">
-        <motion.div layout className="pointer-events-auto flex items-center gap-1.5 p-2 rounded-full bg-zinc-950/80 backdrop-blur-3xl border border-white/10 shadow-[0_20px_80px_rgba(0,0,0,0.8)] ring-1 ring-white/10">
-          {(Object.values(DATA) as TabContent[]).map((tab) => (
-            <motion.button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              whileTap={{ scale: 0.94 }}
-              className="relative w-32 md:w-44 h-12 md:h-16 rounded-full flex items-center justify-center text-[10px] md:text-xs font-black uppercase tracking-widest focus:outline-none overflow-hidden"
-            >
-              {activeTab === tab.id && (
-                <motion.div
-                  layoutId="tab-surface"
-                  className="absolute inset-0 rounded-full bg-gradient-to-b from-white/10 to-transparent shadow-inner border border-white/10"
-                  transition={{ type: 'spring', stiffness: 220, damping: 25 }}
-                />
-              )}
-              <span className={`relative z-10 transition-colors duration-500 ${activeTab === tab.id ? 'text-white' : 'text-zinc-600 hover:text-zinc-400'}`}>
-                {tab.label}
-              </span>
-              {activeTab === tab.id && (
-                <motion.span
-                  layoutId="tab-glow"
-                  className="absolute -bottom-1.5 h-1.5 w-10 rounded-full bg-blue-500 shadow-[0_0_20px_rgba(59,130,246,1)]"
-                />
-              )}
-            </motion.button>
-          ))}
-        </motion.div>
       </div>
 
+      {/* GRÁFICO SVG - ESTILO BOLSA */}
+      <div className="relative z-10 w-full max-w-6xl px-4 md:px-10 h-[350px] md:h-[600px]">
+        <div className="absolute left-10 md:left-14 top-0 bottom-10 flex flex-col justify-between text-[10px] font-black text-zinc-700 pointer-events-none z-20">
+          <span>${Math.round(maxVal).toLocaleString()}</span>
+          <span>${Math.round(maxVal * 0.75).toLocaleString()}</span>
+          <span>${Math.round(maxVal * 0.5).toLocaleString()}</span>
+          <span>${Math.round(maxVal * 0.25).toLocaleString()}</span>
+          <span>$0</span>
+        </div>
+
+        <svg 
+          viewBox={`0 0 ${chartWidth} ${chartHeight}`} 
+          className="w-full h-full overflow-visible"
+          preserveAspectRatio="none"
+        >
+          {/* Grid Lines */}
+          <line x1="0" y1="0" x2={chartWidth} y2="0" stroke="white" strokeOpacity="0.05" />
+          <line x1="0" y1={chartHeight * 0.25} x2={chartWidth} y2={chartHeight * 0.25} stroke="white" strokeOpacity="0.05" />
+          <line x1="0" y1={chartHeight * 0.5} x2={chartWidth} y2={chartHeight * 0.5} stroke="white" strokeOpacity="0.05" />
+          <line x1="0" y1={chartHeight * 0.75} x2={chartWidth} y2={chartHeight * 0.75} stroke="white" strokeOpacity="0.05" />
+
+          {/* Áreas de preenchimento */}
+          <defs>
+            <linearGradient id="gradReality" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#dc2626" stopOpacity="0.2" />
+              <stop offset="100%" stopColor="#dc2626" stopOpacity="0" />
+            </linearGradient>
+            <linearGradient id="gradAqua" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.4" />
+              <stop offset="100%" stopColor="#3b82f6" stopOpacity="0" />
+            </linearGradient>
+            <linearGradient id="gradEmerald" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#10b981" stopOpacity="0.3" />
+              <stop offset="100%" stopColor="#10b981" stopOpacity="0" />
+            </linearGradient>
+            <filter id="glow">
+              <feGaussianBlur stdDeviation="3" result="coloredBlur" />
+              <feMerge>
+                <feMergeNode in="coloredBlur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          </defs>
+
+          {/* Área Aquafeel (Base) */}
+          <path 
+            d={`${getPath('aquafeelAcc')} L ${chartWidth} ${chartHeight} L 0 ${chartHeight} Z`} 
+            fill="url(#gradAqua)" 
+          />
+
+          {/* Área de Lucro (Diferença entre Reality e Aquafeel após quitação) */}
+          <path 
+            d={`${getPath('realityAcc')} L ${chartWidth} ${chartHeight} L 0 ${chartHeight} Z`} 
+            fill="url(#gradReality)" 
+          />
+
+          {/* Linha de Tendência Realidade (VERMELHA - ALTA VISIBILIDADE) */}
+          <motion.path
+            initial={{ pathLength: 0 }}
+            animate={isInView ? { pathLength: 1 } : {}}
+            transition={{ duration: 2, ease: "easeOut" }}
+            d={getPath('realityAcc')}
+            fill="none"
+            stroke="#dc2626"
+            strokeWidth="4"
+            strokeLinecap="round"
+            filter="url(#glow)"
+          />
+
+          {/* Linha de Investimento Aquafeel (AZUL/ESMERALDA) */}
+          <motion.path
+            initial={{ pathLength: 0 }}
+            animate={isInView ? { pathLength: 1 } : {}}
+            transition={{ duration: 2, ease: "easeOut", delay: 0.5 }}
+            d={getPath('aquafeelAcc')}
+            fill="none"
+            stroke={simMonths > 0 ? "#3b82f6" : "#10b981"}
+            strokeWidth="4"
+            strokeLinecap="round"
+            filter="url(#glow)"
+          />
+
+          {/* Marcador de Quitação (Data de Corte) */}
+          {simMonths > 0 && simMonths <= 120 && (
+            <g transform={`translate(${(simMonths / 120) * chartWidth}, 0)`}>
+              <line y1="0" y2={chartHeight} stroke="white" strokeWidth="2" strokeDasharray="8,8" strokeOpacity="0.5" />
+              <circle cx="0" cy={chartHeight - (projection[simMonths-1].aquafeelAcc / maxVal) * chartHeight} r="6" fill="white" filter="url(#glow)" />
+              <foreignObject x="-50" y="-40" width="100" height="30">
+                <div className="bg-white text-black text-[9px] font-black uppercase py-1 px-2 rounded-lg text-center shadow-2xl">
+                   {t.cutoff}
+                </div>
+              </foreignObject>
+            </g>
+          )}
+
+          {/* Interatividade - Invisible Overlay para Hover */}
+          {projection.map((p, i) => (
+            <rect
+              key={i}
+              x={(i / 119) * chartWidth - (chartWidth / 240)}
+              y="0"
+              width={chartWidth / 120}
+              height={chartHeight}
+              fill="transparent"
+              onMouseEnter={() => setHoveredPoint(p)}
+              onMouseLeave={() => setHoveredPoint(null)}
+              className="cursor-crosshair"
+            />
+          ))}
+        </svg>
+
+        {/* Eixo X - Anos */}
+        <div className="absolute left-10 md:left-14 right-0 bottom-0 flex justify-between px-2 pt-4 border-t border-white/10">
+           {[1,2,3,4,5,6,7,8,9,10].map(y => (
+             <span key={y} className="text-[10px] font-black text-zinc-600">{y}Y</span>
+           ))}
+        </div>
+      </div>
+
+      {/* CARDS DE PERFORMANCE FINANCEIRA */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-6xl px-4 md:px-10 mt-16">
+         <div className="bg-white/5 p-8 rounded-[2.5rem] border border-white/10 flex flex-col items-center text-center group hover:bg-red-600/5 transition-all">
+            <div className="bg-red-600/20 p-4 rounded-2xl text-red-500 mb-4 group-hover:scale-110 transition-transform">
+               <TrendingUp size={24} />
+            </div>
+            <span className="text-[10px] font-black text-zinc-500 uppercase tracking-widest mb-1">{t.totalWaste}</span>
+            <div className="text-3xl font-black text-white">${Math.round(maxVal).toLocaleString()}</div>
+            <p className="text-[10px] text-zinc-500 mt-3 font-medium">Capital perdido sem retorno em compras de supermercado.</p>
+         </div>
+
+         <div className="bg-white/5 p-8 rounded-[2.5rem] border border-white/10 flex flex-col items-center text-center group hover:bg-blue-600/5 transition-all">
+            <div className="bg-blue-600/20 p-4 rounded-2xl text-blue-400 mb-4 group-hover:scale-110 transition-transform">
+               <DollarSign size={24} />
+            </div>
+            <span className="text-[10px] font-black text-zinc-500 uppercase tracking-widest mb-1">{t.totalInvest}</span>
+            <div className="text-3xl font-black text-white">${Math.round(projection[119].aquafeelAcc).toLocaleString()}</div>
+            <p className="text-[10px] text-zinc-500 mt-3 font-medium">Investimento total para aquisição do ativo Aquafeel.</p>
+         </div>
+
+         <div className="bg-emerald-500/10 p-8 rounded-[2.5rem] border border-emerald-500/20 flex flex-col items-center text-center group hover:bg-emerald-500/20 transition-all">
+            <div className="bg-emerald-600/20 p-4 rounded-2xl text-emerald-400 mb-4 group-hover:scale-110 transition-transform">
+               <Zap size={24} />
+            </div>
+            <span className="text-[10px] font-black text-emerald-500 uppercase tracking-widest mb-1">{t.netProfit}</span>
+            <div className="text-3xl font-black text-emerald-400">
+               ${Math.round(maxVal - projection[119].aquafeelAcc).toLocaleString()}
+            </div>
+            <p className="text-[10px] text-zinc-500 mt-3 font-medium">Dinheiro que volta ao seu bolso nos próximos 10 anos.</p>
+         </div>
+      </div>
+
+      {/* TOOLTIP DINÂMICO (STOCK STYLE) */}
+      <AnimatePresence>
+        {hoveredPoint && (
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20 }}
+            className="fixed bottom-32 left-1/2 -translate-x-1/2 z-[100] bg-zinc-900/95 backdrop-blur-3xl border border-white/20 p-8 rounded-[2.5rem] shadow-[0_40px_100px_rgba(0,0,0,0.8)] min-w-[320px] ring-1 ring-white/10"
+          >
+            <div className="flex justify-between items-center mb-6 border-b border-white/10 pb-4">
+               <div className="flex flex-col">
+                  <span className="text-[10px] font-black text-zinc-500 uppercase tracking-[0.2em]">Ponto de Análise</span>
+                  <span className="text-xl font-black text-white">Ano {hoveredPoint.year} - Mês {hoveredPoint.month}</span>
+               </div>
+               <div className={`px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest ${hoveredPoint.isPaidOff ? 'bg-emerald-500 text-black' : 'bg-blue-600 text-white'}`}>
+                  {hoveredPoint.isPaidOff ? 'Ativo Quitado' : 'Em Pagamento'}
+               </div>
+            </div>
+
+            <div className="space-y-4">
+              <div className="flex justify-between items-center bg-red-600/10 p-4 rounded-2xl border border-red-600/20">
+                <span className="text-[10px] font-black text-zinc-400 uppercase tracking-widest">Desperdício Acumulado</span>
+                <span className="text-lg font-black text-red-500">${Math.round(hoveredPoint.realityAcc).toLocaleString()}</span>
+              </div>
+              <div className="flex justify-between items-center bg-blue-600/10 p-4 rounded-2xl border border-blue-600/20">
+                <span className="text-[10px] font-black text-zinc-400 uppercase tracking-widest">Patrimônio Aquafeel</span>
+                <span className="text-lg font-black text-blue-400">${Math.round(hoveredPoint.aquafeelAcc).toLocaleString()}</span>
+              </div>
+              
+              {hoveredPoint.isPaidOff && (
+                <div className="flex justify-between items-center bg-emerald-500/10 p-4 rounded-2xl border border-emerald-500/20 animate-pulse">
+                  <span className="text-[10px] font-black text-emerald-400 uppercase tracking-widest">Economia Líquida</span>
+                  <span className="text-lg font-black text-emerald-400">${Math.round(hoveredPoint.realityAcc - hoveredPoint.aquafeelAcc).toLocaleString()}</span>
+                </div>
+              )}
+            </div>
+            
+            <div className="mt-6 flex items-center justify-center gap-2 text-[9px] font-black text-zinc-600 uppercase tracking-widest">
+               <MousePointer2 size={12} /> Arraste o gráfico para analisar
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <style>{`
-        .perspective-1000 { perspective: 1000px; }
-        .preserve-3d { transform-style: preserve-3d; }
-        .backface-hidden { backface-visibility: hidden; }
-        
-        @keyframes float {
-          0% { transform: translateY(0px) rotate(0deg); }
-          50% { transform: translateY(-15px) rotate(2deg); }
-          100% { transform: translateY(0px) rotate(0deg); }
+        input[type=range]::-webkit-slider-thumb {
+          -webkit-appearance: none;
+          height: 32px;
+          width: 32px;
+          border-radius: 50%;
+          background: #3b82f6;
+          cursor: pointer;
+          box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+          border: 4px solid white;
+          transition: transform 0.2s;
         }
-        .animate-float {
-          animation: float 6s ease-in-out infinite;
+        input[type=range]::-webkit-slider-thumb:hover {
+          transform: scale(1.1);
         }
       `}</style>
     </div>
