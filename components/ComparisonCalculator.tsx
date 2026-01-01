@@ -40,9 +40,6 @@ export const ComparisonCalculator: React.FC<ComparisonCalculatorProps> = ({
   
   const t = translations[lang].calculator;
 
-  // Preços atualizados conforme solicitação:
-  // NJ, PA, DE -> $8,990
-  // MD, VA, DC, NC -> $7,990
   const regionPrices: Record<RegionId, number> = {
     NE: 8990,
     SOUTH: 7990
@@ -228,11 +225,10 @@ export const ComparisonCalculator: React.FC<ComparisonCalculatorProps> = ({
         </div>
       </div>
 
-      {/* GRÁFICO DE PROJEÇÃO DE 10 ANOS COM SIMULADOR DE JUROS */}
       <UrgencyChart 
         waterMonthly={waterTotal} 
         soapMonthly={cleaningTotal} 
-        fixedMonthly={currentPlan.id === 'cash' ? (cashPrice / 12) : currentPlan.amount} 
+        fixedMonthly={currentPlan.amount} 
         cashPrice={cashPrice} 
         lang={lang}
         financingMonths={currentPlan.months || 0}
