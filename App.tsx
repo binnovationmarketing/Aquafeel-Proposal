@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { HeroSection } from './components/HeroSection';
 import { ComparisonCalculator } from './components/ComparisonCalculator';
@@ -14,13 +15,14 @@ import { AnalystModal } from './components/AnalystModal';
 import AquaFeelLogo from './components/AquaFeelLogo';
 import { Phone, Lock, ChevronRight, LogOut, Globe, Clock, AlertTriangle } from 'lucide-react';
 import { Language, translations } from './utils/i18n';
+import { ClientData } from './types';
 
 function App() {
   const [expirationDate, setExpirationDate] = useState<Date | null>(null);
   const [cleaningTotal, setCleaningTotal] = useState<number>(0);
   const [waterTotal, setWaterTotal] = useState<number>(0);
   const [isExpired, setIsExpired] = useState(false);
-  const [clientData, setClientData] = useState<{name: string, spouse: string, lang: Language} | null>(null);
+  const [clientData, setClientData] = useState<ClientData | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [isAnalystModalOpen, setIsAnalystModalOpen] = useState(false);
   const [timeLeft, setTimeLeft] = useState({ hours: 0, minutes: 0, seconds: 0 });
@@ -48,10 +50,18 @@ function App() {
     const urlName = params.get('n') || params.get('name');
     const urlSpouse = params.get('s') || params.get('spouse');
     const urlLang = params.get('l') || params.get('lang');
+    const urlEmail = params.get('e') || params.get('email');
+    const urlZip = params.get('z') || params.get('zip');
 
     if (urlName) {
       const selectedLang: Language = (urlLang === 'en' || urlLang === 'es' || urlLang === 'pt') ? (urlLang as Language) : 'pt';
-      const data = { name: urlName, spouse: urlSpouse || '', lang: selectedLang };
+      const data: ClientData = { 
+        name: urlName, 
+        spouseName: urlSpouse || '', 
+        lang: selectedLang,
+        email: urlEmail || '',
+        zipCode: urlZip || ''
+      };
       setClientData(data);
       localStorage.setItem('proposalClientData', JSON.stringify(data));
     } else {
@@ -91,11 +101,19 @@ function App() {
   }, [expirationDate]);
 
   if (!isLoaded || !expirationDate) return null;
-  if (!clientData) return <WelcomeScreen onComplete={(n, s, l) => setClientData({name: n, spouse: s, lang: l})} />;
+  if (!clientData) return (
+    <WelcomeScreen 
+      onComplete={(n, s, l, e, z) => {
+        const data: ClientData = { name: n, spouseName: s, lang: l, email: e, zipCode: z };
+        setClientData(data);
+        localStorage.setItem('proposalClientData', JSON.stringify(data));
+      }} 
+    />
+  );
 
-  const { lang, name, spouse } = clientData;
+  const { lang, name, spouseName } = clientData;
   const t = translations[lang || 'pt'];
-  const displayName = spouse ? `${name} & ${spouse}` : name;
+  const displayName = spouseName ? `${name} & ${spouseName}` : name;
 
   return (
     <div className="min-h-screen bg-slate-50 font-sans selection:bg-aqua-200 selection:text-aqua-900 pb-0">
@@ -118,13 +136,13 @@ function App() {
         </div>
       </nav>
 
-      <HeroSection clientName={name} spouseName={spouse} lang={lang} />
+      <HeroSection clientName={name} spouseName={spouseName} lang={lang} />
       <InfoSection lang={lang} />
       <ContaminantTruths lang={lang} />
       <WaterMalefices lang={lang} />
       <WaterConsumptionLogic lang={lang} onWaterTotalChange={setWaterTotal} />
       <SoapLifestyle onTotalChange={setCleaningTotal} lang={lang} />
-      <WhiteGloveService clientName={name} spouseName={spouse} lang={lang} />
+      <WhiteGloveService clientName={name} spouseName={spouseName} lang={lang} />
 
       {/* Seção de Oferta VIP */}
       <div className="max-w-5xl mx-auto px-4 py-12 md:py-16">
@@ -158,13 +176,12 @@ function App() {
       </div>
 
       <Testimonials lang={lang} />
-      <FAQ spouseName={spouse || name} lang={lang} />
+      <FAQ spouseName={spouseName || name} lang={lang} />
       
       <div className="bg-slate-50 py-8 px-4 text-center">
         <p className="text-[9px] md:text-[10px] text-slate-500 font-medium max-w-4xl mx-auto leading-relaxed">{t.footer.soapDisclaimer}</p>
       </div>
 
-      {/* FOOTER: Único local onde o timer aparece agora */}
       <footer className="bg-slate-950 text-white relative overflow-hidden border-t border-white/10">
         <div className={`py-8 px-4 md:px-8 transition-colors duration-500 ${isExpired ? 'bg-red-950/80' : 'bg-aqua-950/40'}`}>
           <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">

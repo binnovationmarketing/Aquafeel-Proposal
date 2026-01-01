@@ -1,3 +1,4 @@
+
 export type Language = 'pt' | 'en' | 'es';
 
 type TranslationStructure = typeof ptTranslations;
@@ -11,12 +12,17 @@ const ptTranslations = {
     identify: "Por favor, identifique-se para descriptografar sua proposta.",
     yourName: "SEU NOME",
     spouseName: "NOME DO CÔNJUGE (OPCIONAL)",
+    email: "SEU MELHOR E-MAIL",
+    zipCode: "ZIP CODE (CEP)",
     placeholderName: "Ex: João Silva",
     placeholderSpouse: "Ex: Maria Silva",
+    placeholderEmail: "seu@email.com",
+    placeholderZip: "Ex: 19123",
     accessButton: "LIBERAR ACESSO VIP",
     backButton: "Voltar",
     secure: "Protocolo de Segurança Criptografado",
-    error: "Identificação necessária para prosseguir."
+    error: "Nome e Zip Code são obrigatórios para prosseguir.",
+    errorEmail: "Por favor, insira um e-mail válido."
   },
   hero: {
     platinum: "Oferta VIP Exclusiva",
@@ -80,7 +86,7 @@ const ptTranslations = {
       m3: "Vapores Tóxicos: Durante o banho quente, a inalação de vapores de cloro pode agravar severamente quadros de asma e rinites.",
       backTitle: "O FUTURO DELES EM SUAS MÃOS",
       fearTrigger: "Eles não têm escolha sobre o que consomem, mas você tem. Proteger a pele e o desenvolvimento cognitivo de uma criança é o ato mais nobre de cuidado. Não permita que o 'legal' substitua o 'saudável'.",
-      impactLabel: "Fator de Risco Cutâneo"
+      impactLabel: "Fator de Riesgo Cutâneo"
     },
     pets: {
       title: "Para os Pets",
@@ -290,12 +296,17 @@ const enTranslations: TranslationStructure = {
     identify: "Please identify yourself to decrypt your proposal.",
     yourName: "YOUR NAME",
     spouseName: "SPOUSE'S NAME (OPTIONAL)",
+    email: "YOUR BEST EMAIL",
+    zipCode: "ZIP CODE",
     placeholderName: "Ex: John Smith",
     placeholderSpouse: "Ex: Mary Smith",
+    placeholderEmail: "your@email.com",
+    placeholderZip: "Ex: 19123",
     accessButton: "UNLOCK VIP ACCESS",
     backButton: "Back",
     secure: "Encrypted Security Protocol",
-    error: "Identification required to proceed."
+    error: "Name and Zip Code are required to proceed.",
+    errorEmail: "Please enter a valid email."
   },
   hero: {
     platinum: "Exclusive VIP Offer",
@@ -569,12 +580,17 @@ const esTranslations: TranslationStructure = {
     identify: "Por favor, identifíquese para descifrar su propuesta.",
     yourName: "SU NOMBRE",
     spouseName: "NOMBRE DEL CÓNYUGE (OPCIONAL)",
+    email: "SU MELHOR E-MAIL",
+    zipCode: "CÓDIGO POSTAL (ZIP)",
     placeholderName: "Ej: Juan Pérez",
     placeholderSpouse: "Ej: María Pérez",
+    placeholderEmail: "su@email.com",
+    placeholderZip: "Ej: 19123",
     accessButton: "LIBERAR ACESSO VIP",
     backButton: "Volver",
     secure: "Protocolo de Seguridad Cifrado",
-    error: "Identificación necesaria para continuar."
+    error: "Nombre y Código Postal son obligatorios.",
+    errorEmail: "Por favor, ingrese un e-mail válido."
   },
   hero: {
     platinum: "Oferta VIP Exclusiva",
@@ -617,7 +633,7 @@ const esTranslations: TranslationStructure = {
       title: "Salud del Hogar",
       m1: "Corrosión de Tuberías: Los metales pesados y el cloro oxidan el cobre y resecan el PVC, causando fugas invisibles.",
       m2: "Muerte de Electrodomésticos: La cal (piedra) obstruye válvulas y quema resistencias de máquinas y calentadores, reduciendo la vida útil hasta un 50%.",
-      m3: "Manchas Irreversíveis: Depósitos minerales permanentes que destruyen el brillo de vidrios, porcelanatos, mármores y metales de lujo.",
+      m3: "Manchas Irreversíveis: Depósitos minerales permanentes que destruyen el brillo de vidros, porcelanatos, mármores y metales de lujo.",
       backTitle: "PRESERVE SU PATRIMONIO",
       fearTrigger: "Mientras duerme, contaminantes corroen la plomería de su casa. Una fuga estructural puede costar 5 veces más que la prevención.",
       impactLabel: "Degradación Estructural"
@@ -634,7 +650,7 @@ const esTranslations: TranslationStructure = {
     children: {
       title: "Para los Niños",
       m1: "Riesgos en el Desarrollo: El plomo es neurotóxico y está ligado directamente a retrasos cognitivos y dificultades de aprendizaje.",
-      m2: "Inmunidade Fragilizada: Exposição continua a residuos bacterianos y virus que escapan del tratamento municipal básico.",
+      m2: "Imunidade Fragilizada: Exposição continua a residuos bacterianos y virus que escapan del tratamento municipal básico.",
       m3: "Vapores Tóxicos: Durante el baño caliente, la inhalación de vapores de cloro puede agravar cuadros de asma y rinitis.",
       backTitle: "EL FUTURO DE ELLOS EN SUS MANOS",
       fearTrigger: "Ellos no pueden elegir lo que consumen, pero usted sí. Proteger el desarrollo de un niño es el acto de cuidado más noble.",
@@ -645,7 +661,7 @@ const esTranslations: TranslationStructure = {
       m1: "Insuficiência Renal: Los perros y gatos filtran toxinas más rápido; el exceso de sodio y minerales causa insuficiencia renal temprana.",
       m2: "Cálculos Urinarios: El agua \"dura\" es la principal responsable de la formación de cristales y piedras en la vejiga.",
       m3: "Dermatitis y Picazón: Sin la grasa natural en la piel, las mascotas desarrollan alergias constantes y pérdida de brillo en el pelaje.",
-      backTitle: "LA SALUD QUE NO SABEN PEDIR",
+      backTitle: "LA SAUD QUE NO SABEN PEDIR",
       fearTrigger: "Sus mascotas confían en usted. La cal en el agua es la causa principal de cálculos renales en animales domésticos.",
       impactLabel: "Cuidado y Lealtad"
     },

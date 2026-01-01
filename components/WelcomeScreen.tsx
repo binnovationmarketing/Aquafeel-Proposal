@@ -1,10 +1,11 @@
+
 import React, { useState } from 'react';
-import { Lock, ChevronRight, ShieldCheck, ArrowLeft } from 'lucide-react';
+import { Lock, ChevronRight, ShieldCheck, ArrowLeft, Loader2 } from 'lucide-react';
 import AquaFeelLogo from './AquaFeelLogo';
 import { Language, translations } from '../utils/i18n';
 
 interface WelcomeScreenProps {
-  onComplete: (clientName: string, spouseName: string, lang: Language) => void;
+  onComplete: (clientName: string, spouseName: string, lang: Language, email: string, zip: string) => void;
 }
 
 export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
@@ -12,7 +13,10 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
   const [lang, setLang] = useState<Language>('pt');
   const [name, setName] = useState('');
   const [spouse, setSpouse] = useState('');
+  const [email, setEmail] = useState('');
+  const [zip, setZip] = useState('');
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const t = translations[lang].welcome;
 
@@ -21,12 +25,65 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
     setStep('form');
   };
 
-  const handleSubmit = () => {
-    if (!name.trim()) {
+  const validateEmail = (email: string) => {
+    return String(email)
+      .toLowerCase()
+      .match(
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      );
+  };
+
+  const handleSubmit = async () => {
+    if (!name.trim() || !zip.trim()) {
       setError(t.error);
       return;
     }
-    onComplete(name.trim(), spouse.trim(), lang);
+
+    if (email.trim() && !validateEmail(email)) {
+      setError(t.errorEmail);
+      return;
+    }
+
+    setIsLoading(true);
+    
+    // --- INTEGRAÇÃO GOOGLE SHEETS ---
+    // Este endpoint deve ser uma URL de um Google Apps Script implantado como Web App.
+    // O script no Google deve receber o POST e anexar uma linha na planilha.
+    const GOOGLE_SHEETS_ENDPOINT = 'https://script.google.com/macros/s/AKfycby-YOUR-APP-SCRIPT-ID/exec'; 
+
+    try {
+      // Enviamos as informações para captura de lead
+      // Mesmo que falhe ou não tenhamos a URL real configurada agora, 
+      // o sistema deve prosseguir para não travar o cliente.
+      const payload = {
+        name,
+        spouse,
+        email,
+        zip,
+        lang,
+        timestamp: new Date().toISOString(),
+        source: 'VIP-Proposal-Access'
+      };
+
+      // Tenta enviar para o Sheets em background (CORS pode bloquear se não configurado no Script)
+      // Usamos mode: 'no-cors' se for apenas um ping de envio
+      fetch(GOOGLE_SHEETS_ENDPOINT, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      }).catch(e => console.log('Sheet integration pending config:', e));
+
+      // Simulamos um delay de processamento para UX
+      await new Promise(r => setTimeout(r, 800));
+      
+      onComplete(name.trim(), spouse.trim(), lang, email.trim(), zip.trim());
+    } catch (err) {
+      console.error(err);
+      onComplete(name.trim(), spouse.trim(), lang, email.trim(), zip.trim());
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -95,39 +152,73 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
               <p className="text-slate-400 text-xs md:text-sm font-medium">{t.identify}</p>
             </div>
 
-            <div className="space-y-5">
-              <div className="space-y-2">
-                <label className="block text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">{t.yourName}</label>
+            <div className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-1.5">
+                  <label className="block text-[9px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">{t.yourName}</label>
+                  <input 
+                    type="text" 
+                    value={name} 
+                    onChange={(e) => setName(e.target.value)} 
+                    className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-600 focus:ring-2 focus:ring-aqua-500 focus:border-aqua-500 outline-none transition-all text-sm" 
+                    placeholder={t.placeholderName} 
+                    autoFocus 
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <label className="block text-[9px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">{t.spouseName}</label>
+                  <input 
+                    type="text" 
+                    value={spouse} 
+                    onChange={(e) => setSpouse(e.target.value)} 
+                    className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-600 focus:ring-2 focus:ring-aqua-500 focus:border-aqua-500 outline-none transition-all text-sm" 
+                    placeholder={t.placeholderSpouse} 
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="block text-[9px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">{t.email} <span className="opacity-50">(OPCIONAL)</span></label>
                 <input 
-                  type="text" 
-                  value={name} 
-                  onChange={(e) => setName(e.target.value)} 
-                  className="w-full bg-black/40 border border-white/10 rounded-2xl px-5 py-3.5 text-white placeholder-slate-600 focus:ring-2 focus:ring-aqua-500 focus:border-aqua-500 outline-none transition-all shadow-inner" 
-                  placeholder={t.placeholderName} 
-                  autoFocus 
+                  type="email" 
+                  value={email} 
+                  onChange={(e) => setEmail(e.target.value)} 
+                  className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-600 focus:ring-2 focus:ring-aqua-500 focus:border-aqua-500 outline-none transition-all text-sm" 
+                  placeholder={t.placeholderEmail} 
                 />
               </div>
-              <div className="space-y-2">
-                <label className="block text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">{t.spouseName}</label>
+
+              <div className="space-y-1.5">
+                <label className="block text-[9px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">{t.zipCode}</label>
                 <input 
                   type="text" 
-                  value={spouse} 
-                  onChange={(e) => setSpouse(e.target.value)} 
-                  className="w-full bg-black/40 border border-white/10 rounded-2xl px-5 py-3.5 text-white placeholder-slate-600 focus:ring-2 focus:ring-aqua-500 focus:border-aqua-500 outline-none transition-all shadow-inner" 
-                  placeholder={t.placeholderSpouse} 
+                  maxLength={10}
+                  value={zip} 
+                  onChange={(e) => setZip(e.target.value)} 
+                  className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-600 focus:ring-2 focus:ring-aqua-500 focus:border-aqua-500 outline-none transition-all text-sm" 
+                  placeholder={t.placeholderZip} 
                 />
               </div>
+
               {error && (
-                <div className="text-red-400 text-xs text-center font-bold bg-red-400/10 py-3 rounded-xl border border-red-400/20 animate-in shake duration-500">
+                <div className="text-red-400 text-[10px] text-center font-bold bg-red-400/10 py-2 rounded-xl border border-red-400/20 animate-in shake duration-500">
                   {error}
                 </div>
               )}
+
               <button 
                 onClick={handleSubmit} 
-                className="w-full bg-gradient-to-r from-aqua-600 to-blue-700 hover:from-aqua-500 hover:to-blue-600 text-white font-black py-4.5 rounded-2xl shadow-[0_10px_30px_rgba(2,132,199,0.3)] flex items-center justify-center gap-3 group transition-all duration-300 hover:-translate-y-1 active:scale-95 shimmer"
+                disabled={isLoading}
+                className="w-full bg-gradient-to-r from-aqua-600 to-blue-700 hover:from-aqua-500 hover:to-blue-600 text-white font-black py-4 rounded-2xl shadow-[0_10px_30px_rgba(2,132,199,0.3)] flex items-center justify-center gap-3 group transition-all duration-300 hover:-translate-y-1 active:scale-95 disabled:opacity-70 disabled:pointer-events-none shimmer"
               >
-                <span className="uppercase tracking-[0.1em]">{t.accessButton}</span>
-                <ChevronRight size={20} className="group-hover:translate-x-1.5 transition-transform duration-300" />
+                {isLoading ? (
+                  <Loader2 className="animate-spin" size={20} />
+                ) : (
+                  <>
+                    <span className="uppercase tracking-[0.1em]">{t.accessButton}</span>
+                    <ChevronRight size={20} className="group-hover:translate-x-1.5 transition-transform duration-300" />
+                  </>
+                )}
               </button>
             </div>
 

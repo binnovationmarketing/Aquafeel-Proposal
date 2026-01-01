@@ -1,3 +1,4 @@
+
 export interface PaymentOption {
   id: string;
   label: string;
@@ -10,7 +11,9 @@ export interface PaymentOption {
 export interface ClientData {
   name: string;
   spouseName: string;
-  location: string;
+  email: string;
+  zipCode: string;
+  lang: 'pt' | 'en' | 'es';
 }
 
 export interface ExpenseData {
