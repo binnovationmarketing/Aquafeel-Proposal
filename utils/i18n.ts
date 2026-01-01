@@ -22,7 +22,7 @@ const ptTranslations = {
     backButton: "Voltar",
     secure: "Protocolo de Segurança Criptografado",
     error: "Nome e Zip Code são obrigatórios para prosseguir.",
-    errorEmail: "Por favor, insira um e-mail válido."
+    errorEmail: "E-mail válido é obrigatório para garantir o backup da proposta."
   },
   hero: {
     platinum: "Oferta VIP Exclusiva",
@@ -229,14 +229,14 @@ const ptTranslations = {
   urgency: {
     expires: "Oferta expira em:",
     expiredTitle: "OFERTA ENCERRADA",
-    commission: "Benefício exclusivo da Aquafeel Solutions PA.",
+    commission: "Benefício exclusivo para Familias atendidas pelos analistas da Aquafeel Solutions.",
     limit: "PRAZO FINAL:",
     footer: "Após o prazo, o benefício de 3 meses grátis será removido.",
     expiredText: "Falar com o consultor para verificar a disponibilidade de algum programa ainda com 3 meses livres de pagamento.",
     expiredButton: "FALAR COM CONSULTOR"
   },
   footer: {
-    rights: "© 2024 Aquafeel Solutions • Proposta Especial de Ativação",
+    rights: "© 2025 Aquafeel Solutions Tech • Criado por Carlos Henrique e GlobalBim • Proposta Especial de Ativação",
     button: "Falar com Consultor",
     soapDisclaimer: "(*) 25 anos de garantia de recebimento de sabão desde que cubra o custo de envio ou que recomende uma família para o programa de saúde para que possa ser trocado pelo benefício de receber mais 2 anos de sabão grátis."
   },
@@ -306,7 +306,7 @@ const enTranslations: TranslationStructure = {
     backButton: "Back",
     secure: "Encrypted Security Protocol",
     error: "Name and Zip Code are required to proceed.",
-    errorEmail: "Please enter a valid email."
+    errorEmail: "A valid email is required to secure the proposal backup."
   },
   hero: {
     platinum: "Exclusive VIP Offer",
@@ -422,7 +422,7 @@ const enTranslations: TranslationStructure = {
     ridiculousTitle: "Where do we spend this today?",
     ridiculousBody: "We spend on little things that don't bring health. Compare values:",
     expenses: {
-      gas: "Gasoline",
+      gas: "Gasolina",
       donuts: "Donuts/Sweets",
       coffee: "Coffee (Starbucks/Dunkin)",
       water: "Water on the go",
@@ -448,7 +448,7 @@ const enTranslations: TranslationStructure = {
     selectRegion: "Select Location:",
     selectCredit: "CREDIT PROFILE",
     creditRanges: {
-      excellent: "740+ Excellent",
+      excellent: "740+ Excelente",
       great: "700-739 Great",
       good: "660-699 Good",
       fair: "620-659 Fair",
@@ -513,14 +513,14 @@ const enTranslations: TranslationStructure = {
   urgency: {
     expires: "Offer expires in:",
     expiredTitle: "OFFER EXPIRED",
-    commission: "Exclusive benefit from Aquafeel Solutions PA.",
+    commission: "Exclusive benefit for families served by Aquafeel Solutions analysts.",
     limit: "DEADLINE:",
     footer: "After the timer hits zero, the 3 months free benefit will be removed.",
     expiredText: "Talk to our consultant to check availability for programs with 3 free months.",
     expiredButton: "TALK TO CONSULTANT"
   },
   footer: {
-    rights: "© 2024 Aquafeel Solutions • Special Activation Proposal",
+    rights: "© 2025 Aquafeel Solutions Tech • Created by Carlos Henrique & GlobalBim • Special Activation Proposal",
     button: "Talk to Consultant",
     soapDisclaimer: "(*) 25-year soap delivery guarantee provided you cover the shipping cost or refer a family to the health program so it can be exchanged for the benefit of receiving 2 more years of free soap."
   },
@@ -590,7 +590,7 @@ const esTranslations: TranslationStructure = {
     backButton: "Volver",
     secure: "Protocolo de Seguridad Cifrado",
     error: "Nombre y Código Postal son obligatorios.",
-    errorEmail: "Por favor, ingrese un e-mail válido."
+    errorEmail: "Se requiere un e-mail válido para garantizar el respaldo de la propuesta."
   },
   hero: {
     platinum: "Oferta VIP Exclusiva",
@@ -632,10 +632,10 @@ const esTranslations: TranslationStructure = {
     home: {
       title: "Salud del Hogar",
       m1: "Corrosión de Tuberías: Los metales pesados y el cloro oxidan el cobre y resecan el PVC, causando fugas invisibles.",
-      m2: "Muerte de Electrodomésticos: La cal (piedra) obstruye válvulas y quema resistencias de máquinas y calentadores, reduciendo la vida útil hasta un 50%.",
+      m2: "Muerte de Electrodomésticos: La cal (piedra) obstruye válvulas y quema resistencias de máquinas e calentadores, reduciendo a vida útil hasta un 50%.",
       m3: "Manchas Irreversíveis: Depósitos minerales permanentes que destruyen el brillo de vidros, porcelanatos, mármores y metales de lujo.",
       backTitle: "PRESERVE SU PATRIMONIO",
-      fearTrigger: "Mientras duerme, contaminantes corroen la plomería de su casa. Una fuga estructural puede costar 5 veces más que la prevención.",
+      fearTrigger: "Mientras duerme, contaminantes corroem la plomería de su casa. Una fuga estructural puede costar 5 veces más que la prevención.",
       impactLabel: "Degradación Estructural"
     },
     adults: {
@@ -715,7 +715,7 @@ const esTranslations: TranslationStructure = {
       vape: "Cigarros",
       lottery: "Lotería",
       streaming: "Apps",
-      parking: "Estacionamiento"
+      parking: "Estacionamento"
     }
   },
   calculator: {
@@ -797,14 +797,14 @@ const esTranslations: TranslationStructure = {
   urgency: {
     expires: "Expira en:",
     expiredTitle: "OFERTA EXPIRADA",
-    commission: "Beneficio exclusivo Aquafeel Solutions.",
+    commission: "Beneficio exclusivo para familias atendidas por analistas de Aquafeel Solutions.",
     limit: "PLAZO:",
     footer: "El beneficio será eliminado al terminar.",
     expiredText: "Hable con el consultor para verificar disponibilidad de programa con 3 meses gratis.",
     expiredButton: "HABLAR CON CONSULTOR"
   },
   footer: {
-    rights: "© 2024 Aquafeel Solutions",
+    rights: "© 2025 Aquafeel Solutions Tech • Creado por Carlos Henrique & GlobalBim • Propuesta Especial de Activación",
     button: "Hablar con Consultor",
     soapDisclaimer: "(*) Garantía de entrega de jabón por 25 años siempre que cubra el costo de envío o recomiende una familia al programa de salud para que pueda canjearse por el beneficio de recibir 2 años más de jabón gratis."
   },

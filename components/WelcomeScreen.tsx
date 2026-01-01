@@ -5,6 +5,9 @@ import AquaFeelLogo from './AquaFeelLogo';
 import { Language, translations } from '../utils/i18n';
 import { motion, AnimatePresence } from 'framer-motion';
 
+// Workaround for framer-motion type mismatch
+const MotionDiv = motion.div as any;
+
 interface WelcomeScreenProps {
   onComplete: (clientName: string, spouseName: string, lang: Language, email: string, zip: string) => void;
 }
@@ -22,35 +25,44 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
   const t = translations[lang].welcome;
 
   // --- GOOGLE DRIVE INTEGRATION ---
-  // Para funcionar, você precisa criar um Google Apps Script, publicar como Web App
-  // com permissão "Anyone" e colar a URL abaixo.
   const syncLeadToDrive = async (data: any) => {
     try {
-      // URL de Placeholder - Substitua pela URL real do seu Web App do Google Apps Script
-      // Exemplo: https://script.google.com/macros/s/AKfycbx.../exec
-      const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbz_placeholder/exec'; 
+      // COLOQUE O LINK GERADO NO PASSO 3 AQUI ABAIXO, DENTRO DAS ASPAS:
+      const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbxn0tChpNSHiduCB4rryU5aEQAGGls8fLGfjw4VrsF_Zxohc98jQ5G-AYgIVW11I9w/exec'; 
       
-      // Usamos no-cors para evitar bloqueios de navegador, já que é um "fire and forget"
+      const payload = {
+        timestamp: new Date().toISOString(),
+        name: data.name,
+        spouse: data.spouse,
+        email: data.email,
+        zip: data.zip,
+        language: data.lang,
+        source: 'VIP_WEBAPP'
+      };
+
       await fetch(WEBHOOK_URL, {
         method: 'POST',
-        mode: 'no-cors',
+        mode: 'no-cors', 
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...data, date: new Date().toISOString(), source: 'VIP_WEBAPP' })
+        body: JSON.stringify(payload)
       });
-      console.log("Lead synced to drive");
+      
+      console.log("Data packet sent to secure storage.");
     } catch (e) {
-      console.warn('Lead sync failed (offline mode)', e);
+      console.warn('Backup sync failed (offline mode)', e);
     }
   };
 
   const handleSubmit = async () => {
+    // Validação Obrigatória
     if (!name.trim() || !zip.trim()) {
       setError(t.error);
       return;
     }
 
-    if (email && !email.includes('@')) {
-       setError(t.errorEmail || "Invalid Email");
+    // E-mail agora é mandatório e deve ser válido
+    if (!email.trim() || !email.includes('@')) {
+       setError(t.errorEmail || "Valid Email is required.");
        return;
     }
 
@@ -60,11 +72,11 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
     const leadData = { name: name.trim(), spouse, lang, email, zip };
 
     try {
-      // 1. Tenta salvar no Drive (sem bloquear se falhar)
+      // 1. Envia para o Google Sheets (Fire and Forget)
       syncLeadToDrive(leadData);
       
-      // 2. Delay artificial para dar peso e "segurança" ao processo de login
-      await new Promise(r => setTimeout(r, 1200));
+      // 2. Delay artificial para UX de segurança e processamento
+      await new Promise(r => setTimeout(r, 1500));
       
       onComplete(name.trim(), spouse.trim(), lang, email.trim(), zip.trim());
     } finally {
@@ -76,13 +88,12 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
     <div className="fixed inset-0 z-[100] min-h-screen bg-[#020d1a] flex flex-col items-center justify-start p-4 overflow-y-auto overflow-x-hidden pt-6 pb-12 supports-[min-height:100dvh]:min-h-[100dvh]">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(14,165,233,0.1),transparent_70%)] pointer-events-none fixed"></div>
 
-      {/* Header com Logo Fixa */}
       <div className="mb-6 md:mb-10 shrink-0 z-20 w-full flex justify-center">
         <AquaFeelLogo width="220px" variant="white" className="drop-shadow-[0_0_20px_rgba(0,174,239,0.3)]" />
       </div>
 
       <AnimatePresence mode="wait">
-        <motion.div 
+        <MotionDiv 
           key={step}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -151,7 +162,7 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
               </div>
             </div>
           )}
-        </motion.div>
+        </MotionDiv>
       </AnimatePresence>
     </div>
   );

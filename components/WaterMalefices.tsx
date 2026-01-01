@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { 
   Home, 
@@ -14,6 +15,9 @@ import {
 import { Language, translations } from '../utils/i18n';
 import { motion } from 'framer-motion';
 
+// Workaround for framer-motion type mismatch
+const MotionDiv = motion.div as any;
+
 interface WaterMaleficesProps {
   lang: Language;
 }
@@ -24,83 +28,80 @@ const CategoryCard: React.FC<{ cat: any; lang: Language }> = ({ cat, lang }) => 
 
   return (
     <div 
-      className="perspective-1000 h-[500px] md:h-[620px] w-full cursor-pointer group"
+      className="perspective-1000 h-[420px] w-full cursor-pointer group"
       onClick={() => setIsFlipped(!isFlipped)}
     >
-      <motion.div
-        className="relative w-full h-full transition-all duration-700 preserve-3d shadow-2xl rounded-[2rem] md:rounded-[3rem]"
+      <MotionDiv
+        className="relative w-full h-full transition-all duration-700 preserve-3d shadow-xl rounded-[1.5rem]"
         animate={{ rotateY: isFlipped ? 180 : 0 }}
         transition={{ type: "spring", stiffness: 260, damping: 20 }}
       >
         {/* Front Side */}
-        <div className={`absolute inset-0 backface-hidden ${cat.bgColor} ${cat.borderColor} border-2 rounded-[2rem] md:rounded-[3rem] p-8 md:p-10 flex flex-col z-20`}>
-          <div className="flex items-center gap-4 mb-8">
-            <div className="bg-white p-3 md:p-4 rounded-2xl shadow-sm shrink-0">
+        <div className={`absolute inset-0 backface-hidden ${cat.bgColor} ${cat.borderColor} border rounded-[1.5rem] p-6 flex flex-col z-20 hover:shadow-2xl transition-shadow`}>
+          <div className="flex items-center gap-3 mb-4">
+            <div className="bg-white p-2.5 rounded-xl shadow-sm shrink-0">
               {cat.icon}
             </div>
-            <h3 className="text-xl md:text-3xl font-black text-slate-800 leading-tight uppercase tracking-tighter">{cat.title}</h3>
+            <h3 className="text-lg font-black text-slate-800 leading-none uppercase tracking-tight">{cat.title}</h3>
           </div>
           
-          <ul className="space-y-4 md:space-y-6 flex-1">
+          <ul className="space-y-3 flex-1 overflow-y-auto custom-scrollbar pr-1">
             {cat.items.map((item: string, i: number) => (
-              <li key={i} className="flex gap-4 text-slate-700">
-                <div className="mt-1 shrink-0">
-                  <HeartCrack size={18} className="text-red-500" />
+              <li key={i} className="flex gap-3 text-slate-700">
+                <div className="mt-0.5 shrink-0">
+                  <HeartCrack size={14} className="text-red-500" />
                 </div>
-                <span className="text-sm md:text-base font-semibold leading-relaxed">{item}</span>
+                <span className="text-xs font-semibold leading-snug">{item}</span>
               </li>
             ))}
           </ul>
 
-          <div className="mt-6 flex items-center justify-center gap-2 text-[10px] md:text-xs font-black text-slate-400 uppercase tracking-widest animate-pulse border-t border-slate-200 pt-6">
-            <RotateCcw size={14} />
+          <div className="mt-4 flex items-center justify-center gap-2 text-[9px] font-black text-slate-400 uppercase tracking-widest animate-pulse border-t border-slate-200 pt-4">
+            <RotateCcw size={12} />
             {tAction}
           </div>
         </div>
 
         {/* Back Side (Realidade Oculta) */}
         <div 
-          className="absolute inset-0 backface-hidden rounded-[2rem] md:rounded-[3rem] overflow-hidden bg-slate-950 flex flex-col z-10"
+          className="absolute inset-0 backface-hidden rounded-[1.5rem] overflow-hidden bg-slate-950 flex flex-col z-10"
           style={{ transform: 'rotateY(180deg)' }}
         >
           {/* HD Image Section */}
-          <div className="h-2/5 md:h-1/2 relative overflow-hidden">
+          <div className="h-1/2 relative overflow-hidden">
             <img 
               src={cat.imageUrl} 
               alt={cat.title} 
-              className="w-full h-full object-cover transition-all duration-700"
+              className="w-full h-full object-cover"
               onError={(e) => {
                 const target = e.target as HTMLImageElement;
                 target.src = 'https://images.unsplash.com/photo-1518152006812-edab29b069ac?auto=format&fit=crop&q=80&w=1200';
               }}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent"></div>
-            <div className="absolute top-4 right-4 bg-red-600/90 text-white p-2 rounded-full shadow-lg">
-               <Maximize2 size={16} />
-            </div>
-            <div className="absolute bottom-4 left-6 flex items-center gap-2">
-                <div className="bg-red-600 p-1.5 rounded-lg">
-                    <AlertTriangle size={14} className="text-white" />
+            <div className="absolute bottom-3 left-4 flex items-center gap-2">
+                <div className="bg-red-600 p-1 rounded">
+                    <AlertTriangle size={10} className="text-white" />
                 </div>
-                <span className="text-white font-black uppercase text-[10px] tracking-widest">{cat.impactLabel}</span>
+                <span className="text-white font-black uppercase text-[8px] tracking-widest">{cat.impactLabel}</span>
             </div>
           </div>
 
           {/* Fear Trigger Section */}
-          <div className="flex-1 p-6 md:p-10 flex flex-col justify-center bg-slate-950">
-             <h4 className="text-red-500 text-xs md:text-lg font-black uppercase tracking-[0.2em] mb-3 md:mb-4 border-b border-red-500/20 pb-2">
+          <div className="flex-1 p-5 flex flex-col justify-center bg-slate-950">
+             <h4 className="text-red-500 text-[10px] font-black uppercase tracking-[0.2em] mb-2 border-b border-red-500/20 pb-1">
                {cat.backTitle}
              </h4>
-             <p className="text-slate-100 text-sm md:text-xl font-bold leading-relaxed italic border-l-4 border-red-600 pl-4 py-2 bg-white/5 rounded-r-xl">
+             <p className="text-slate-200 text-xs font-medium leading-relaxed italic border-l-2 border-red-600 pl-3">
                "{cat.fearTrigger}"
              </p>
              
-             <button className="mt-6 md:mt-8 bg-white/10 hover:bg-white/20 text-white px-5 py-2.5 rounded-xl font-black uppercase text-[9px] md:text-[10px] tracking-widest mx-auto transition-all border border-white/10">
-               Toque para Voltar
+             <button className="mt-auto bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-lg font-black uppercase text-[8px] tracking-widest mx-auto transition-all border border-white/10 w-full">
+               Voltar
              </button>
           </div>
         </div>
-      </motion.div>
+      </MotionDiv>
     </div>
   );
 };
@@ -110,7 +111,7 @@ export const WaterMalefices: React.FC<WaterMaleficesProps> = ({ lang }) => {
 
   const categories = [
     {
-      icon: <Home size={32} className="text-amber-500" />,
+      icon: <Home size={20} className="text-amber-500" />,
       title: t.home.title,
       items: [t.home.m1, t.home.m2, t.home.m3],
       bgColor: 'bg-amber-50',
@@ -121,7 +122,7 @@ export const WaterMalefices: React.FC<WaterMaleficesProps> = ({ lang }) => {
       impactLabel: t.home.impactLabel
     },
     {
-      icon: <User size={32} className="text-blue-500" />,
+      icon: <User size={20} className="text-blue-500" />,
       title: t.adults.title,
       items: [t.adults.m1, t.adults.m2, t.adults.m3],
       bgColor: 'bg-blue-50',
@@ -132,7 +133,7 @@ export const WaterMalefices: React.FC<WaterMaleficesProps> = ({ lang }) => {
       impactLabel: t.adults.impactLabel
     },
     {
-      icon: <Baby size={32} className="text-pink-500" />,
+      icon: <Baby size={20} className="text-pink-500" />,
       title: t.children.title,
       items: [t.children.m1, t.children.m2, t.children.m3],
       bgColor: 'bg-pink-50',
@@ -143,7 +144,7 @@ export const WaterMalefices: React.FC<WaterMaleficesProps> = ({ lang }) => {
       impactLabel: t.children.impactLabel
     },
     {
-      icon: <Dog size={32} className="text-emerald-500" />,
+      icon: <Dog size={20} className="text-emerald-500" />,
       title: t.pets.title,
       items: [t.pets.m1, t.pets.m2, t.pets.m3],
       bgColor: 'bg-emerald-50',
@@ -156,55 +157,32 @@ export const WaterMalefices: React.FC<WaterMaleficesProps> = ({ lang }) => {
   ];
 
   return (
-    <section className="py-16 md:py-32 bg-slate-50 px-4 overflow-hidden relative">
-      <div className="absolute top-0 right-0 p-20 opacity-[0.03] pointer-events-none hidden lg:block">
-        <ShieldAlert size={500} />
-      </div>
-
-      <div className="max-w-6xl mx-auto relative z-10">
-        <div className="text-center mb-16 md:mb-24">
-          <div className="inline-flex items-center gap-2 bg-red-100 text-red-600 px-6 py-2 rounded-full text-[10px] md:text-xs font-black uppercase tracking-widest mb-6 border border-red-200 shadow-sm">
-            <AlertTriangle size={14} />
-            <span>Alerta de Saúde Preventiva</span>
+    <section id="malefices" className="py-20 bg-slate-50 px-4 overflow-hidden relative">
+      <div className="max-w-[1400px] mx-auto relative z-10">
+        <div className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 bg-red-100 text-red-600 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest mb-4 border border-red-200">
+            <AlertTriangle size={12} />
+            <span>Alerta de Saúde</span>
           </div>
-          <h2 className="text-3xl md:text-7xl font-serif font-black text-slate-900 mb-6 md:mb-8 px-2 tracking-tighter leading-tight">
+          <h2 className="text-3xl md:text-5xl font-serif font-black text-slate-900 mb-4 tracking-tight">
             {t.title}
           </h2>
-          <p className="text-slate-500 max-w-3xl mx-auto text-base md:text-2xl px-4 leading-relaxed font-medium">
-            {t.subtitle}
-          </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-12">
+        {/* GRID 4 COLUNAS EM TELAS GRANDES */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
           {categories.map((cat, idx) => (
             <CategoryCard key={idx} cat={cat} lang={lang} />
           ))}
         </div>
-
-        <div className="mt-16 md:mt-32 bg-slate-900 rounded-[2rem] md:rounded-[3rem] p-10 md:p-20 text-center text-white relative overflow-hidden group shadow-2xl border border-white/5">
-          <div className="absolute inset-0 bg-gradient-to-r from-red-600/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000"></div>
-          <div className="relative z-10">
-            <div className="bg-aqua-500/20 w-16 h-16 md:w-24 md:h-24 rounded-full flex items-center justify-center mx-auto mb-8 md:mb-10 animate-float shadow-[0_0_50px_rgba(14,165,233,0.3)]">
-                <Droplets className="text-aqua-400 w-8 h-8 md:w-12 md:h-12" />
-            </div>
-            <p className="text-xl md:text-4xl font-serif font-bold max-w-5xl mx-auto italic leading-relaxed px-4 text-slate-100 drop-shadow-lg">
-              "{t.quote}"
-            </p>
-            <div className="mt-8 md:mt-12 h-1 w-24 md:w-32 bg-gradient-to-r from-red-600 to-amber-500 mx-auto rounded-full shadow-lg"></div>
-          </div>
-        </div>
       </div>
-
       <style>{`
-        .perspective-1000 {
-          perspective: 1000px;
-        }
-        .preserve-3d {
-          transform-style: preserve-3d;
-        }
-        .backface-hidden {
-          backface-visibility: hidden;
-        }
+        .perspective-1000 { perspective: 1000px; }
+        .preserve-3d { transform-style: preserve-3d; }
+        .backface-hidden { backface-visibility: hidden; }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { bg: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.1); border-radius: 4px; }
       `}</style>
     </section>
   );

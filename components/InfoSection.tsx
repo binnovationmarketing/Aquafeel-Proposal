@@ -1,13 +1,20 @@
+
 import React from 'react';
 import { ExternalLink, Microscope, AlertOctagon, MapPin } from 'lucide-react';
 import { Language, translations } from '../utils/i18n';
 
 interface InfoSectionProps {
   lang: Language;
+  zipCode?: string;
 }
 
-export const InfoSection: React.FC<InfoSectionProps> = ({ lang }) => {
+export const InfoSection: React.FC<InfoSectionProps> = ({ lang, zipCode }) => {
   const t = translations[lang].info;
+  
+  // Se houver zipCode, usa o link direto. Se não, usa o link de busca genérico.
+  const ewgLink = zipCode 
+    ? `https://www.ewg.org/tapwater/search-results.php?zip5=${zipCode}`
+    : "https://www.ewg.org/tapwater/";
 
   return (
     <section className="py-20 bg-white px-4">
@@ -29,14 +36,14 @@ export const InfoSection: React.FC<InfoSectionProps> = ({ lang }) => {
                 <div className="bg-red-100 p-3 rounded-full text-red-600 group-hover:bg-red-600 group-hover:text-white transition-colors duration-300">
                     <MapPin size={24} />
                 </div>
-                <h3 className="font-bold text-xl text-slate-800">{t.alertTitle}</h3>
+                <h3 className="font-bold text-xl text-slate-800">{t.alertTitle} {zipCode && <span className="text-red-500">({zipCode})</span>}</h3>
              </div>
              <p className="text-slate-600 mb-4 text-sm leading-relaxed">
                 {t.alertBody}
              </p>
              <div className="space-y-3">
-                <a href="https://www.ewg.org/tapwater/" target="_blank" rel="noopener noreferrer" className="flex items-center justify-between p-3 bg-white rounded-lg shadow-sm hover:shadow-md transition-all group/link border border-slate-100">
-                    <span className="text-sm font-semibold text-slate-700">EWG Database</span>
+                <a href={ewgLink} target="_blank" rel="noopener noreferrer" className="flex items-center justify-between p-3 bg-white rounded-lg shadow-sm hover:shadow-md transition-all group/link border border-slate-100 cursor-pointer">
+                    <span className="text-sm font-bold text-slate-700">VER RELATÓRIO DO MEU ZIP CODE</span>
                     <ExternalLink size={16} className="text-aqua-500 group-hover/link:translate-x-1 transition-transform" />
                 </a>
              </div>

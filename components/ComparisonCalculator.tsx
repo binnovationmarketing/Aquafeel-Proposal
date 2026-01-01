@@ -171,9 +171,13 @@ export const ComparisonCalculator: React.FC<ComparisonCalculatorProps> = ({
       </div>
 
       <UrgencyChart 
-        waterMonthly={waterTotal} soapMonthly={cleaningTotal} 
+        waterMonthly={waterTotal} 
+        soapMonthly={cleaningTotal} 
         fixedMonthly={currentPlan.id === 'cash' ? (cashPrice / 12) : currentPlan.amount} 
-        cashPrice={cashPrice} lang={lang} financingMonths={currentPlan.months || 0}
+        cashPrice={cashPrice} 
+        lang={lang} 
+        financingMonths={currentPlan.months}
+        creditScoreLabel={creditOptions.find(o => o.id === selectedCredit)?.score || "GOOD"}
       />
     </div>
   );

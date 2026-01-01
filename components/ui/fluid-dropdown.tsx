@@ -1,8 +1,13 @@
+
 "use client"
 
 import * as React from "react"
 import { motion, AnimatePresence, MotionConfig } from "framer-motion"
 import { ChevronDown } from "lucide-react"
+
+// Workaround for framer-motion type mismatch
+const MotionDiv = motion.div as any;
+const MotionButton = motion.button as any;
 
 function cn(...classes: (string | boolean | undefined)[]) {
   return classes.filter(Boolean).join(" ")
@@ -85,22 +90,22 @@ export function FluidDropdown({ options, selectedId, onSelect, className, label 
             {selectedOption.icon && <selectedOption.icon size={16} className="text-aqua-400" />}
             {selectedOption.label}
           </span>
-          <motion.div animate={{ rotate: isOpen ? 180 : 0 }} transition={{ duration: 0.2 }}>
+          <MotionDiv animate={{ rotate: isOpen ? 180 : 0 }} transition={{ duration: 0.2 }}>
             <ChevronDown size={16} />
-          </motion.div>
+          </MotionDiv>
         </button>
 
         <AnimatePresence>
           {isOpen && (
-            <motion.div
+            <MotionDiv
               initial={{ opacity: 0, scale: 0.95, y: -10 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: -10 }}
               className="absolute left-0 right-0 top-full mt-2 z-[100] bg-slate-900 border border-white/10 rounded-xl shadow-2xl p-1 overflow-hidden"
             >
-              <motion.div variants={containerVariants} initial="hidden" animate="visible" className="relative">
+              <MotionDiv variants={containerVariants} initial="hidden" animate="visible" className="relative">
                 {options.map((option) => (
-                  <motion.button
+                  <MotionButton
                     key={option.id}
                     variants={itemVariants}
                     onClick={() => {
@@ -115,7 +120,7 @@ export function FluidDropdown({ options, selectedId, onSelect, className, label 
                     )}
                   >
                     {selectedId === option.id && (
-                      <motion.div
+                      <MotionDiv
                         layoutId="active-bg"
                         className="absolute inset-0 bg-white/5 rounded-lg -z-10"
                         transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
@@ -123,10 +128,10 @@ export function FluidDropdown({ options, selectedId, onSelect, className, label 
                     )}
                     {option.icon && <option.icon size={16} className={selectedId === option.id ? "text-aqua-400" : "text-slate-500"} />}
                     {option.label}
-                  </motion.button>
+                  </MotionButton>
                 ))}
-              </motion.div>
-            </motion.div>
+              </MotionDiv>
+            </MotionDiv>
           )}
         </AnimatePresence>
       </div>
