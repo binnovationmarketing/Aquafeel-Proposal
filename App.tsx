@@ -29,6 +29,7 @@ function App() {
   const [timeLeft, setTimeLeft] = useState({ hours: 0, minutes: 0, seconds: 0 });
   const [currentSection, setCurrentSection] = useState('hero');
   const [isManagerMode, setIsManagerMode] = useState(false);
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   
   const EXPIRATION_HOURS = 48;
 
@@ -103,7 +104,6 @@ function App() {
     return () => clearInterval(interval);
   }, [expirationDate]);
 
-  // Scroll Listener para atualizar o menu lateral
   useEffect(() => {
     const handleScroll = () => {
       const sections = ['hero', 'malefices', 'logic', 'soap', 'proposal', 'testimonials', 'faq'];
@@ -149,23 +149,25 @@ function App() {
   const t = translations[lang || 'pt'];
   const displayName = spouseName ? `${name} & ${spouseName}` : name;
 
+  // Ajuste de margem principal baseado no estado da sidebar
+  const mainMargin = isSidebarCollapsed ? 'lg:ml-20' : 'lg:ml-[260px]';
+
   return (
     <div className="min-h-screen bg-slate-50 font-sans selection:bg-aqua-200 selection:text-aqua-900 pb-0 flex">
       
-      {/* NOVO: Sidebar Navigation */}
       <Sidebar 
         lang={lang} 
         clientName={name} 
         onNavigate={handleNavigate} 
         currentSection={currentSection}
+        isCollapsed={isSidebarCollapsed}
+        setIsCollapsed={setIsSidebarCollapsed}
         onOpenManager={() => setIsManagerMode(true)}
         onLogout={() => { setClientData(null); localStorage.removeItem('proposalClientData'); }}
       />
 
-      {/* Main Content Area - Pushed by Sidebar on Desktop */}
-      <main className="flex-1 md:ml-[260px] relative w-full">
+      <main className={`flex-1 transition-all duration-300 w-full ${mainMargin}`}>
         
-        {/* IDs adicionados para navegação */}
         <div id="hero"><HeroSection clientName={name} spouseName={spouseName} lang={lang} /></div>
         <InfoSection lang={lang} zipCode={zipCode} />
         <ContaminantTruths lang={lang} />
@@ -173,7 +175,6 @@ function App() {
         <div id="logic"><WaterConsumptionLogic lang={lang} onWaterTotalChange={setWaterTotal} /></div>
         <div id="soap"><SoapLifestyle onTotalChange={setCleaningTotal} lang={lang} /></div>
 
-        {/* Seção de Oferta VIP */}
         <div id="proposal" className="max-w-5xl mx-auto px-4 py-12 md:py-16">
            <div className="bg-gradient-to-br from-white to-slate-50 rounded-2xl p-6 md:p-12 shadow-xl border border-white text-center relative overflow-hidden">
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-aqua-500 to-transparent opacity-50"></div>
@@ -190,7 +191,7 @@ function App() {
         
         <div className="relative z-20 py-10 md:py-12 bg-slate-50 border-t border-slate-200">
           <div className="text-center mb-8 md:mb-10 px-4">
-               <h2 className="text-2xl md:text-4xl font-serif font-bold text-slate-900 leading-tight">{lang === 'pt' ? 'Sua Proposta Exclusiva' : 'Your Exclusive Proposal'}</h2>
+               <h2 className="text-2xl md:text-4xl font-serif font-bold text-slate-900 leading-tight">{lang === 'pt' ? 'Sua Proposta Exclusiva' : lang === 'en' ? 'Your Exclusive Proposal' : 'Su Propuesta Exclusiva'}</h2>
                <p className="text-sm md:text-base text-slate-500 mt-2 px-4">{t.calculator.proposalSub}</p>
           </div>
           <ComparisonCalculator 
@@ -251,7 +252,7 @@ function App() {
             <div className="flex flex-col gap-2 items-center">
                <div className="flex items-center gap-2 text-[10px] font-black text-slate-500 uppercase tracking-[0.3em]">
                  <Lock size={12} className="text-emerald-500" />
-                 {lang === 'pt' ? 'Conexão Segura 256-bit' : 'Secure 256-bit Connection'}
+                 {lang === 'pt' ? 'Conexão Segura 256-bit' : lang === 'en' ? 'Secure 256-bit Connection' : 'Conexión Segura 256-bit'}
                </div>
                <a href="mailto:binnovationmarketing@gmail.com" className="text-[10px] text-slate-600 hover:text-aqua-400 transition-colors uppercase tracking-widest font-bold">
                  binnovationmarketing@gmail.com

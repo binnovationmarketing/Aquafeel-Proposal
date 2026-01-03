@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { 
   Droplets, 
@@ -12,9 +13,9 @@ import {
   Coffee,
   Fuel,
   IceCream,
-  Gamepad,
   Ticket,
-  Tv
+  Tv,
+  Scale
 } from 'lucide-react';
 import { Language, translations } from '../utils/i18n';
 import { FluidDropdown } from './ui/fluid-dropdown';
@@ -25,26 +26,43 @@ interface WaterConsumptionLogicProps {
 }
 
 export const WaterConsumptionLogic: React.FC<WaterConsumptionLogicProps> = ({ lang, onWaterTotalChange }) => {
-  const [buyType, setBuyType] = useState<'gallon' | 'pack'>('pack');
-  const [packPrice, setPackPrice] = useState<number>(6);
-  const [packQty, setPackQty] = useState<number>(2);
-  const [gallonPrice, setGallonPrice] = useState<number>(2.5);
-  const [gallonQty, setGallonQty] = useState<number>(2);
-  const [includeCooking, setIncludeCooking] = useState<boolean>(true);
-  const [cookingManualValue, setCookingManualValue] = useState<number>(30);
+  // Lógica de BEBER
+  const [drinkPackPrice, setDrinkPackPrice] = useState<number>(6);
+  const [drinkPackQty, setDrinkPackQty] = useState<number>(0);
+  const [drinkGallonPrice, setDrinkGallonPrice] = useState<number>(3);
+  const [drinkGallonQty, setDrinkGallonQty] = useState<number>(0);
+
+  // Lógica de COZINHAR / LAVAR
+  const [cookPackPrice, setCookPackPrice] = useState<number>(6);
+  const [cookPackQty, setCookPackQty] = useState<number>(0);
+  const [cookGallonPrice, setCookGallonPrice] = useState<number>(3);
+  const [cookGallonQty, setCookGallonQty] = useState<number>(0);
   
   const t = translations[lang].logic;
 
-  const buyTypeOptions = [
-    { id: 'pack', label: t.buyPack, icon: Package },
-    { id: 'gallon', label: t.buyGallon, icon: Droplets }
-  ];
+  // Garantir exclusividade: Se mexer no Pack, zera Gallon e vice-versa (BEBER)
+  const handleDrinkPackChange = (qty: number) => {
+    setDrinkPackQty(qty);
+    if (qty > 0) setDrinkGallonQty(0);
+  };
+  const handleDrinkGallonChange = (qty: number) => {
+    setDrinkGallonQty(qty);
+    if (qty > 0) setDrinkPackQty(0);
+  };
 
-  const drinkingMonthly = buyType === 'pack' 
-    ? (packPrice * packQty * 4) 
-    : (gallonPrice * gallonQty * 30);
+  // Garantir exclusividade (COZINHAR)
+  const handleCookPackChange = (qty: number) => {
+    setCookPackQty(qty);
+    if (qty > 0) setCookGallonQty(0);
+  };
+  const handleCookGallonChange = (qty: number) => {
+    setCookGallonQty(qty);
+    if (qty > 0) setCookPackQty(0);
+  };
 
-  const finalWaterMonthly = includeCooking ? drinkingMonthly * 2 : drinkingMonthly + cookingManualValue;
+  const drinkingMonthly = (drinkPackPrice * drinkPackQty * 4) + (drinkGallonPrice * drinkGallonQty * 30);
+  const cookingMonthly = (cookPackPrice * cookPackQty * 4) + (cookGallonPrice * cookGallonQty * 30);
+  const finalWaterMonthly = drinkingMonthly + cookingMonthly;
 
   useEffect(() => {
     onWaterTotalChange(finalWaterMonthly);
@@ -52,17 +70,8 @@ export const WaterConsumptionLogic: React.FC<WaterConsumptionLogicProps> = ({ la
 
   const dailyCost = finalWaterMonthly / 30;
 
-  const popularExpenses = [
-    { name: t.expenses.gas, daily: 10, icon: <Fuel size={14}/> },
-    { name: t.expenses.coffee, daily: 5, icon: <Coffee size={14}/> },
-    { name: t.expenses.breakfast, daily: 12, icon: <Utensils size={14}/> },
-    { name: t.expenses.donuts, daily: 6, icon: <IceCream size={14}/> },
-    { name: t.expenses.streaming, daily: 1.5, icon: <Tv size={14}/> },
-    { name: t.expenses.lottery, daily: 5, icon: <Ticket size={14}/> },
-  ];
-
   return (
-    <section className="py-16 md:py-24 bg-white px-4 overflow-hidden">
+    <section id="logic" className="py-16 md:py-24 bg-white px-4 overflow-hidden">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12 md:mb-20">
           <div className="inline-flex items-center gap-2 bg-blue-100 text-blue-700 px-4 py-1.5 rounded-full text-[10px] md:text-xs font-black uppercase tracking-widest mb-4 border border-blue-200">
@@ -75,107 +84,168 @@ export const WaterConsumptionLogic: React.FC<WaterConsumptionLogicProps> = ({ la
           <p className="text-sm md:text-xl text-slate-500 max-w-3xl mx-auto italic font-medium leading-relaxed">"{t.intro}"</p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-8 md:gap-12 items-start">
-          {/* CALCULADORA DE ÁGUA */}
-          <div className="bg-slate-50 rounded-[2.5rem] p-6 md:p-12 border border-slate-200 shadow-inner">
-            <div className="space-y-8">
-              <FluidDropdown label={t.howYouBuy} options={buyTypeOptions} selectedId={buyType} onSelect={(id) => setBuyType(id as 'pack' | 'gallon')} />
-              
-              <div className="space-y-4">
-                <div className="flex justify-between items-end">
-                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">{t.priceLabel}</label>
-                  <span className="font-black text-blue-600 text-lg">${buyType === 'pack' ? packPrice.toFixed(2) : gallonPrice.toFixed(2)}</span>
+        <div className="grid lg:grid-cols-2 gap-8 md:gap-12 items-stretch">
+          
+          {/* CALCULADORA DE ÁGUA - BEBER */}
+          <div className="bg-slate-50 rounded-[2.5rem] p-6 md:p-10 border border-slate-200 shadow-sm flex flex-col">
+            <div className="flex items-center gap-3 mb-8">
+               <div className="bg-blue-600 p-3 rounded-2xl text-white shadow-lg"><Droplets size={22} /></div>
+               <h3 className="font-black text-xl text-slate-900 uppercase tracking-tighter">{t.drinking}</h3>
+            </div>
+
+            <div className="space-y-10 flex-1">
+              {/* Opção Pack */}
+              <div className="space-y-4 p-4 bg-white rounded-2xl border border-slate-100">
+                <div className="flex justify-between items-center mb-2">
+                   <div className="flex items-center gap-2 text-[10px] font-black uppercase text-slate-600 tracking-widest">
+                     <Package size={14} className="text-blue-500" /> {t.buyPack}
+                   </div>
+                   <span className="text-xs font-bold text-slate-400">($2 - $10)</span>
                 </div>
-                <input type="range" min="0" max="10" step="0.25" value={buyType === 'pack' ? packPrice : gallonPrice} onChange={(e) => buyType === 'pack' ? setPackPrice(Number(e.target.value)) : setGallonPrice(Number(e.target.value))} className="w-full h-2 bg-blue-200/50 rounded-lg appearance-none cursor-pointer accent-blue-600" />
+                <div className="flex justify-between items-end mb-2">
+                  <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest">{t.priceLabel}</label>
+                  <span className="font-black text-blue-600 text-lg">${drinkPackPrice}</span>
+                </div>
+                <input type="range" min="2" max="10" step="1" value={drinkPackPrice} onChange={(e) => setDrinkPackPrice(Number(e.target.value))} className="w-full h-2 bg-blue-50 rounded-lg appearance-none cursor-pointer accent-blue-600" />
+                
+                <div className="flex justify-between items-end mt-4">
+                  <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest">{t.qtyWeekly}</label>
+                  <span className="font-black text-blue-600 text-lg">{drinkPackQty}</span>
+                </div>
+                <input type="range" min="0" max="10" step="1" value={drinkPackQty} onChange={(e) => handleDrinkPackChange(Number(e.target.value))} className="w-full h-2 bg-blue-100 rounded-lg appearance-none cursor-pointer accent-blue-600" />
               </div>
 
-              <div className="space-y-4">
-                <div className="flex justify-between items-end">
-                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">{buyType === 'pack' ? t.qtyWeekly : t.qtyDaily}</label>
-                  <span className="font-black text-blue-600 text-lg">{buyType === 'pack' ? packQty : gallonQty} un</span>
+              {/* Opção Galão */}
+              <div className="space-y-4 p-4 bg-white rounded-2xl border border-slate-100">
+                <div className="flex justify-between items-center mb-2">
+                   <div className="flex items-center gap-2 text-[10px] font-black uppercase text-slate-600 tracking-widest">
+                     <Droplets size={14} className="text-blue-500" /> {t.buyGallon}
+                   </div>
+                   <span className="text-xs font-bold text-slate-400">($1 - $5)</span>
                 </div>
-                <input type="range" min="0" max="10" step="1" value={buyType === 'pack' ? packQty : gallonQty} onChange={(e) => buyType === 'pack' ? setPackQty(Number(e.target.value)) : setGallonQty(Number(e.target.value))} className="w-full h-2 bg-blue-200/50 rounded-lg appearance-none cursor-pointer accent-blue-600" />
-              </div>
-
-              <div className="pt-2">
-                <button onClick={() => setIncludeCooking(!includeCooking)} className={`w-full flex items-center justify-between p-5 rounded-2xl border-2 transition-all ${includeCooking ? 'bg-white border-blue-500 shadow-xl' : 'bg-transparent border-slate-200 opacity-60'}`}>
-                  <div className="flex items-center gap-4">
-                    <div className={`p-3 rounded-xl ${includeCooking ? 'bg-blue-600 text-white shadow-lg' : 'bg-slate-200 text-slate-400'}`}><Utensils size={20} /></div>
-                    <div className="text-left">
-                      <p className={`text-sm font-black ${includeCooking ? 'text-slate-900' : 'text-slate-500'}`}>{t.includeCooking}</p>
-                      <p className="text-[9px] text-slate-400 uppercase tracking-widest font-bold">{t.cooking}</p>
-                    </div>
-                  </div>
-                  <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all ${includeCooking ? 'bg-blue-600 border-blue-600' : 'border-slate-300'}`}>{includeCooking && <ShieldCheck size={14} className="text-white" />}</div>
-                </button>
-              </div>
-
-              <div className="pt-4">
-                <div className="bg-slate-900 p-8 md:p-10 rounded-[2rem] shadow-2xl relative overflow-hidden text-center group">
-                  <div className="absolute inset-0 bg-gradient-to-br from-blue-600/10 to-transparent opacity-50"></div>
-                  <span className="text-blue-400 font-black text-[10px] uppercase tracking-[0.3em] mb-2 block">{t.totalMonthly}</span>
-                  <div className="text-5xl md:text-6xl font-black text-white tracking-tighter transition-transform group-hover:scale-110 duration-500">${finalWaterMonthly.toFixed(2)}</div>
+                <div className="flex justify-between items-end mb-2">
+                  <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest">{t.priceLabel}</label>
+                  <span className="font-black text-blue-600 text-lg">${drinkGallonPrice}</span>
                 </div>
+                <input type="range" min="1" max="5" step="1" value={drinkGallonPrice} onChange={(e) => setDrinkGallonPrice(Number(e.target.value))} className="w-full h-2 bg-blue-50 rounded-lg appearance-none cursor-pointer accent-blue-600" />
+                
+                <div className="flex justify-between items-end mt-4">
+                  <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest">{t.qtyDaily}</label>
+                  <span className="font-black text-blue-600 text-lg">{drinkGallonQty}</span>
+                </div>
+                <input type="range" min="0" max="10" step="1" value={drinkGallonQty} onChange={(e) => handleDrinkGallonChange(Number(e.target.value))} className="w-full h-2 bg-blue-100 rounded-lg appearance-none cursor-pointer accent-blue-600" />
               </div>
+            </div>
+
+            <div className="mt-8 pt-6 border-t border-slate-200">
+               <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 text-center">
+                  <span className="text-[9px] text-slate-400 font-black uppercase tracking-widest block mb-1">Subtotal Bebida</span>
+                  <div className="text-3xl font-black text-slate-900 tracking-tighter">${drinkingMonthly.toFixed(2)}</div>
+               </div>
             </div>
           </div>
 
-          {/* ONDE GASTAMOS HOJE (REVISADO) */}
-          <div className="bg-white border border-slate-100 p-6 md:p-12 rounded-[2.5rem] shadow-2xl h-full flex flex-col justify-between">
-            <div className="mb-10 text-center md:text-left">
-              <h3 className="text-2xl md:text-3xl font-black text-slate-900 flex items-center gap-3 justify-center md:justify-start tracking-tighter">
-                <TrendingDown className="text-red-600 shrink-0" size={28} />
-                {t.ridiculousTitle}
-              </h3>
-              <p className="text-slate-500 text-sm md:text-base font-medium mt-3 leading-relaxed">{t.ridiculousBody}</p>
-            </div>
-            
-            <div className="space-y-3 flex-1">
-              {popularExpenses.map((exp, idx) => (
-                <div key={idx} className="flex items-center justify-between p-4 rounded-xl bg-slate-50 border border-slate-100 group hover:bg-white hover:shadow-lg transition-all duration-300">
-                  <div className="flex items-center gap-3">
-                    <div className="bg-white p-2 rounded-lg text-slate-400 group-hover:text-red-600 transition-colors shadow-sm">{exp.icon}</div>
-                    <span className="text-sm md:text-base font-bold text-slate-700">{exp.name}</span>
-                  </div>
-                  <div className="text-right">
-                    <div className="text-xs md:text-sm font-black text-slate-900">${exp.daily} <span className="text-[9px] text-slate-400 uppercase">/dia</span></div>
-                    <div className="text-[10px] md:text-xs font-black text-red-500 uppercase tracking-wider">${exp.daily * 30 * 12} <span className="text-[8px] opacity-60">/ano</span></div>
-                  </div>
-                </div>
-              ))}
+          {/* CALCULADORA DE ÁGUA - COZINHAR / LAVAR */}
+          <div className="bg-slate-50 rounded-[2.5rem] p-6 md:p-10 border border-slate-200 shadow-sm flex flex-col">
+            <div className="flex items-center gap-3 mb-8">
+               <div className="bg-emerald-600 p-3 rounded-2xl text-white shadow-lg"><Utensils size={22} /></div>
+               <h3 className="font-black text-xl text-slate-900 uppercase tracking-tighter">{t.cooking}</h3>
             </div>
 
-            <div className="mt-10 p-6 bg-red-50 rounded-2xl border border-red-100 flex items-center gap-4">
-               <AlertCircle size={24} className="text-red-600 shrink-0 animate-pulse" />
-               <p className="text-[10px] md:text-xs font-black text-red-900 uppercase tracking-widest leading-relaxed italic">
-                 "Pequenos vazamentos financeiros afundam grandes navios. Sua saúde não pode ser um custo, deve ser um investimento."
-               </p>
+            <div className="space-y-10 flex-1">
+               {/* Opção Pack Cozinha */}
+               <div className="space-y-4 p-4 bg-white rounded-2xl border border-slate-100">
+                <div className="flex justify-between items-center mb-2">
+                   <div className="flex items-center gap-2 text-[10px] font-black uppercase text-slate-600 tracking-widest">
+                     <Package size={14} className="text-emerald-500" /> {t.buyPack}
+                   </div>
+                   <span className="text-xs font-bold text-slate-400">($2 - $10)</span>
+                </div>
+                <div className="flex justify-between items-end mb-2">
+                  <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest">{t.priceLabel}</label>
+                  <span className="font-black text-emerald-600 text-lg">${cookPackPrice}</span>
+                </div>
+                <input type="range" min="2" max="10" step="1" value={cookPackPrice} onChange={(e) => setCookPackPrice(Number(e.target.value))} className="w-full h-2 bg-emerald-50 rounded-lg appearance-none cursor-pointer accent-emerald-600" />
+                
+                <div className="flex justify-between items-end mt-4">
+                  <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest">{t.qtyWeekly}</label>
+                  <span className="font-black text-emerald-600 text-lg">{cookPackQty}</span>
+                </div>
+                <input type="range" min="0" max="10" step="1" value={cookPackQty} onChange={(e) => handleCookPackChange(Number(e.target.value))} className="w-full h-2 bg-emerald-100 rounded-lg appearance-none cursor-pointer accent-emerald-600" />
+              </div>
+
+              {/* Opção Galão Cozinha */}
+              <div className="space-y-4 p-4 bg-white rounded-2xl border border-slate-100">
+                <div className="flex justify-between items-center mb-2">
+                   <div className="flex items-center gap-2 text-[10px] font-black uppercase text-slate-600 tracking-widest">
+                     <Droplets size={14} className="text-emerald-500" /> {t.buyGallon}
+                   </div>
+                   <span className="text-xs font-bold text-slate-400">($1 - $5)</span>
+                </div>
+                <div className="flex justify-between items-end mb-2">
+                  <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest">{t.priceLabel}</label>
+                  <span className="font-black text-emerald-600 text-lg">${cookGallonPrice}</span>
+                </div>
+                <input type="range" min="1" max="5" step="1" value={cookGallonPrice} onChange={(e) => setCookGallonPrice(Number(e.target.value))} className="w-full h-2 bg-emerald-50 rounded-lg appearance-none cursor-pointer accent-emerald-600" />
+                
+                <div className="flex justify-between items-end mt-4">
+                  <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest">{t.qtyDaily}</label>
+                  <span className="font-black text-emerald-600 text-lg">{cookGallonQty}</span>
+                </div>
+                <input type="range" min="0" max="10" step="1" value={cookGallonQty} onChange={(e) => handleCookGallonChange(Number(e.target.value))} className="w-full h-2 bg-emerald-100 rounded-lg appearance-none cursor-pointer accent-emerald-600" />
+              </div>
+            </div>
+
+            <div className="mt-8 pt-6 border-t border-slate-200">
+               <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 text-center">
+                  <span className="text-[9px] text-slate-400 font-black uppercase tracking-widest block mb-1">Subtotal Cozinha</span>
+                  <div className="text-3xl font-black text-slate-900 tracking-tighter">${cookingMonthly.toFixed(2)}</div>
+               </div>
             </div>
           </div>
         </div>
 
-        {/* DECISÃO PELA VIDA (BANNER REFINADO) */}
-        <div className="bg-blue-600 rounded-[2.5rem] p-8 md:p-12 text-white shadow-2xl relative overflow-hidden mt-12 group">
-           <div className="absolute top-0 right-0 p-12 opacity-10 transform translate-x-8 -translate-y-8 group-hover:scale-110 transition-transform duration-1000"><Heart size={200} fill="white" /></div>
-           <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8 text-center md:text-left">
-             <div className="max-w-2xl">
-               <div className="flex items-center gap-4 mb-4 justify-center md:justify-start">
-                  <div className="bg-white/20 p-3 rounded-2xl backdrop-blur-md"><Activity size={24} className="text-white" /></div>
-                  <h4 className="text-2xl md:text-3xl font-black uppercase tracking-tighter leading-none">Decisão pela Vida</h4>
-               </div>
-               <p className="text-blue-50 text-sm md:text-lg leading-relaxed font-bold italic opacity-90">
-                 Investir o desperdício de hoje para garantir <span className="text-amber-300">ÁGUA MOLECULAR</span> para sua família é o maior ato de inteligência financeira atual.
-               </p>
-             </div>
-             <div className="shrink-0 w-full md:w-auto">
-                <div className="bg-white text-blue-700 p-8 rounded-[2rem] font-black shadow-2xl flex flex-col items-center justify-center transition-all hover:scale-105 border-4 border-blue-500/20">
-                  <span className="text-[10px] md:text-xs text-blue-500 uppercase tracking-[0.3em] mb-2 font-black leading-none opacity-60 text-center">Investimento Diário:</span>
-                  <div className="flex items-center gap-2">
-                      <DollarSign size={28} className="text-blue-500" />
-                      <span className="text-4xl md:text-5xl text-red-600 tracking-tighter">${dailyCost.toFixed(2)}</span>
-                  </div>
-                </div>
-             </div>
+        {/* BANNER DE RESULTADOS FINAL */}
+        <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
+           <div className="md:col-span-2 bg-slate-950 p-8 md:p-10 rounded-[2.5rem] shadow-2xl relative overflow-hidden group border border-white/5">
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-600/10 to-transparent opacity-50"></div>
+              <div className="flex flex-col md:flex-row items-center gap-8 relative z-10">
+                 <div className="text-center md:text-left flex-1">
+                    <span className="text-blue-400 font-black text-[10px] uppercase tracking-[0.4em] mb-2 block">{t.totalMonthly}</span>
+                    <div className="text-6xl md:text-7xl font-black text-white tracking-tighter transition-transform group-hover:scale-105 duration-500">${finalWaterMonthly.toFixed(2)}</div>
+                 </div>
+                 <div className="w-px h-16 bg-white/10 hidden md:block"></div>
+                 <div className="text-center md:text-right">
+                    <p className="text-[10px] text-slate-500 font-black uppercase tracking-widest mb-1">{t.wasteForLife}</p>
+                    <p className="text-2xl font-black text-red-500 tracking-tight uppercase">A Troco de Nada</p>
+                    <p className="text-[9px] text-slate-600 uppercase tracking-widest font-bold mt-1">Investimento sem retorno de saúde</p>
+                 </div>
+              </div>
+           </div>
+
+           <div className="bg-blue-600 rounded-[2.5rem] p-8 text-white shadow-2xl relative overflow-hidden flex flex-col items-center justify-center text-center group">
+              <div className="absolute -top-10 -right-10 opacity-10"><Activity size={120} /></div>
+              <span className="text-[10px] font-black uppercase tracking-[0.3em] mb-2 opacity-80">{t.dailyInvestment}:</span>
+              <div className="text-5xl font-black tracking-tighter mb-2">${dailyCost.toFixed(2)}</div>
+              <p className="text-[10px] font-bold uppercase tracking-widest leading-tight opacity-90 max-w-[150px]">
+                 Saúde Real para sua Família
+              </p>
+           </div>
+        </div>
+
+        {/* RODAPÉ COMPARATIVO */}
+        <div className="mt-8 p-6 bg-slate-50 rounded-2xl border border-slate-200 flex flex-col md:flex-row items-center gap-6">
+           <div className="flex items-center gap-3">
+              <div className="bg-red-100 p-2.5 rounded-xl text-red-600"><TrendingDown size={20} /></div>
+              <p className="text-[10px] md:text-xs font-black text-slate-700 uppercase tracking-widest leading-relaxed">
+                 O desperdício invisível financia sua saúde. <br className="hidden md:block"/>
+                 <span className="text-red-600">Não gaste o que você pode investir no seu futuro.</span>
+              </p>
+           </div>
+           <div className="flex-1 h-px bg-slate-200 hidden md:block"></div>
+           <div className="flex items-center gap-2">
+              <ShieldCheck className="text-emerald-500" size={18} />
+              <span className="text-[10px] font-black text-slate-900 uppercase tracking-[0.2em]">Purificação Molecular Certificada</span>
            </div>
         </div>
       </div>
