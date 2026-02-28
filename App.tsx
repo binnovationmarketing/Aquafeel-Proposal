@@ -16,6 +16,8 @@ import { ManagerDashboard } from './components/ManagerDashboard';
 import AquaFeelLogo from './components/AquaFeelLogo';
 import { Phone, Lock, ChevronRight, Clock } from 'lucide-react';
 import { Language, translations } from './utils/i18n';
+import { WaterMalefices } from './components/WaterMalefices'; // ✗ Não definido
+import { ComparisonCalculator } from './components/ComparisonCalculator'; // ✓ OK
 import { ClientData } from './types';
 
 function App() {
