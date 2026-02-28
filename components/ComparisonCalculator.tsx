@@ -52,6 +52,8 @@ export const ComparisonCalculator: React.FC<ComparisonCalculatorProps> = ({
   const cashPrice = regionPrices[selectedRegion];
   const creditFactors = factors[selectedCredit];
   const calculateMonthly = (factor: number) => Math.round((cashPrice * factor) / 100);
+  const creditFactors = factors[selectedCredit];
+  const calculateMonthly = (factor: number) => Math.round((SYSTEM_PRICE * factor) / 100);
 
   const plans = [
     { id: '180x', label: `180 ${t.months}`, amount: calculateMonthly(creditFactors['180x']), months: 180 },
